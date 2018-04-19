@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".mlh.goodsdetials.GoodsdetialsActivity" />
+        <activity android:name=".mlh.login.LoginActivity" />
     </application>
 
 </manifest>

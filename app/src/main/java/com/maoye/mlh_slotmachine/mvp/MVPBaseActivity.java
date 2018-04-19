@@ -1,10 +1,12 @@
 package com.maoye.mlh_slotmachine.mvp;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.maoye.mlh_slotmachine.util.StatusBarUtils;
 
@@ -19,7 +21,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtils.fullScreen(this);
+       StatusBarUtils.fullScreen(this);
         mPresenter = getInstance(this, 1);
         mPresenter.attachView((V) this);
 

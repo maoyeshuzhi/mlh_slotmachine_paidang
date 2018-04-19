@@ -23,6 +23,7 @@ import com.maoye.mlh_slotmachine.adapter.SpecAdapter;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
 import com.maoye.mlh_slotmachine.bean.SpecBean;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
+import com.maoye.mlh_slotmachine.mlh.login.LoginActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.DateUtils;
@@ -347,16 +348,20 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
             case R.id.right_scroll_img:
                 break;
             case R.id.addcart_tv:
+                openActivity(LoginActivity.class);
                 break;
             case R.id.immdl_buy_tv:
                 break;
             case R.id.add_buy_tv:
+                openActivity(LoginActivity.class);
                 break;
             case R.id.back:
                 break;
             case R.id.addcart_bottom_tv:
+                openActivity(LoginActivity.class);
                 break;
             case R.id.immdl_buy_bottom_tv:
+                openActivity(LoginActivity.class);
                 break;
         }
     }
