@@ -151,9 +151,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     public void onSuccess(Object o) {
         bean = (GoodsDetialsBean) o;
         String WEB_STYLE = "<style>*p{font-size:12px;}</style>";
-
         String warmHintWebContent = bean.getDescription().replace("<img", "<img style='max-width:100%;height:auto;'");
-
         hintWebview.loadDataWithBaseURL(null,  WEB_STYLE+warmHintWebContent, "text/html", "utf-8", null);
 
         ImgGlideUtil.displayImage(bean.getDefault_image(), goodsImg, true);
