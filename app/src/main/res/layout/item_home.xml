@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen4"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/left_line_v"
+        android:layout_width="@dimen/dimen8"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen175"
+            tools:context="me.chunyu.spike.wcl_flip_anim_demo.MainActivity">
+           <ImageView
+               android:id="@+id/code_img"
+               android:clickable="true"
+               android:visibility="invisible"
+               android:layout_width="match_parent"
+               android:layout_height="@dimen/dimen175"
+               android:scaleType="fitXY" />
+            <ImageView
+                android:id="@+id/goods_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen175"
+                android:scaleType="fitXY"
+
+                android:src="@mipmap/default_image" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/discription_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen12"
+            android:layout_marginTop="@dimen/dimen6"
+            android:text="明星变色润唇膏 Dior/迪奥"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen9sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen12"
+            android:orientation="horizontal">
+
+            <TextView
+                android:paddingTop="@dimen/dimen4"
+                android:id="@+id/price_tv"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥955.00"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen10sp" />
+
+            <LinearLayout
+                android:id="@+id/buy_phone_ll"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingTop="@dimen/dimen4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/dimen35"
+                    android:layout_height="@dimen/dimen10"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:background="@drawable/black_stroke"
+                    android:gravity="center"
+                    android:text="@string/phoneBuy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen7sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/right_line_v"
+        android:layout_width="@dimen/dimen8"
+        android:layout_height="wrap_content" />
+</LinearLayout>
