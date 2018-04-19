@@ -18,4 +18,8 @@
     <string name="login_str">登录</string>
     <string name="hint_str">提示</string>
     <string name="hint_login_str">会员身份购买需使用茂业会员账号登陆，然后下单。该类订单享受会员积分；\n\n游客身份购买免登陆，直接下单，该类订单不参与会员积分。</string>
+    <string name="store_pickup_str">门店自提</string>
+    <string name="confirmorderinfo_str">确认订单信息</string>
+    <string name="delivery_str">快递配送</string>
+    <string name="submitorder">提交订单</string>
 </resources>

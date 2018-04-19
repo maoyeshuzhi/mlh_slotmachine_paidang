@@ -19,7 +19,6 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-
     @GET(URL.HOME_DATA)
     Observable<BaseResult<HomeBean>> homedata(@Query("device_no") String device_no);
 
@@ -33,4 +32,11 @@ public interface ApiService {
      */
     @GET(URL.STATISTIC)
     Observable<BaseResult<GoodsDetialsBean>> statistic(@Query("id") int id);
+
+    @GET(URL.ACCOUNT_LOGIN)
+    Observable<BaseResult> accountLogin(@Query("mobile") String mobile,@Query("password")String psw);
+
+   @GET(URL.MOBILE_LOGIN)
+    Observable<BaseResult> mobileLogin(@Query("mobile") String mobile,@Query("type")int type);
+
 }

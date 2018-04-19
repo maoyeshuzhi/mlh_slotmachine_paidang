@@ -8,5 +8,6 @@ public interface URL {
     String GOODS_DETIALS = "/home/machine/goods?";
     String HOME_DATA = "home/machine/index?";
     String STATISTIC = "/home/machine/advertClick?";
-
+    String ACCOUNT_LOGIN = "/home/machine/login?";
+    String MOBILE_LOGIN = "/home/machine/login?";
 }

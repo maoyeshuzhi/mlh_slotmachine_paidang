@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".mlh.goodsdetials.GoodsdetialsActivity" />
         <activity android:name=".mlh.login.LoginActivity" />
+        <activity android:name=".mlh.confirmorder.ConfirmOrderActivity" />
     </application>
 
 </manifest>
