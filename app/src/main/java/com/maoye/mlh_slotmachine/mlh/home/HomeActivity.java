@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
 import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
+import com.maoye.mlh_slotmachine.mlh.cart.CartActivity;
 import com.maoye.mlh_slotmachine.mlh.goodsdetials.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
@@ -86,7 +87,6 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
 
 
-
     @OnClick({R.id.quick_pay_bt, R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -104,6 +104,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
                 break;
             case R.id.cart_img:
               //购物车
+                openActivity(CartActivity.class);
                 break;
         }
     }
@@ -143,5 +144,10 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         goodsNumView.setBadgeCount(data.getCartNum());
         goodsData(data);
         getHeadBannerData(data);
+    }
+
+    @Override
+    public void onFail(Throwable throwable) {
+
     }
 }

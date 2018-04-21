@@ -16,6 +16,11 @@ public class GoodsDetialsModel extends BaseModel{
     public  void questGoodsDetialsData(int goodsId, Observer<BaseResult<GoodsDetialsBean>>observer){
         Observable observable = mServletApi.goodsDetials(goodsId).map(new HttpResultFunc<GoodsDetialsBean>());
         toSubscribe(observable,observer);
+    }
+
+    public void addCart(String deviceNo,int id,int specId,int num ,Observer<BaseResult>observer){
+        Observable observable = mServletApi.addCart(deviceNo,id,specId,num).map(new HttpResultFunc());
+        toSubscribe(observable,observer);
 
     }
 }

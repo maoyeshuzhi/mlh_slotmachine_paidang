@@ -64,7 +64,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         initData();
     }
 
-    private void initData() {
+    protected void initData() {
         rg.setOnCheckedChangeListener(this);
         accountEt.addTextChangedListener(accountTextWatcher);
         pswEt.addTextChangedListener(pswTextWatcher);
@@ -100,7 +100,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
         @Override
         public void afterTextChanged(Editable editable) {
-            isCanLogin(loginType == ACCOUNT_LOIGN && editable.length() > 0 && TextUtils.isEmpty(pswEt.getText()));
+            isCanLogin(loginType == ACCOUNT_LOIGN && editable.length() > 0 && !TextUtils.isEmpty(pswEt.getText()));
         }
     };
     TextWatcher pswTextWatcher = new TextWatcher() {
@@ -116,7 +116,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
         @Override
         public void afterTextChanged(Editable editable) {
-            isCanLogin(loginType == ACCOUNT_LOIGN && editable.length() > 0 && TextUtils.isEmpty(accountEt.getText()));
+            isCanLogin(loginType == ACCOUNT_LOIGN && editable.length() > 0 && !TextUtils.isEmpty(accountEt.getText()));
         }
     };
 
@@ -140,6 +140,11 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         openActivity(ConfirmOrderActivity.class);
     }
 
+    @Override
+    public void onFail(Throwable throwable) {
+
+    }
+
     @OnClick({R.id.login_bt, R.id.back_imgbt})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -158,14 +163,14 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     private boolean islogin() {
-        if (loginType == MOBILE_LOIGN && !TextUtil.isMobileNo(phoneEt.getText() + "")) {
+   /*     if (loginType == MOBILE_LOIGN && !TextUtil.isMobileNo(phoneEt.getText() + "")) {
             Toast.getInstance().toast(this, Constant.PLEASE_INPUT_RIGHT_PHONE, 2);
             return false;
         }
         if (loginType == ACCOUNT_LOIGN && TextUtil.isMobileNo(accountEt.getText() + "")) {
             Toast.getInstance().toast(this, Constant.PLEASE_INPUT_RIGHT_PHONE, 2);
             return false;
-        }
+        }*/
         return true;
     }
 

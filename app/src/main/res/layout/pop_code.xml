@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/code_pop"
+    android:layout_gravity="center"
+    android:id="@+id/view"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/code_img"
+        android:layout_width="@dimen/dimen110"
+        android:layout_height="@dimen/dimen110"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen16"
+        android:src="@mipmap/default_image" />
+
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/code_img"
+        android:layout_centerHorizontal="true"
+        android:text="点击隐藏 15s"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen9sp" />
+
+</RelativeLayout>

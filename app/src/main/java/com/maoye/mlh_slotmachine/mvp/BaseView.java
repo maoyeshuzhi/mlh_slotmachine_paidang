@@ -4,4 +4,5 @@ import android.content.Context;
 public interface BaseView<T> {
      Context getContext();
      void onSuccess(T t);
+     void onFail(Throwable throwable);
 }

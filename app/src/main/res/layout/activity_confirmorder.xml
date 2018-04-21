@@ -11,89 +11,7 @@
         android:layout_height="@dimen/dimen0.5"
         android:background="@color/color_fcfcfc" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen105"
-        android:background="@color/color_f2f2f2"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen50"
-        android:paddingRight="@dimen/dimen50">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/b1" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen13"
-            android:layout_marginRight="@dimen/dimen13"
-            android:src="@mipmap/arrowline" />
-
-        <ImageView
-            android:id="@+id/flow2_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/a2" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen13"
-            android:layout_marginRight="@dimen/dimen13"
-            android:src="@mipmap/arrowline" />
-
-        <ImageView
-            android:id="@+id/flow3_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/a3" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen13"
-            android:layout_marginRight="@dimen/dimen13"
-            android:src="@mipmap/arrowline" />
-
-        <ImageView
-            android:id="@+id/flow4_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/a4" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen13"
-            android:layout_marginRight="@dimen/dimen13"
-            android:src="@mipmap/arrowline" />
-
-        <ImageView
-            android:id="@+id/flow5_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/a5" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen13"
-            android:layout_marginRight="@dimen/dimen13"
-            android:src="@mipmap/arrowline" />
-    </LinearLayout>
+    <include layout="@layout/layout_step" />
 
     <RadioGroup
         android:id="@+id/rg"
@@ -184,29 +102,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen40"
+        android:layout_marginBottom="@dimen/dimen63"
         android:layout_marginLeft="@dimen/dimen32"
         android:layout_marginRight="@dimen/dimen32"
         android:background="@color/color_f0f0f0">
 
         <TextView
-            android:layout_marginLeft="@dimen/dimen8"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen8"
             android:gravity="center"
             android:text="快送方式:"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen12sp" />
+
         <RadioGroup
             android:id="@+id/deliverway_rg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen10"
             android:orientation="horizontal">
+
             <RadioButton
                 android:id="@+id/expresstype_rb"
-                android:text="快递"
-                android:button="@drawable/color969696soliddd2450"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:button="@drawable/deliverytypeselect"
+                android:checked="true"
+                android:paddingLeft="@dimen/dimen5"
+                android:text="快递"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+
+            <RadioButton
+                android:id="@+id/EMS_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen23"
+                android:button="@drawable/deliverytypeselect"
+                android:drawablePadding="@dimen/dimen3"
+                android:paddingLeft="@dimen/dimen5"
+                android:text="EMS"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+
+            <RadioButton
+                android:id="@+id/mail_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen23"
+                android:button="@drawable/deliverytypeselect"
+                android:drawablePadding="@dimen/dimen3"
+                android:paddingLeft="@dimen/dimen5"
+                android:text="E平邮MS"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
         </RadioGroup>
     </LinearLayout>
 

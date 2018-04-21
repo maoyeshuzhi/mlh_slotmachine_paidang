@@ -22,4 +22,5 @@
     <string name="confirmorderinfo_str">确认订单信息</string>
     <string name="delivery_str">快递配送</string>
     <string name="submitorder">提交订单</string>
+    <string name="selecrall_str">全选</string>
 </resources>

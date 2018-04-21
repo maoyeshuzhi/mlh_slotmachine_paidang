@@ -32,6 +32,21 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
         });
     }
 
+    @Override
+    public void addCart(String deviceNo, int id, int specId, int num) {
+        goodsDetialsModel.addCart(deviceNo, id, specId, num, new BaseObserver<BaseResult>(mView.getContext()) {
+            @Override
+            protected void onBaseNext(BaseResult data) {
+                mView.addCardSucc(data);
+            }
+
+            @Override
+            protected void onBaseError(Throwable t) {
+
+            }
+        });
+    }
+
 
     /**
      * 处理规格数据

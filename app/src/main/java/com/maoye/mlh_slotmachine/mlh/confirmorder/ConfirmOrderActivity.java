@@ -59,8 +59,14 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
     }
 
 
+
     @Override
     public void onSuccess(Object o) {
+
+    }
+
+    @Override
+    public void onFail(Throwable throwable) {
 
     }
 

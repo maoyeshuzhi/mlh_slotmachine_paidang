@@ -2,7 +2,7 @@ package com.maoye.mlh_slotmachine.mvp;
 
 import android.text.TextUtils;
 
-import com.maoye.mlh_slotmachine.util.httputil.ApiService;
+import com.maoye.mlh_slotmachine.webservice.ApiService;
 import com.maoye.mlh_slotmachine.util.httputil.BaseRetrofit;
 
 import java.util.HashMap;

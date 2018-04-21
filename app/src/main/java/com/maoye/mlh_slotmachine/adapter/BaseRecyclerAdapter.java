@@ -1,8 +1,10 @@
 package com.maoye.mlh_slotmachine.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,8 +31,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     private OnItemLongClickListener longClickListener;
 
     public OnItemChildClickListener onItemChildClickListener;
+    protected Context mContext;
+    protected LayoutInflater inflater;
 
-    public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener){
+    public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener) {
         this.onItemChildClickListener = onItemChildClickListener;
     }
 
@@ -43,7 +47,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         this.longClickListener = longClickListener;
     }
 
-    public List<T> getData(){
+    public List<T> getData() {
         return mDatas;
     }
 
@@ -75,6 +79,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemViewType(int position) {
+
         if (mHeaderView != null && position == 0) return TYPE_HEADER;
         if (mFooterView != null && mHeaderView != null && position > mDatas.size() || (mFooterView != null && mHeaderView == null && position >= mDatas.size()))
             return TYPE_FOOTER;
@@ -83,6 +88,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+        mContext = parent.getContext();
+        inflater = LayoutInflater.from(mContext);
         if (mHeaderView != null && viewType == TYPE_HEADER) return new BaseVH(mHeaderView);
 
         if (mFooterView != null && viewType == TYPE_FOOTER) return new BaseVH(mFooterView);
@@ -97,14 +104,14 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         final int pos = getRealPosition(viewHolder);
         if (pos < mDatas.size()) {
             final T data = mDatas.get(pos);
-            onBind(viewHolder, pos, data , mDatas.size());
+            onBind(viewHolder, pos, data, mDatas.size());
 
 
             if (mListener != null) {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mListener.onItemClick(v,pos, data);
+                        mListener.onItemClick(v, pos, data);
                     }
                 });
             }
@@ -113,7 +120,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
                 viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        longClickListener.onItemLongClick(view, pos,null);
+                        longClickListener.onItemLongClick(view, pos, null);
                         return true;
                     }
                 });
@@ -167,10 +174,9 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     }
 
 
-
     public abstract RecyclerView.ViewHolder onCreate(ViewGroup parent, final int viewType);
 
-    public abstract void onBind(RecyclerView.ViewHolder viewHolder, int RealPosition, T data , int size);
+    public abstract void onBind(RecyclerView.ViewHolder viewHolder, int RealPosition, T data, int size);
 
     public class BaseVH extends RecyclerView.ViewHolder {
         public BaseVH(View itemView) {

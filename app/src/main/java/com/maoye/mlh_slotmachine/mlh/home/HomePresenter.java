@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter{
+public class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter {
     private final HomeModel homeModel;
+
     public HomePresenter() {
         this.homeModel = new HomeModel();
     }
@@ -30,17 +31,18 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
 
             @Override
             protected void onBaseError(Throwable t) {
-
+                mView.onFail(t);
             }
         });
     }
 
     @Override
     public void statisticClickNum(int adId) {
-        homeModel.onClickAd(adId, new BaseObserver<BaseResult>(mView.getContext(),false) {
+        homeModel.onClickAd(adId, new BaseObserver<BaseResult>(mView.getContext(), false) {
             @Override
             protected void onBaseNext(BaseResult data) {
             }
+
             @Override
             protected void onBaseError(Throwable t) {
 
@@ -68,7 +70,6 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
 
         return resultList;
     }
-
 
 
 }

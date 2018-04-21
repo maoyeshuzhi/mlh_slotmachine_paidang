@@ -17,21 +17,21 @@
     <RadioGroup
         android:id="@+id/rg"
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/dimen80"
-        android:layout_marginRight="@dimen/dimen80"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/dimen80"
+        android:layout_marginRight="@dimen/dimen80"
         android:layout_marginTop="@dimen/dimen96"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/accountlogin_rb"
             android:layout_width="0dp"
-            android:button="@null"
-            android:layout_weight="1"
             android:layout_height="@dimen/dimen40"
-            android:checked="true"
+            android:layout_weight="1"
             android:background="@drawable/color969696soliddd2450"
+            android:button="@null"
+            android:checked="true"
             android:gravity="center"
             android:text="@string/accountlogin_str"
             android:textColor="@color/white"
@@ -40,16 +40,17 @@
         <RadioButton
             android:id="@+id/phonelogin_rb"
             android:layout_width="0dp"
-            android:button="@null"
-            android:layout_weight="1"
             android:layout_height="@dimen/dimen40"
+            android:layout_weight="1"
             android:background="@drawable/color969696soliddd2450"
+            android:button="@null"
             android:clickable="true"
             android:gravity="center"
             android:text="@string/phonelogin_str"
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen16sp" />
     </RadioGroup>
+
     <EditText
         android:id="@+id/account_et"
         android:layout_width="match_parent"
@@ -60,10 +61,12 @@
         android:background="@null"
         android:hint="请输入茂业会员账号"
         android:inputType="phone"
+        android:maxLength="11"
         android:maxLines="1"
         android:paddingBottom="@dimen/dimen11"
         android:paddingTop="@dimen/dimen11"
         android:textCursorDrawable="@drawable/shap_cursor" />
+
     <View
         android:id="@+id/account_view"
         android:layout_width="match_parent"
@@ -79,14 +82,15 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen80"
         android:layout_marginRight="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen57"
         android:background="@null"
         android:hint="请输入密码"
+        android:gravity="bottom"
         android:inputType="phone"
         android:maxLines="1"
         android:paddingBottom="@dimen/dimen11"
-        android:paddingTop="@dimen/dimen11"
+        android:paddingTop="@dimen/dimen68"
         android:textCursorDrawable="@drawable/shap_cursor" />
+
     <View
         android:id="@+id/psw_view"
         android:layout_width="match_parent"
@@ -96,10 +100,8 @@
         android:background="@color/color_646464" />
 
 
-
     <EditText
         android:id="@+id/phone_et"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen80"
@@ -108,73 +110,83 @@
         android:background="@null"
         android:hint="请输入购买手机号"
         android:inputType="phone"
+        android:maxLength="11"
         android:maxLines="1"
         android:paddingBottom="@dimen/dimen11"
         android:paddingTop="@dimen/dimen11"
-        android:textCursorDrawable="@drawable/shap_cursor" />
+        android:textCursorDrawable="@drawable/shap_cursor"
+        android:visibility="gone" />
 
     <View
         android:id="@+id/phone_view"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen0.5"
         android:layout_marginLeft="@dimen/dimen80"
         android:layout_marginRight="@dimen/dimen80"
-        android:background="@color/color_646464" />
+        android:background="@color/color_646464"
+        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/login_bt"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen42"
-        android:layout_marginLeft="@dimen/dimen80"
-        android:layout_marginRight="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen142"
-        android:background="@color/color_dd2450"
-        android:gravity="center"
-        android:text="@string/login_str"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dimen18sp" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/login_tv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen42"
-        android:layout_marginLeft="@dimen/dimen80"
-        android:layout_marginRight="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen142"
-        android:background="@color/color_c8c8c8"
-        android:gravity="center"
-        android:text="@string/login_str"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dimen18sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen30"
-        android:drawableLeft="@mipmap/hint_login"
-        android:drawablePadding="@dimen/dimen4"
-        android:gravity="center"
-        android:text="@string/hint_str"
-        android:textColor="@color/color_505050"
-        android:textSize="@dimen/dimen9sp" />
+        <Button
+            android:id="@+id/login_bt"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="@dimen/dimen42"
+            android:layout_marginLeft="@dimen/dimen80"
+            android:layout_marginRight="@dimen/dimen80"
+            android:background="@color/color_dd2450"
+            android:gravity="center"
+            android:text="@string/login_str"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen18sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen10"
-        android:text="@string/hint_login_str"
-        android:textColor="@color/color_505050"
-        android:textSize="@dimen/dimen9sp" />
+        <TextView
+            android:id="@+id/login_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen42"
+            android:layout_marginLeft="@dimen/dimen80"
+            android:layout_marginRight="@dimen/dimen80"
+            android:background="@color/color_c8c8c8"
+            android:gravity="center"
+            android:text="@string/login_str"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen18sp" />
 
-    <ImageButton
-        android:id="@+id/back_imgbt"
-        android:layout_marginLeft="@dimen/dimen28"
-        android:layout_marginBottom="@dimen/dimen28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:src="@mipmap/back_login"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen80"
+            android:layout_marginTop="@dimen/dimen30"
+            android:drawableLeft="@mipmap/hint_login"
+            android:drawablePadding="@dimen/dimen4"
+            android:gravity="center"
+            android:text="@string/hint_str"
+            android:textColor="@color/color_505050"
+            android:textSize="@dimen/dimen9sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen80"
+            android:layout_marginTop="@dimen/dimen10"
+            android:text="@string/hint_login_str"
+            android:textColor="@color/color_505050"
+            android:textSize="@dimen/dimen9sp" />
+
+        <ImageButton
+            android:id="@+id/back_imgbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen28"
+            android:layout_marginLeft="@dimen/dimen28"
+            android:background="@null"
+            android:src="@mipmap/back_login" />
+    </LinearLayout>
 </LinearLayout>

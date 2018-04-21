@@ -13,21 +13,30 @@ import android.text.style.StrikethroughSpan;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.adapter.GoodsDetialsGoodsAdapter;
 import com.maoye.mlh_slotmachine.adapter.SpecAdapter;
+import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
 import com.maoye.mlh_slotmachine.bean.SpecBean;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
+import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
 import com.maoye.mlh_slotmachine.mlh.login.LoginActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.DateUtils;
+import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
+import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.httputil.ImgGlideUtil;
+import com.maoye.mlh_slotmachine.webservice.EnvConfig;
+import com.maoye.mlh_slotmachine.widget.CodePop;
 import com.maoye.mlh_slotmachine.widget.NoLineSpaceTextView;
 
 import java.util.ArrayList;
@@ -82,8 +91,8 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     TextView addcartTv;
     @BindView(R.id.immdl_buy_tv)
     TextView immdlBuyTv;
-    @BindView(R.id.add_buy_tv)
-    TextView addBuyTv;
+    @BindView(R.id.phonebuy_tv)
+    TextView phonebuyTv;
     @BindView(R.id.hint_webview)
     WebView hintWebview;
     @BindView(R.id.back)
@@ -102,6 +111,12 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     TextView hintBt;//不能购买按钮
     @BindView(R.id.hint_bottom_bt)
     TextView hintBottomBt;//不能购买按钮
+    @BindView(R.id.top_imgbt)
+    ImageButton topImgbt;
+    @BindView(R.id.cart_img)
+    ImageView cartImg;
+    @BindView(R.id.scrollview)
+    ScrollView scrollview;
     private CountDownTimer timer;
     private int timeState;//时间状态
     public static final int UN_START = 0;//未开始
@@ -113,18 +128,21 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     private int stockNum;
     private List<SpecBean> specList;
     private SpecAdapter specAdapter;
+    private int selectGoodsNum = 1;
+    private PopupWindow codePop;
+    private int picPisition;//商品图片位置
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goodsdetials);
-        ButterKnife.bind(this);
         int goodsId = getIntent().getIntExtra(Constant.GOODS_ID, 0);
         mPresenter.getGoodsDetialsData(goodsId);
+        ButterKnife.bind(this);
         initData();
     }
 
-    private void initData() {
+    protected void initData() {
         initWebSetting();
         goodsPicAdapter = new GoodsDetialsGoodsAdapter();
         goodsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -132,7 +150,15 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         specAdapter = new SpecAdapter();
         specificationRecycler.setLayoutManager(new LinearLayoutManager(this));
         specificationRecycler.setAdapter(specAdapter);
+        goodsPicAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, Object data) {
+                picPisition = position;
+                ImgGlideUtil.displayImage(image_list.get(position).getImage_url(), goodsImg, true);
+            }
+        });
     }
+
 
     private void initWebSetting() {
         WebSettings webSetting = hintWebview.getSettings();
@@ -141,19 +167,20 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
         webSetting.setJavaScriptEnabled(true);
         webSetting.setDomStorageEnabled(true);
-       /* webSetting.setBlockNetworkImage(false); // 解决图片不显示
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+        webSetting.setBlockNetworkImage(false); // 解决图片不显示
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }*/
+        }
     }
 
 
     @Override
     public void onSuccess(Object o) {
         bean = (GoodsDetialsBean) o;
-        String WEB_STYLE = "<style>*p{font-size:12px;}</style>";
+        String WEB_STYLE = "<style>*p{padding:0px;}</style>";
         String warmHintWebContent = bean.getDescription().replace("<img", "<img style='max-width:100%;height:auto;'");
-        hintWebview.loadDataWithBaseURL(null,  WEB_STYLE+warmHintWebContent, "text/html", "utf-8", null);
+        if (warmHintWebContent != null)
+            hintWebview.loadDataWithBaseURL(null, WEB_STYLE + warmHintWebContent, "text/html", "utf-8", null);
 
         ImgGlideUtil.displayImage(bean.getDefault_image(), goodsImg, true);
         goodTitleTv.setText(bean.getName() + "");
@@ -185,6 +212,11 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 switchStockState(stockNum);
             }
         });
+    }
+
+    @Override
+    public void onFail(Throwable throwable) {
+
     }
 
     /**
@@ -235,6 +267,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 timeState = ENDTIME;
                 titmeTv.setVisibility(View.GONE);
             } else {//活动开始中
+                titmeTv.setVisibility(View.VISIBLE);
                 timeState = STARTING;
                 long l = DateUtils.differentDay(bean.getEnd_time(), System.currentTimeMillis());
                 startingTime(l);
@@ -336,33 +369,76 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     }
 
 
-    @OnClick({R.id.subtract_tv, R.id.add_tv, R.id.left_scroll_img, R.id.right_scroll_img, R.id.addcart_tv, R.id.immdl_buy_tv, R.id.add_buy_tv, R.id.back, R.id.addcart_bottom_tv, R.id.immdl_buy_bottom_tv})
+    @OnClick({R.id.subtract_tv, R.id.add_tv, R.id.left_scroll_img, R.id.right_scroll_img, R.id.addcart_tv, R.id.immdl_buy_tv, R.id.phonebuy_tv, R.id.back, R.id.addcart_bottom_tv, R.id.immdl_buy_bottom_tv, R.id.top_imgbt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.subtract_tv:
+                //减
+                int goodsnum1 = Integer.parseInt(selectGoodsNumTv.getText().toString());
+                if (goodsnum1 <= 1) {
+                    Toast.getInstance().toast(this, "至少选择一件商品", 2);
+                    return;
+                }
+                selectGoodsNumTv.setText(goodsnum1 - 1 + "");
+
                 break;
             case R.id.add_tv:
-                break;
-            case R.id.left_scroll_img:
-                break;
-            case R.id.right_scroll_img:
-                break;
-            case R.id.addcart_tv:
-                openActivity(LoginActivity.class);
-                break;
-            case R.id.immdl_buy_tv:
-                break;
-            case R.id.add_buy_tv:
-                openActivity(LoginActivity.class);
-                break;
-            case R.id.back:
+                //加
+                int goodsnum = Integer.parseInt(selectGoodsNumTv.getText().toString());
+                if (goodsnum >= stockNum) {
+                    Toast.getInstance().toast(this, Constant.NOOVER_STOCK, 2);
+                    return;
+                }
+                selectGoodsNumTv.setText(goodsnum + 1 + "");
+
                 break;
             case R.id.addcart_bottom_tv:
-                openActivity(LoginActivity.class);
+            case R.id.addcart_tv:
+                //加入购物车
+                if (Integer.parseInt(selectGoodsNumTv.getText().toString()) > stockNum) {
+                    Toast.getInstance().toast(this, "商品不能超过库存数", 2);
+                    return;
+                }
+                mPresenter.addCart(DeviceInfoUtil.getDeviceId(this), bean.getId(), 0, Integer.parseInt(selectGoodsNumTv.getText().toString()));
+
                 break;
+
+            case R.id.left_scroll_img:
+                if (picPisition != 0) {
+                    goodsRecycler.scrollToPosition(picPisition - 1);
+                    picPisition = picPisition - 1;
+                }
+                break;
+            case R.id.right_scroll_img:
+                if (picPisition != image_list.size() - 1) {
+                    goodsRecycler.scrollToPosition(picPisition + 1);
+                    picPisition = picPisition + 1;
+                }
+
+                break;
+            case R.id.phonebuy_tv:
+                if (codePop == null) {
+                    codePop = new CodePop(this, EnvConfig.instance().getWebServiceBaseUrl() + "goods?id=" + bean.getId());
+                }
+                codePop.showAsDropDown(phonebuyTv);
+                break;
+            case R.id.back:
+                finish();
+                break;
+            case R.id.immdl_buy_tv:
             case R.id.immdl_buy_bottom_tv:
                 openActivity(LoginActivity.class);
                 break;
+            case R.id.top_imgbt:
+                //返回顶部
+                scrollview.scrollBy(0, 0);
+                break;
         }
     }
+
+    @Override
+    public void addCardSucc(BaseResult baseResult) {
+        Toast.getInstance().toast(this, "添加成功！购物车等您亲", 2);
+    }
+
 }

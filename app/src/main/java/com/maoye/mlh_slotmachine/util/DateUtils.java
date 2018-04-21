@@ -207,6 +207,12 @@ public final class DateUtils {
      * @return
      */
     public static long differentDay(long endTime, long startTime) {
+        if((endTime+"").length()<13){
+            endTime = endTime*1000;
+        }
+        if((startTime+"").length()<13){
+            startTime = startTime*1000;
+        }
         Date d1 = null;
         Date d2 = null;
             d1 = new Date(endTime);

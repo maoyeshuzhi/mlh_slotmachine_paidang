@@ -1,7 +1,6 @@
 package com.maoye.mlh_slotmachine.util.httputil;
 
 
-import android.database.Observable;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -9,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.maoye.mlh_slotmachine.util.MyContext;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.CustomGsonConverterFactory;
+import com.maoye.mlh_slotmachine.webservice.ApiService;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 
 import java.io.File;
@@ -20,7 +20,6 @@ import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -54,7 +53,7 @@ public class BaseRetrofit {
     protected <T> void toSubscribe(io.reactivex.Observable<T> observable, io.reactivex.Observer<T> observer) {
         observable.subscribeOn(Schedulers.io())    // 指定subscribe()发生在IO线程
                 .observeOn(AndroidSchedulers.mainThread())  // 指定Subscriber的回调发生在io线程
-                .timeout(DEFAULT_TIME, TimeUnit.SECONDS)    //重连间隔时间
+              //  .timeout(DEFAULT_TIME, TimeUnit.SECONDS)    //重连间隔时间
                 .retry(RETRY_TIMES)
 //          .repeatWhen(new Function<Observable<Object>, ObservableSource<?>>() {
 //                @Override
@@ -65,9 +64,6 @@ public class BaseRetrofit {
                 .subscribe(observer);   //订阅
     }
 
-    public ApiService getService() {
-        return apiService;
-    }
 
     private OkHttpClient getHttpClient() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -88,11 +84,11 @@ public class BaseRetrofit {
         Cache cache = new Cache(new File(cacheFile), SIZE_OF_CACHE);
 
         httpClient
-                .cache(cache)
+               // .cache(cache)
                 .writeTimeout(20000L, TimeUnit.MILLISECONDS)
                 .connectTimeout(40000L, TimeUnit.MILLISECONDS)
                 .readTimeout(20000L, TimeUnit.MILLISECONDS)
-                .addInterceptor(new com.maoye.mlh_slotmachine.util.httputil.cache.CacheInterceptor())
+               // .addInterceptor(new com.maoye.mlh_slotmachine.util.httputil.cache.CacheInterceptor())
                 .addInterceptor(loggingInterceptor).build();
     }
 

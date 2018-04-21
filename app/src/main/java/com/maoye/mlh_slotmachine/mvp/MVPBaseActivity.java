@@ -12,7 +12,7 @@ import com.maoye.mlh_slotmachine.util.StatusBarUtils;
 
 import java.lang.reflect.ParameterizedType;
 
-
+import butterknife.ButterKnife;
 
 
 public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresenterImpl<V>> extends AppCompatActivity implements BaseView {
@@ -26,6 +26,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
         mPresenter.attachView((V) this);
 
     }
+
 
     protected void openActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);
