@@ -23,4 +23,8 @@
     <string name="delivery_str">快递配送</string>
     <string name="submitorder">提交订单</string>
     <string name="selecrall_str">全选</string>
+    <string name="cancel_str">取消</string>
+    <string name="confirm_str">确定</string>
+    <string name="add_attress_str">创建地址</string>
+    <string name="close_str">关闭</string>
 </resources>

@@ -10,7 +10,6 @@ import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
@@ -32,14 +31,6 @@ import butterknife.OnClick;
  */
 public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresenter> implements CartContract.View, OnItemChildClickListener {
 
-    @BindView(R.id.flow2_img)
-    ImageView flow2Img;
-    @BindView(R.id.flow3_img)
-    ImageView flow3Img;
-    @BindView(R.id.flow4_img)
-    ImageView flow4Img;
-    @BindView(R.id.flow5_img)
-    ImageView flow5Img;
     @BindView(R.id.goodsnum_tv)
     TextView goodsnumTv;
     @BindView(R.id.selctall_cb)
@@ -60,6 +51,16 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
     TextView priceTv;
     @BindView(R.id.submit_bt)
     Button submitBt;
+    @BindView(R.id.flow1_tv)
+    TextView flow1Tv;
+    @BindView(R.id.flow2_tv)
+    TextView flow2Tv;
+    @BindView(R.id.flow3_tv)
+    TextView flow3Tv;
+    @BindView(R.id.flow4_tv)
+    TextView flow4Tv;
+    @BindView(R.id.flow5_tv)
+    TextView flow5Tv;
     private CartGoodsAdapter cartGoodsAdapter;
     private List<GoodsItemBean> list = new ArrayList<>();
 
@@ -113,7 +114,7 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
 
     @Override
     public void onChildItemClick(View view, int type, int position, Object data) {
-        switch (type){
+        switch (type) {
             case CartGoodsAdapter.SELECT_GOODS:
                 break;
         }

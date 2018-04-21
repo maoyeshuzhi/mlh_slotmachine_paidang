@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/dimen12"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dimen152"
+        android:layout_height="@dimen/dimen70"
+        android:background="@mipmap/address_select">
+
+        <TextView
+            android:id="@+id/address_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen10"
+            android:includeFontPadding="false"
+            android:text="广东深圳"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen10sp" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen4"
+            android:layout_marginTop="@dimen/dimen10"
+            android:layout_toRightOf="@+id/address_tv"
+            android:includeFontPadding="false"
+            android:text="(翁双双收)"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen9sp" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen1"
+            android:layout_below="@+id/name_tv"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen4"
+            android:background="@drawable/dotline_1e1e1e" />
+
+        <TextView
+            android:id="@+id/address_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen9"
+            android:text="罗湖 深南东路4003号世界金融中心A座36楼  13506781234"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen9sp" />
+    </RelativeLayout>
+</LinearLayout>

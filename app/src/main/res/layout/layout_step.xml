@@ -6,11 +6,17 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <ImageView
+    <TextView
+        android:id="@+id/flow1_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@mipmap/b1" />
+        android:drawablePadding="@dimen/dimen6"
+        android:drawableTop="@mipmap/b1"
+        android:gravity="center"
+        android:text="①查看购物车"
+        android:textColor="@color/color_323232"
+        android:textSize="@dimen/dimen8sp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -20,12 +26,16 @@
         android:layout_marginRight="@dimen/dimen13"
         android:src="@mipmap/arrowline" />
 
-    <ImageView
-        android:id="@+id/flow2_img"
+    <TextView
+        android:id="@+id/flow2_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@mipmap/a2" />
+        android:drawablePadding="@dimen/dimen6"
+        android:drawableTop="@mipmap/a2"
+        android:gravity="center"
+        android:text="②拍下商品"
+        android:textColor="@color/color_323232"
+        android:textSize="@dimen/dimen8sp"  />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -35,12 +45,17 @@
         android:layout_marginRight="@dimen/dimen13"
         android:src="@mipmap/arrowline" />
 
-    <ImageView
-        android:id="@+id/flow3_img"
+    <TextView
+        android:id="@+id/flow3_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@mipmap/a3" />
+        android:drawablePadding="@dimen/dimen6"
+        android:drawableTop="@mipmap/a3"
+        android:gravity="center"
+        android:text="③快递/门店自提配送"
+        android:textColor="@color/color_323232"
+        android:textSize="@dimen/dimen8sp"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -50,12 +65,17 @@
         android:layout_marginRight="@dimen/dimen13"
         android:src="@mipmap/arrowline" />
 
-    <ImageView
-        android:id="@+id/flow4_img"
+    <TextView
+        android:id="@+id/flow4_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@mipmap/a4" />
+        android:drawablePadding="@dimen/dimen6"
+        android:drawableTop="@mipmap/a4"
+        android:gravity="center"
+        android:text="④选择支付方式"
+        android:textColor="@color/color_323232"
+        android:textSize="@dimen/dimen8sp"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -65,10 +85,15 @@
         android:layout_marginRight="@dimen/dimen13"
         android:src="@mipmap/arrowline" />
 
-    <ImageView
-        android:id="@+id/flow5_img"
+    <TextView
+        android:id="@+id/flow5_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@mipmap/a5" />
+        android:drawablePadding="@dimen/dimen6"
+        android:drawableTop="@mipmap/a5"
+        android:gravity="center"
+        android:text="⑤完成打小票"
+        android:textColor="@color/color_323232"
+        android:textSize="@dimen/dimen8sp" />
 </LinearLayout>

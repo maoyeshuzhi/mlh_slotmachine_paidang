@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dimen480"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/color_white_redius10_solid"
+    android:orientation="vertical">
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen44"
+        android:layout_marginTop="@dimen/dimen19"
+        android:text="@string/add_attress_str"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen0.5"
+        android:layout_marginTop="@dimen/dimen13"
+        android:background="@color/color_969696" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen23"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen44"
+                android:layout_marginTop="@dimen/dimen17"
+                android:text="操作说明"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen16"
+                android:src="@mipmap/code1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen44"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="打开微信或支付宝扫一扫功能"
+                android:textColor="@color/color_323232"
+                android:textSize="@dimen/dimen11sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen16"
+                android:src="@mipmap/code2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen44"
+                android:layout_marginTop="@dimen/dimen10"
+                android:text="扫描右侧二维码添加地址"
+                android:textColor="@color/color_323232"
+                android:textSize="@dimen/dimen11sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/code_img"
+                android:layout_width="@dimen/dimen138"
+                android:layout_height="@dimen/dimen138"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/default_image" />
+
+            <TextView
+                android:id="@+id/cancel_tv"
+                android:clickable="true"
+                android:layout_width="@dimen/dimen130"
+                android:layout_height="@dimen/dimen40"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/color969696_stroke"
+                android:gravity="center"
+                android:text="@string/cancel_str"
+                android:textColor="@color/color_1e1e1e"
+                android:textSize="@dimen/dimen16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen40"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dimen29"
+        android:layout_marginLeft="@dimen/dimen78"
+        android:layout_marginRight="@dimen/dimen78"
+        android:layout_marginTop="@dimen/dimen24"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/pickup_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/color969696soliddd2450"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="@string/store_pickup_str"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen16sp" />
+
+        <RadioButton
+            android:id="@+id/express_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/color969696soliddd2450"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/delivery_str"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen16sp" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/address_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/address_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen70"
+            android:layout_marginLeft="@dimen/dimen31" />
+
+        <TextView
+            android:id="@+id/addAddress_tv"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen32"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawableLeft="@mipmap/addicon"
+            android:drawablePadding="@dimen/dimen4"
+            android:paddingBottom="@dimen/dimen18"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen9"
+            android:text="添加收货地址"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen11sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/space_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen57"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen18"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/confirmorderinfo_str"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen0.5"
+        android:layout_marginLeft="@dimen/dimen30"
+        android:layout_marginRight="@dimen/dimen30"
+        android:layout_marginTop="@dimen/dimen16"
+        android:background="@color/color_b4b4b4" />
+
+    <include
+        layout="@layout/recycler_white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dimen18"
+        android:layout_weight="1" />
+
+
+    <LinearLayout
+
+        android:id="@+id/address_bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen40"
+        android:layout_marginBottom="@dimen/dimen63"
+        android:layout_marginLeft="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen32"
+        android:background="@color/color_f0f0f0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen8"
+            android:gravity="center"
+            android:text="快送方式:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen12sp" />
+
+        <RadioGroup
+            android:id="@+id/deliverway_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/expresstype_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@drawable/deliverytypeselect"
+                android:checked="true"
+                android:paddingLeft="@dimen/dimen5"
+                android:text="快递"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+
+            <RadioButton
+                android:id="@+id/EMS_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen23"
+                android:button="@drawable/deliverytypeselect"
+                android:drawablePadding="@dimen/dimen3"
+                android:paddingLeft="@dimen/dimen5"
+                android:text="EMS"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+
+            <RadioButton
+                android:id="@+id/mail_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen23"
+                android:button="@drawable/deliverytypeselect"
+                android:drawablePadding="@dimen/dimen3"
+                android:paddingLeft="@dimen/dimen5"
+                android:text="E平邮MS"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen27"
+        android:layout_marginLeft="@dimen/dimen28"
+        android:layout_marginRight="@dimen/dimen28"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/back_imgbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@mipmap/back_login" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen40"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen6"
+            android:layout_weight="1"
+            android:background="@color/color_f0f0f0"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/price_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="合计：￥2055.00"
+                android:textColor="@color/color_1e1e1e"
+                android:textSize="@dimen/dimen19sp" />
+
+            <TextView
+                android:id="@+id/isdelivery_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dimen7"
+                android:gravity="center"
+                android:text="（不含运费）"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen15sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/submit_bt"
+            android:layout_width="@dimen/dimen110"
+            android:layout_height="@dimen/dimen40"
+            android:layout_gravity="center"
+            android:background="@color/color_dd2450"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/submitorder"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen16sp" />
+    </LinearLayout>
+</LinearLayout>

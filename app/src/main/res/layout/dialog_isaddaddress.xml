@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dimen336"
+    android:layout_height="@dimen/dimen240"
+    android:layout_gravity="center"
+    android:background="@drawable/color_white_redius10_solid"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen28">
+
+        <RadioButton
+            android:id="@+id/localadd_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen35"
+            android:button="@drawable/deliverytypeselect"
+            android:checked="true"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingTop="@dimen/dimen15"
+            android:text="本机器输入新地址"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen16sp" />
+
+        <RadioButton
+            android:id="@+id/phoneadd_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:button="@drawable/deliverytypeselect"
+            android:checked="true"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingLeft="@dimen/dimen10"
+            android:paddingTop="@dimen/dimen15"
+            android:text="手机扫码录入新地址"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen16sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/cancel_tv"
+        android:clickable="true"
+        android:layout_width="@dimen/dimen130"
+        android:layout_height="@dimen/dimen40"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dimen20"
+        android:layout_marginLeft="@dimen/dimen28"
+        android:background="@drawable/color1e1e1e_stroke"
+        android:gravity="center"
+        android:text="@string/cancel_str"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen16sp" />
+
+    <TextView
+        android:id="@+id/confirm_tv"
+        android:clickable="true"
+        android:layout_width="@dimen/dimen130"
+        android:layout_height="@dimen/dimen40"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen28"
+        android:layout_marginBottom="@dimen/dimen20"
+        android:background="@color/color_dd2450"
+        android:gravity="center"
+        android:text="@string/confirm_str"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen16sp" />
+
+</RelativeLayout>

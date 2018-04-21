@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dimen480"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/color_white_redius10_solid"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen44"
+        android:layout_marginTop="@dimen/dimen19"
+        android:text="@string/add_attress_str"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen16sp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen0.5"
+        android:layout_marginTop="@dimen/dimen13"
+        android:background="@color/color_969696" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen44"
+        android:layout_marginRight="@dimen/dimen25"
+        android:layout_marginTop="@dimen/dimen23"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen31"
+            android:gravity="center"
+            android:text="* 所在地区"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen14sp" />
+
+        <EditText
+            android:id="@+id/province_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen31"
+            android:layout_marginLeft="@dimen/dimen14"
+            android:layout_weight="1"
+            android:background="@drawable/color969696_stroke"
+            android:hint="选择省市区"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/dimen8"
+            android:textSize="@dimen/dimen13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen44"
+        android:layout_marginRight="@dimen/dimen25"
+        android:layout_marginTop="@dimen/dimen14"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen31"
+            android:gravity="top"
+            android:text="* 所在地区"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen14sp" />
+
+        <EditText
+            android:id="@+id/detialaddress_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen60"
+            android:layout_marginLeft="@dimen/dimen14"
+            android:layout_weight="1"
+            android:background="@drawable/color969696_stroke"
+            android:gravity="top"
+            android:hint="建议您如实填写详细收货地址，例如街道名称，门牌号
+码，楼层和房间号等信息"
+            android:paddingLeft="@dimen/dimen8"
+            android:paddingTop="@dimen/dimen8"
+            android:textSize="@dimen/dimen13sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen30"
+        android:layout_marginRight="@dimen/dimen25"
+        android:layout_marginTop="@dimen/dimen14"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen31"
+            android:gravity="top"
+            android:text="* 收货人姓名"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen14sp" />
+
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen31"
+            android:layout_marginLeft="@dimen/dimen14"
+            android:layout_weight="1"
+            android:background="@drawable/color969696_stroke"
+            android:gravity="center_vertical"
+            android:hint="长度不超过25个字符"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/dimen8"
+            android:paddingTop="@dimen/dimen8"
+            android:textSize="@dimen/dimen13sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen44"
+        android:layout_marginRight="@dimen/dimen25"
+        android:layout_marginTop="@dimen/dimen14"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen31"
+            android:gravity="top"
+            android:text="* 手机号码"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen14sp" />
+
+        <EditText
+            android:id="@+id/phone_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen31"
+            android:layout_marginLeft="@dimen/dimen14"
+            android:layout_weight="1"
+            android:background="@drawable/color969696_stroke"
+            android:gravity="center_vertical"
+            android:hint="请输入手机号码"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/dimen8"
+            android:paddingTop="@dimen/dimen8"
+            android:textSize="@dimen/dimen13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dimen18"
+        android:layout_marginTop="@dimen/dimen44"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/close_tv"
+            android:layout_width="@dimen/dimen130"
+            android:layout_height="@dimen/dimen40"
+            android:background="@drawable/color969696_stroke"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/close_str"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen16sp" />
+
+        <TextView
+            android:id="@+id/save_tv"
+            android:layout_width="@dimen/dimen130"
+            android:layout_height="@dimen/dimen40"
+            android:layout_marginLeft="@dimen/dimen9"
+            android:background="@color/color_dd2450"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/close_str"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen16sp" />
+    </LinearLayout>
+
+</LinearLayout>

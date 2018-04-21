@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen122"
+    android:layout_marginLeft="@dimen/dimen30"
+    android:layout_marginRight="@dimen/dimen30"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/goods_img"
+        android:layout_width="@dimen/dimen100"
+        android:layout_height="@dimen/dimen100"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/default_image" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_toRightOf="@+id/goods_img"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="明星变色润唇膏 Dior/迪奥润唇膏变色润唇膏"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen15sp" />
+
+    <TextView
+        android:id="@+id/specification_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_toRightOf="@+id/goods_img"
+        android:text="x,红色"
+        android:textColor="@color/color_323232"
+        android:textSize="@dimen/dimen14sp" />
+
+    <TextView
+        android:id="@+id/price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dimen24"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_toRightOf="@+id/goods_img"
+        android:includeFontPadding="false"
+        android:text="￥1655.00"
+        android:textColor="@color/color_dd2450"
+        android:textSize="@dimen/dimen19sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dimen24"
+        android:includeFontPadding="false"
+        android:text="x1"
+        android:textColor="@color/color_323232"
+        android:textSize="@dimen/dimen15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen0.5"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_b4b4b4" />
+</RelativeLayout>

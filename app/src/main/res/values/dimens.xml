@@ -150,7 +150,9 @@
     <dimen name="dimen339">339dp</dimen>
     <dimen name="dimen376">376dp</dimen>
     <dimen name="dimen150">150dp</dimen>
+    <dimen name="dimen152">152dp</dimen>
     <dimen name="dimen410">410dp</dimen>
+    <dimen name="dimen480">480dp</dimen>
     <dimen name="dimen33sp">33sp</dimen>
     <dimen name="dimen142">142dp</dimen>
 </resources>
