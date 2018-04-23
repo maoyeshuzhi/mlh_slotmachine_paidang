@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -11,9 +11,15 @@
         android:text="尺码"
         android:textColor="@color/color_1e1e1e"
         android:textSize="@dimen/dimen11sp" />
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/recycler"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"/>
+
+    <com.maoye.mlh_slotmachine.widget.BGAFlowLayout
+        android:id="@+id/flowlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen4"
+        android:paddingBottom="@dimen/dimen3"
+        android:paddingLeft="@dimen/dimen10"
+        android:paddingRight="@dimen/dimen10"
+        android:paddingTop="@dimen/dimen3" />
 
 </LinearLayout>

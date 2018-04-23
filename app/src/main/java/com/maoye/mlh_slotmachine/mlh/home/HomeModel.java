@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
+import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.mvp.BaseModel;
 import com.maoye.mlh_slotmachine.util.httputil.HttpResultFunc;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
@@ -25,5 +26,11 @@ public class HomeModel extends BaseModel {
         Observable observable = mServletApi.statistic(adId);
         toSubscribe(observable, observer);
     }
+
+    public void versionInfo(BaseObserver<BaseResult<VersionInfoBean>> observer){
+        Observable observable = mServletApi.versionInfo();
+        toSubscribe(observable, observer);
+    }
+
 
 }

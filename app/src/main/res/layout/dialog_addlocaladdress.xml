@@ -137,6 +137,7 @@
             android:layout_height="@dimen/dimen31"
             android:layout_marginLeft="@dimen/dimen14"
             android:layout_weight="1"
+            android:inputType="phone"
             android:background="@drawable/color969696_stroke"
             android:gravity="center_vertical"
             android:hint="请输入手机号码"

@@ -210,6 +210,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 stockNum = num;
                 stockNumTv.setText(String.format(STOCK_NUM, stockNum + ""));
                 switchStockState(stockNum);
+                specAdapter.addDatas(specList);
             }
         });
     }

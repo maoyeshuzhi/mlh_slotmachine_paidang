@@ -6,12 +6,15 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
-import com.maoye.mlh_slotmachine.bean.LoginBean;
+import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.mvp.BasePresenterImpl;
+import com.maoye.mlh_slotmachine.util.httputil.HttpResultFunc;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 
 public class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter {
@@ -69,6 +72,21 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
         }
 
         return resultList;
+    }
+
+    @Override
+    public void versionInfo() {
+      homeModel.versionInfo(new BaseObserver<BaseResult<VersionInfoBean>>(mView.getContext()) {
+          @Override
+          protected void onBaseNext(BaseResult<VersionInfoBean> data) {
+               mView.getVersionInfo(data.getData());
+          }
+
+          @Override
+          protected void onBaseError(Throwable t) {
+
+          }
+      });
     }
 
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.maoye.mlh_slotmachine.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -43,6 +44,7 @@ public class DialogAddLocalAddress extends AlertDialog {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_addlocaladdress);
+        ButterKnife.bind(this);
         setCanceledOnTouchOutside(false);
     }
 

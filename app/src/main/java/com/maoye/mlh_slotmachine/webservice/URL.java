@@ -5,6 +5,7 @@ package com.maoye.mlh_slotmachine.webservice;
  */
 
 public interface URL {
+    String VERSION_INFO = "/home/machine/getVersion";
     String GOODS_DETIALS = "/home/machine/goods?";
     String HOME_DATA = "home/machine/index?";
     String STATISTIC = "/home/machine/advertClick?";

@@ -7,7 +7,7 @@ package com.maoye.mlh_slotmachine.webservice;
 public class DevConfig extends EnvConfig {
     @Override
     public String getWebServiceBaseUrl() {
-        return "http://172.29.36.130/";
+        return "http://172.29.36.199/";
     }
 
     @Override

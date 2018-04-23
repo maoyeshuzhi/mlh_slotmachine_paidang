@@ -189,6 +189,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen15"
                             android:orientation="horizontal">
 
                             <TextView
@@ -273,6 +274,7 @@
                             android:id="@+id/goods_recycler"
                             android:layout_width="@dimen/dimen270"
                             android:layout_height="@dimen/dimen50" />
+
                         <ImageView
                             android:id="@+id/left_scroll_img"
                             android:layout_width="wrap_content"
@@ -283,10 +285,10 @@
                             android:src="@mipmap/rightarrowgoodsdetials" />
 
                         <ImageView
-                            android:layout_alignParentRight="true"
                             android:id="@+id/right_scroll_img"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:clickable="true"
                             android:src="@mipmap/rightarrowgoodsdetials" />

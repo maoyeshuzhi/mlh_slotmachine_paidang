@@ -42,7 +42,7 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
 
             @Override
             protected void onBaseError(Throwable t) {
-
+          LogUtils.e(t+"");
             }
         });
     }

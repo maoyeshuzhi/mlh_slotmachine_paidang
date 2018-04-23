@@ -1,6 +1,7 @@
 package com.maoye.mlh_slotmachine.mlh.home;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,11 +15,13 @@ import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
+import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
 import com.maoye.mlh_slotmachine.mlh.cart.CartActivity;
 import com.maoye.mlh_slotmachine.mlh.goodsdetials.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
+import com.maoye.mlh_slotmachine.util.VersionManagerUtil;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
 import com.maoye.mlh_slotmachine.widget.banner.ConvenientBanner;
 import com.maoye.mlh_slotmachine.widget.banner.holder.CBViewHolderCreator;
@@ -51,7 +54,6 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     private List<List<HomeBean.ListBeanX>> goodList = new ArrayList<>();
     private List<HomeBean.AdvertBean> advertBeanList = new ArrayList<>();
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
 
         });
-
+    // LogUtils.e( DeviceInfoUtil.getDeviceId(this));
         mPresenter.homedata("mlhj01");
     }
 
@@ -149,5 +151,18 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
     @Override
     public void onFail(Throwable throwable) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+      //  super.onBackPressed();
+    }
+
+    @Override
+    public void getVersionInfo(VersionInfoBean versionInfoBean) {
+        if(!versionInfoBean.getVersionName().equals(VersionManagerUtil.getVersion(this))){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        }
     }
 }

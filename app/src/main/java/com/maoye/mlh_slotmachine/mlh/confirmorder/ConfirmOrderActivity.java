@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -21,6 +22,7 @@ import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.GoodsItemBean;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
+import com.maoye.mlh_slotmachine.util.SoftUtil;
 import com.maoye.mlh_slotmachine.widget.DialogAddLocalAddress;
 import com.maoye.mlh_slotmachine.widget.DialogAddressCode;
 import com.maoye.mlh_slotmachine.widget.DialogIsAddAdress;
@@ -94,6 +96,7 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
     private DialogIsAddAdress addressDialog;
     private DialogAddLocalAddress addLocalAddressDialog;
     private DialogAddressCode addressCodeDialog;
+    private EditText editText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,8 +122,9 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
         }
         addressAdapter.addDatas(addressList);
         goodsAdapter.addDatas(goodsList);
-
+        editText = new EditText(getContext());
         addLocalAddressDialog = new DialogAddLocalAddress(getContext());
+        addLocalAddressDialog.setView(editText);
         addressCodeDialog = new DialogAddressCode(getContext(),"url");
         addressDialog = new DialogIsAddAdress(this);
         addressDialog.setOnItemChildClickListener(new OnItemChildClickListener() {
@@ -128,6 +132,7 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
             public void onChildItemClick(View view, int type, int position, Object data) {
                   if(type ==0){
                       addLocalAddressDialog.show();
+                      SoftUtil.showSoft(1, editText);
                   }else if(type ==1){
 
                     addressCodeDialog.show();

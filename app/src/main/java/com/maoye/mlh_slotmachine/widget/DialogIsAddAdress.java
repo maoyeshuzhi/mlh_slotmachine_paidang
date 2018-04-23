@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
-import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -23,6 +23,7 @@ import butterknife.OnClick;
  */
 
 public class DialogIsAddAdress extends AlertDialog implements RadioGroup.OnCheckedChangeListener {
+
     @BindView(R.id.localadd_rb)
     RadioButton localaddRb;
     @BindView(R.id.phoneadd_rb)
@@ -49,6 +50,7 @@ public class DialogIsAddAdress extends AlertDialog implements RadioGroup.OnCheck
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_isaddaddress);
+        ButterKnife.bind(this);
         setCanceledOnTouchOutside(false);
         rg.setOnCheckedChangeListener(this);
     }
@@ -61,8 +63,8 @@ public class DialogIsAddAdress extends AlertDialog implements RadioGroup.OnCheck
                 dismiss();
                 break;
             case R.id.confirm_tv:
-                if(onItemChildClickListener!=null)
-                    onItemChildClickListener.onChildItemClick(null,type,0,null);
+                if (onItemChildClickListener != null)
+                    onItemChildClickListener.onChildItemClick(null, type, 0, null);
                 dismiss();
                 break;
         }

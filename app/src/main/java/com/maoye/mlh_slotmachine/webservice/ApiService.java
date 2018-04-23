@@ -4,6 +4,7 @@ package com.maoye.mlh_slotmachine.webservice;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
+import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -56,5 +57,8 @@ public interface ApiService {
      */
    @GET(URL.CART_LIST)
     Observable<BaseResult> cartlist(@Query("device_no") String mobile);
+
+   @GET(URL.VERSION_INFO)
+    Observable<BaseResult<VersionInfoBean>> versionInfo();
 
 }

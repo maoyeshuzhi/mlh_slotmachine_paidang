@@ -163,14 +163,14 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     private boolean islogin() {
-   /*     if (loginType == MOBILE_LOIGN && !TextUtil.isMobileNo(phoneEt.getText() + "")) {
+        if (loginType == MOBILE_LOIGN && !TextUtil.isMobile(phoneEt.getText().toString())) {
             Toast.getInstance().toast(this, Constant.PLEASE_INPUT_RIGHT_PHONE, 2);
             return false;
         }
-        if (loginType == ACCOUNT_LOIGN && TextUtil.isMobileNo(accountEt.getText() + "")) {
+        if (loginType == ACCOUNT_LOIGN && !TextUtil.isMobile(accountEt.getText() + "")) {
             Toast.getInstance().toast(this, Constant.PLEASE_INPUT_RIGHT_PHONE, 2);
             return false;
-        }*/
+        }
         return true;
     }
 

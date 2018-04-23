@@ -7,13 +7,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.zxing.WriterException;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.util.CodeUtils;
 import com.maoye.mlh_slotmachine.util.DensityUtil;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -21,7 +21,6 @@ import butterknife.OnClick;
  */
 
 public class DialogAddressCode extends AlertDialog {
-
     @BindView(R.id.code_img)
     ImageView codeImg;
     @BindView(R.id.cancel_tv)
@@ -38,6 +37,7 @@ public class DialogAddressCode extends AlertDialog {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_addresscode);
+        ButterKnife.bind(this);
         setCanceledOnTouchOutside(false);
         try {
             codeImg.setImageBitmap(CodeUtils.createQRCode(linkUrl, DensityUtil.dip2px(getContext(), 138)));
