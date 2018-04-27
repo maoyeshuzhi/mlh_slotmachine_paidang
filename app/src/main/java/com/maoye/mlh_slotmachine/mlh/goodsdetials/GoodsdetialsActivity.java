@@ -1,6 +1,7 @@
 package com.maoye.mlh_slotmachine.mlh.goodsdetials;
 
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,6 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -24,18 +26,22 @@ import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.adapter.GoodsDetialsGoodsAdapter;
 import com.maoye.mlh_slotmachine.adapter.SpecAdapter;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
+import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
 import com.maoye.mlh_slotmachine.bean.SpecBean;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
 import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
+import com.maoye.mlh_slotmachine.mlh.cart.CartActivity;
 import com.maoye.mlh_slotmachine.mlh.login.LoginActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.DateUtils;
-import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
+import com.maoye.mlh_slotmachine.util.DensityUtil;
+import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.httputil.ImgGlideUtil;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
+import com.maoye.mlh_slotmachine.widget.BadgeView;
 import com.maoye.mlh_slotmachine.widget.CodePop;
 import com.maoye.mlh_slotmachine.widget.NoLineSpaceTextView;
 
@@ -101,12 +107,6 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     TextView addcartBottomTv;
     @BindView(R.id.immdl_buy_bottom_tv)
     TextView immdlBuyBottomTv;
-    public static final String START_TIME_HINT = "距离开始时间还有:%s";
-    public static final String END_TIME_HINT = "还剩:%s";
-    public static final String IMMDL_START = "即将开始";
-    public static final String ALREAD_SALE = "已售罄";
-    public static final String STOCK_NUM = "(库存还剩%s件)";
-    public static final String INTEGRAL = "本商品购买预计可积%s~%s分";
     @BindView(R.id.hint_bt)
     TextView hintBt;//不能购买按钮
     @BindView(R.id.hint_bottom_bt)
@@ -117,6 +117,20 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     ImageView cartImg;
     @BindView(R.id.scrollview)
     ScrollView scrollview;
+    @BindView(R.id.address_tv)
+    TextView addressTv;
+    @BindView(R.id.phone_tv)
+    TextView phoneTv;
+    @BindView(R.id.discription_wb)
+    WebView discriptionWb;
+    @BindView(R.id.address_ll)
+    LinearLayout addressLl;
+    @BindView(R.id.warmhint_bt)
+    TextView warmhintBt;
+    @BindView(R.id.address_bt)
+    TextView addressBt;
+    @BindView(R.id.detial_bt)
+    TextView detialBt;
     private CountDownTimer timer;
     private int timeState;//时间状态
     public static final int UN_START = 0;//未开始
@@ -131,6 +145,14 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     private int selectGoodsNum = 1;
     private PopupWindow codePop;
     private int picPisition;//商品图片位置
+    public static final String START_TIME_HINT = "距离开始时间还有:%s";
+    public static final String END_TIME_HINT = "还剩:%s";
+    public static final String IMMDL_START = "即将开始";
+    public static final String ALREAD_SALE = "已售罄";
+    public static final String STOCK_NUM = "(库存还剩%s件)";
+    public static final String INTEGRAL = "本商品购买预计可积%s~%s分";
+    private BadgeView badgeView;
+    private int cartNum;//购物车商品数量
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -143,6 +165,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     }
 
     protected void initData() {
+        badgeView = new BadgeView(this);
         initWebSetting();
         goodsPicAdapter = new GoodsDetialsGoodsAdapter();
         goodsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -171,17 +194,35 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
+
+        WebSettings goodsDetialsWebSettings = discriptionWb.getSettings();
+        //  goodsDetialsWebSettings.setSupportZoom(true); // 支持缩放
+        goodsDetialsWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        goodsDetialsWebSettings.setLoadWithOverviewMode(true);//设置webview加载的页面的模式
+        goodsDetialsWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        goodsDetialsWebSettings.setDomStorageEnabled(true);
+        goodsDetialsWebSettings.setJavaScriptEnabled(true);
+        goodsDetialsWebSettings.setBlockNetworkImage(false); // 解决图片不显示
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            goodsDetialsWebSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
     }
 
 
     @Override
     public void onSuccess(Object o) {
         bean = (GoodsDetialsBean) o;
-        String WEB_STYLE = "<style>*p{padding:0px;}</style>";
-        String warmHintWebContent = bean.getDescription().replace("<img", "<img style='max-width:100%;height:auto;'");
+        cartNum = bean.getCartNum();
+        badgeView.setTargetView(cartImg);
+        badgeView.setBadgeCount(cartNum);
+        badgeView.setBadgeMargin(0, 0, 15, 0);
+        String WEB_STYLE = "<style>*{padding:0;margin:0;  color:#505050 !important; font-size:14px !important;} p {font-size:14px;}</style>";
+        String warmHintWebContent = bean.getNotice().replace("<img", "<img style='max-width:100%;height:auto;'");
+        String CONTENT_STYLE = "<style>*{padding:0;margin:0; } img {line-height:0px;}</style>";
+        String goodsDetialsWebContent = bean.getDescription().replace("<img", "<img style='max-width:100%;height:auto;margin:0;padding:0;'");
         if (warmHintWebContent != null)
             hintWebview.loadDataWithBaseURL(null, WEB_STYLE + warmHintWebContent, "text/html", "utf-8", null);
-
+        discriptionWb.loadDataWithBaseURL(null, CONTENT_STYLE + goodsDetialsWebContent, "text/html", "utf-8", null);
         ImgGlideUtil.displayImage(bean.getDefault_image(), goodsImg, true);
         goodTitleTv.setText(bean.getName() + "");
         timehandler();
@@ -191,10 +232,13 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         spannableString.setSpan(strikethroughSpan, 0, spannableString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         oldpriceTv.setText(spannableString);
         stockNum = bean.getStock();
+        addressTv.setText(String.format("地址：%s", bean.getService_address() + ""));
+        phoneTv.setText(String.format("电话：%s", bean.getService_phone() + ""));
         stockNumTv.setText(String.format(STOCK_NUM, bean.getStock() + ""));
-        if (bean.getDelivery_type() == 1) {
+        if (bean.getDelivery_type() == 1) {//自提
             expressTv.setVisibility(View.INVISIBLE);
-        } else if (bean.getDelivery_type() == 2) {
+        } else if (bean.getDelivery_type() == 2) {//快递
+            addressLl.setVisibility(View.GONE);
             expressTv.setVisibility(View.INVISIBLE);
         }
         integralTv.setText(String.format(INTEGRAL, bean.getMin_points() + "", bean.getMax_points() + ""));
@@ -210,6 +254,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 stockNum = num;
                 stockNumTv.setText(String.format(STOCK_NUM, stockNum + ""));
                 switchStockState(stockNum);
+                salepriceTv.setText(String.format(Constant.PRICE_FORMAT, mPresenter.getPrice(bean.getSpec_list())));
                 specAdapter.addDatas(specList);
             }
         });
@@ -278,34 +323,6 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
 
     /**
-     * 毫秒转化
-     *
-     * @param ms
-     * @return
-     */
-    public static String formatTime(long ms) {
-
-        int ss = 1000;
-        int mi = ss * 60;
-        int hh = mi * 60;
-        int dd = hh * 24;
-
-        long day = ms / dd;
-        long hour = (ms - day * dd) / hh;
-        long minute = (ms - day * dd - hour * hh) / mi;
-        long second = (ms - day * dd - hour * hh - minute * mi) / ss;
-        long milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
-
-        String strDay = day < 10 ? "0" + day : "" + day; //天
-        String strHour = hour < 10 ? "0" + hour : "" + hour;//小时
-        String strMinute = minute < 10 ? "0" + minute : "" + minute;//分钟
-        String strSecond = second < 10 ? "0" + second : "" + second;//秒
-        String strMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;//毫秒
-        strMilliSecond = milliSecond < 100 ? "0" + strMilliSecond : "" + strMilliSecond;
-        return strDay + "天" + strHour + "小时" + strMinute + " 分钟 " + strSecond + " 秒";
-    }
-
-    /**
      * 活动未开始倒计时
      *
      * @param secTime
@@ -314,7 +331,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         timer = new CountDownTimer(secTime - 10, 1000) {
             @Override
             public void onTick(long l) {
-                titmeTv.setText(String.format(START_TIME_HINT, formatTime(l)));
+                titmeTv.setText(String.format(START_TIME_HINT, mPresenter.formatTime(l)));
             }
 
             @Override
@@ -347,7 +364,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         timer = new CountDownTimer(secTime - 10, 1000) {
             @Override
             public void onTick(long l) {
-                titmeTv.setText(String.format(END_TIME_HINT, formatTime(l)));
+                titmeTv.setText(String.format(END_TIME_HINT, mPresenter.formatTime(l)));
             }
 
             @Override
@@ -369,8 +386,16 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         }
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        int hintWebview_y = hintWebview.getTop();
+        int addressLl_y = addressLl.getTop();
+        int discriptionWb_y = discriptionWb.getTop();
+        int cc = discriptionWb.getTop();
+    }
 
-    @OnClick({R.id.subtract_tv, R.id.add_tv, R.id.left_scroll_img, R.id.right_scroll_img, R.id.addcart_tv, R.id.immdl_buy_tv, R.id.phonebuy_tv, R.id.back, R.id.addcart_bottom_tv, R.id.immdl_buy_bottom_tv, R.id.top_imgbt})
+    @OnClick({R.id.subtract_tv, R.id.add_tv, R.id.left_scroll_img, R.id.right_scroll_img, R.id.addcart_tv, R.id.immdl_buy_tv, R.id.phonebuy_tv, R.id.back, R.id.addcart_bottom_tv, R.id.immdl_buy_bottom_tv, R.id.top_imgbt, R.id.cart_img, R.id.warmhint_bt, R.id.address_bt, R.id.detial_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.subtract_tv:
@@ -400,7 +425,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                     Toast.getInstance().toast(this, "商品不能超过库存数", 2);
                     return;
                 }
-                mPresenter.addCart(DeviceInfoUtil.getDeviceId(this), bean.getId(), 0, Integer.parseInt(selectGoodsNumTv.getText().toString()));
+                mPresenter.addCart(bean.getId(), mPresenter.getSpecId(bean.getSpec_list()), Integer.parseInt(selectGoodsNumTv.getText().toString()));
 
                 break;
 
@@ -428,17 +453,61 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 break;
             case R.id.immdl_buy_tv:
             case R.id.immdl_buy_bottom_tv:
-                openActivity(LoginActivity.class);
+                SkipConfirmActivity();
+
                 break;
             case R.id.top_imgbt:
                 //返回顶部
                 scrollview.scrollBy(0, 0);
                 break;
+            case R.id.cart_img:
+                openActivity(CartActivity.class);
+                break;
+
+            case R.id.warmhint_bt:
+                //滑到温馨提示
+                int[] position = new int[2];
+                hintWebview.getLocationInWindow(position);
+                scrollview.smoothScrollTo(0, position[1] - DensityUtil.getViewHeight(hintWebview) / 2);
+                break;
+            case R.id.address_bt:
+                //滑到取货地址
+                int[] addressPosition = new int[2];
+                addressLl.getLocationInWindow(addressPosition);
+                scrollview.smoothScrollTo(0, addressPosition[1] - DensityUtil.getViewHeight(addressLl) / 2);
+                break;
+            case R.id.detial_bt:
+                //滑到详情
+                int[] detialPosition = new int[2];
+                discriptionWb.getLocationInWindow(detialPosition);
+                scrollview.smoothScrollTo(0, detialPosition[1] - DensityUtil.getViewHeight(discriptionWb) / 2);
+                break;
         }
+    }
+
+    private void SkipConfirmActivity() {
+        ArrayList<GoodsBean> list = new ArrayList<>();
+        GoodsBean paramsBean = new GoodsBean();
+        paramsBean.setNum(Integer.valueOf(selectGoodsNumTv.getText() + ""));
+        paramsBean.setPrice(mPresenter.getPrice(bean.getSpec_list()));
+        paramsBean.setProduct_id(bean.getId());
+        paramsBean.setOld_price(bean.getOld_price());
+        paramsBean.setProduct_image(bean.getDefault_image());
+        paramsBean.setSpec_id(mPresenter.getSpecId(bean.getSpec_list()));
+        paramsBean.setProduct_name(bean.getName());
+        paramsBean.setSpec_vals(mPresenter.getSpec_vals(bean.getSpec_list()));
+        list.add(paramsBean);
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constant.FROM, Constant.FROM_BUY);
+        intent.putExtra(Constant.KEY, list);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
     public void addCardSucc(BaseResult baseResult) {
+        ++cartNum;
+        badgeView.setBadgeCount(cartNum);
         Toast.getInstance().toast(this, "添加成功！购物车等您亲", 2);
     }
 

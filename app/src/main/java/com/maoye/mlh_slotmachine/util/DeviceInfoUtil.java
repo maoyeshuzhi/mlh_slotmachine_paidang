@@ -84,11 +84,16 @@ public class DeviceInfoUtil {
 
     /**
      * 获取wlan芯片的mac地址，作为设备唯一ID
-     * @param context
      * @return
      */
+    public static String getDeviceId(){
+        WifiManager wm = (WifiManager)MyContext.appContext.getSystemService(MyContext.appContext.WIFI_SERVICE);
+        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+        return m_szWLANMAC;
+    }
+
     public static String getDeviceId(Context context){
-        WifiManager wm = (WifiManager)context.getSystemService(context.WIFI_SERVICE);
+        WifiManager wm = (WifiManager)MyContext.appContext.getSystemService(context.WIFI_SERVICE);
         String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
         return m_szWLANMAC;
     }

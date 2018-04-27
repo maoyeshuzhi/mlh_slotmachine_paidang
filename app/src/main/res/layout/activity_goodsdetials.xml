@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -7,10 +8,6 @@
 
     <include layout="@layout/layout_head" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen1"
-        android:background="@color/color_fcfcfc" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -263,7 +260,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen50">
+                    android:layout_height="@dimen/dimen50"
+                    android:layout_marginTop="@dimen/dimen15">
 
                     <RelativeLayout
                         android:id="@+id/goods_img_rl"
@@ -362,14 +360,123 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen0.5"
+                    android:layout_height="@dimen/dimen1"
+                    android:layout_marginLeft="@dimen/dimen28"
                     android:layout_marginRight="@dimen/dimen14"
-                    android:background="@drawable/dotline_1e1e1e" />
+                    android:layout_marginTop="@dimen/dimen6"
+                    android:background="@drawable/dotline_1e1e1e"
+                    android:layerType="software" />
 
-                <WebView
-                    android:id="@+id/hint_webview"
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <WebView
+                        android:id="@+id/hint_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen28"
+                        android:layout_marginRight="@dimen/dimen150"
+                        android:layout_marginTop="@dimen/dimen14"
+                        android:scrollbars="none" />
+
+                    <TextView
+                        android:id="@+id/warmhint_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dimen14"
+                        android:layout_marginTop="@dimen/dimen20"
+                        android:background="@mipmap/hinticon"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="温馨提示"
+                        android:textSize="@dimen/dimen9sp" />
+
+                    <TextView
+                        android:id="@+id/address_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/warmhint_bt"
+                        android:layout_marginRight="@dimen/dimen14"
+                        android:layout_marginTop="@dimen/dimen10"
+                        android:background="@mipmap/hinticon"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="取货地址"
+                        android:textSize="@dimen/dimen9sp" />
+
+                    <TextView
+                        android:id="@+id/detial_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/address_bt"
+                        android:layout_marginRight="@dimen/dimen14"
+                        android:layout_marginTop="@dimen/dimen10"
+                        android:background="@mipmap/hinticon"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="商品详情"
+                        android:textSize="@dimen/dimen9sp" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/address_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen27"
+                    android:layout_marginTop="@dimen/dimen18"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="去获取地址"
+                        android:textColor="@color/color_1e1e1e"
+                        android:textSize="@dimen/dimen18sp" />
+
+                    <TextView
+                        android:id="@+id/address_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen28"
+                        android:textColor="@color/color_1e1e1e"
+                        android:textSize="@dimen/dimen10sp"
+                        tools:text="地址 : 深圳茂业天地华强北店1F" />
+
+                    <TextView
+                        android:id="@+id/phone_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen28"
+                        android:textColor="@color/color_1e1e1e"
+                        android:textSize="@dimen/dimen10sp"
+                        tools:text="电话 : 0755-83997319" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen1"
+                    android:layout_marginLeft="@dimen/dimen27"
+                    android:layout_marginRight="@dimen/dimen14"
+                    android:layout_marginTop="@dimen/dimen5"
+                    android:background="@drawable/dotline_1e1e1e"
+                    android:layerType="software" />
+
+                <WebView
+                    android:id="@+id/discription_wb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen13"
                     android:scrollbars="none" />
             </LinearLayout>
         </ScrollView>
@@ -381,7 +488,10 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/dimen132"
-            android:src="@mipmap/top" />
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@null"
+            android:src="@drawable/top" />
+
 
         <ImageView
             android:id="@+id/cart_img"
@@ -390,6 +500,8 @@
             android:layout_above="@+id/top_imgbt"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/dimen11"
+            android:layout_marginRight="@dimen/dimen15"
+            android:clickable="true"
             android:src="@mipmap/selectedgoods" />
     </RelativeLayout>
 

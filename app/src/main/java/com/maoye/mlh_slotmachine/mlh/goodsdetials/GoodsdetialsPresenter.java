@@ -1,9 +1,12 @@
 package com.maoye.mlh_slotmachine.mlh.goodsdetials;
 
+import android.text.TextUtils;
+
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
 import com.maoye.mlh_slotmachine.bean.SpecBean;
 import com.maoye.mlh_slotmachine.mvp.BasePresenterImpl;
+import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
 import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
 
@@ -12,6 +15,9 @@ import java.util.List;
 
 public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContract.View> implements GoodsdetialsContract.Presenter {
     private GoodsDetialsModel goodsDetialsModel;
+    public int specId;
+    public String spec_vals;
+    public String price = "0.00";
 
     public GoodsdetialsPresenter() {
         this.goodsDetialsModel = new GoodsDetialsModel();
@@ -33,8 +39,8 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
     }
 
     @Override
-    public void addCart(String deviceNo, int id, int specId, int num) {
-        goodsDetialsModel.addCart(deviceNo, id, specId, num, new BaseObserver<BaseResult>(mView.getContext()) {
+    public void addCart( int id, int specId, int num) {
+        goodsDetialsModel.addCart(id, specId, num, new BaseObserver<BaseResult>(mView.getContext()) {
             @Override
             protected void onBaseNext(BaseResult data) {
                 mView.addCardSucc(data);
@@ -45,6 +51,49 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
           LogUtils.e(t+"");
             }
         });
+    }
+
+    @Override
+    public int getSpecId( List<GoodsDetialsBean.SpecListBean> spec_list) {
+        return specId !=0?specId:spec_list.get(0).getId();
+    }
+
+
+    /**
+     * 毫秒转化
+     *
+     * @param ms
+     * @return
+     */
+    @Override
+    public String formatTime(long ms) {
+        int ss = 1000;
+        int mi = ss * 60;
+        int hh = mi * 60;
+        int dd = hh * 24;
+        long day = ms / dd;
+        long hour = (ms - day * dd) / hh;
+        long minute = (ms - day * dd - hour * hh) / mi;
+        long second = (ms - day * dd - hour * hh - minute * mi) / ss;
+        long milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
+
+        String strDay = day < 10 ? "0" + day : "" + day; //天
+        String strHour = hour < 10 ? "0" + hour : "" + hour;//小时
+        String strMinute = minute < 10 ? "0" + minute : "" + minute;//分钟
+        String strSecond = second < 10 ? "0" + second : "" + second;//秒
+        String strMilliSecond = milliSecond < 10 ? "0" + milliSecond : "" + milliSecond;//毫秒
+        strMilliSecond = milliSecond < 100 ? "0" + strMilliSecond : "" + strMilliSecond;
+        return strDay + "天" + strHour + "小时" + strMinute + " 分钟 " + strSecond + " 秒";
+    }
+
+    @Override
+    public String getSpec_vals(List<GoodsDetialsBean.SpecListBean> spec_list) {
+        return TextUtils.isEmpty(spec_vals)?spec_list.get(0).getSpec_vals()+"":spec_vals;
+    }
+
+    @Override
+    public String getPrice(List<GoodsDetialsBean.SpecListBean> spec_list) {
+        return  price.equals("0.00")?spec_list.get(0).getPrice()+"":price;
     }
 
 
@@ -76,6 +125,8 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
         return list;
     }
 
+
+
     public int getStockNum(List<SpecBean> specList,int type,int position,GoodsDetialsBean bean,int oldStockNum) {
         int stockNum = 0;
         List<SpecBean.SpecItemListBean> pecItemList = specList.get(type).getPecItemList();
@@ -101,10 +152,17 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
         for (GoodsDetialsBean.SpecListBean specListBean : bean.getSpec_list()) {
             if(specListBean.getSpec_vals().equals(substring)) {
                 stockNum = specListBean.getStock();
+                specId = specListBean.getId();
+                spec_vals = specListBean.getSpec_vals();
+                price = specListBean.getPrice();
                 isallSelect = false;
             }
         }
+
         if(isallSelect){
+            spec_vals = bean.getSpec_list().get(0).getSpec_vals();
+            specId = bean.getSpec_list().get(0).getId();
+            price = bean.getSpec_list().get(0).getPrice();
             stockNum = oldStockNum;
         }
         return stockNum;

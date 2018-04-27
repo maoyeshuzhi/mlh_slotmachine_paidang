@@ -21,6 +21,7 @@
             android:button="@drawable/deliverytypeselect"
             android:checked="true"
             android:gravity="center"
+
             android:paddingBottom="@dimen/dimen15"
             android:paddingLeft="@dimen/dimen10"
             android:paddingTop="@dimen/dimen15"
@@ -34,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:button="@drawable/deliverytypeselect"
-            android:checked="true"
             android:gravity="center"
             android:paddingBottom="@dimen/dimen15"
             android:paddingLeft="@dimen/dimen10"

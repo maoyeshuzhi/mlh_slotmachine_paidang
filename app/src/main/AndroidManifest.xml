@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".mlh.goodsdetials.GoodsdetialsActivity" />
-        <activity android:name=".mlh.login.LoginActivity" />
+        <activity android:name=".mlh.login.LoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".mlh.confirmorder.ConfirmOrderActivity" />
         <activity android:name=".mlh.cart.CartActivity" />
     </application>

@@ -19,6 +19,7 @@
         android:textSize="@dimen/dimen8sp" />
 
     <ImageView
+        android:id="@+id/cart_arrowline_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/dimen6"
-        android:drawableTop="@mipmap/a2"
+        android:drawableTop="@mipmap/b2"
         android:gravity="center"
         android:text="②拍下商品"
         android:textColor="@color/color_323232"

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
 import com.maoye.mlh_slotmachine.util.MyContext;
 
 /**
@@ -15,6 +16,7 @@ public class MlhApplication extends Application{
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+        MyContext.setContext(this);
 
     }
 

@@ -66,7 +66,7 @@ public class GoodsDetialsBean {
      * activity_end_time : 04月30日00点
      * is_index : 1
      */
-
+private int cartNum;
     private int id;
     private int shop_id;
     private int comp_id;
@@ -123,6 +123,14 @@ public class GoodsDetialsBean {
     private List<String> spec_name_list;
     private List<ImageListBean> image_list;
     private List<SpecListBean> spec_list;
+
+    public int getCartNum() {
+        return cartNum;
+    }
+
+    public void setCartNum(int cartNum) {
+        this.cartNum = cartNum;
+    }
 
     public int getId() {
         return id;

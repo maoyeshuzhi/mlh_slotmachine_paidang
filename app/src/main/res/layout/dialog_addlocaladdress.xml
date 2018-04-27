@@ -37,17 +37,66 @@
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen14sp" />
 
-        <EditText
-            android:id="@+id/province_et"
+        <LinearLayout
+            android:id="@+id/address_ll"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen31"
             android:layout_marginLeft="@dimen/dimen14"
             android:layout_weight="1"
-            android:background="@drawable/color969696_stroke"
-            android:hint="选择省市区"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/dimen8"
-            android:textSize="@dimen/dimen13sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/province_tv"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen31"
+                android:background="@drawable/color969696_stroke"
+                android:hint="选择省"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dimen8"
+                android:textSize="@dimen/dimen13sp" />
+
+            <View
+                android:layout_width="@dimen/dimen10"
+                android:layout_height="@dimen/dimen0.5"
+                android:layout_gravity="center"
+                android:background="@color/color_969696" />
+
+            <TextView
+                android:id="@+id/city_tv"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen31"
+                android:background="@drawable/color969696_stroke"
+                android:hint="选择市"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dimen8"
+                android:textSize="@dimen/dimen13sp" />
+            <View
+                android:layout_width="@dimen/dimen10"
+                android:layout_height="@dimen/dimen0.5"
+                android:layout_gravity="center"
+                android:background="@color/color_969696" />
+
+            <TextView
+                android:id="@+id/district_tv"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen31"
+                android:background="@drawable/color969696_stroke"
+                android:hint="选择市"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dimen8"
+                android:textSize="@dimen/dimen13sp" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -72,8 +121,10 @@
             android:layout_height="@dimen/dimen60"
             android:layout_marginLeft="@dimen/dimen14"
             android:layout_weight="1"
+            android:inputType="text"
             android:background="@drawable/color969696_stroke"
             android:gravity="top"
+            android:textCursorDrawable="@drawable/shap_cursor"
             android:hint="建议您如实填写详细收货地址，例如街道名称，门牌号
 码，楼层和房间号等信息"
             android:paddingLeft="@dimen/dimen8"
@@ -104,6 +155,9 @@
             android:layout_height="@dimen/dimen31"
             android:layout_marginLeft="@dimen/dimen14"
             android:layout_weight="1"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:includeFontPadding="false"
             android:background="@drawable/color969696_stroke"
             android:gravity="center_vertical"
             android:hint="长度不超过25个字符"
@@ -137,10 +191,12 @@
             android:layout_height="@dimen/dimen31"
             android:layout_marginLeft="@dimen/dimen14"
             android:layout_weight="1"
-            android:inputType="phone"
             android:background="@drawable/color969696_stroke"
             android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:layout_gravity="center"
             android:hint="请输入手机号码"
+            android:inputType="phone"
             android:maxLength="25"
             android:maxLines="1"
             android:paddingLeft="@dimen/dimen8"
@@ -175,7 +231,7 @@
             android:background="@color/color_dd2450"
             android:clickable="true"
             android:gravity="center"
-            android:text="@string/close_str"
+            android:text="@string/save_str"
             android:textColor="@color/white"
             android:textSize="@dimen/dimen16sp" />
     </LinearLayout>

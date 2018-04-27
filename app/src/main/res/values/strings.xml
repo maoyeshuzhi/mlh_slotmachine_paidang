@@ -27,4 +27,10 @@
     <string name="confirm_str">确定</string>
     <string name="add_attress_str">创建地址</string>
     <string name="close_str">关闭</string>
+    <string name="save_str">保存</string>
+    <string name="wechat_max_hint_str">请打开【微信】的付款码\n对准机器下方扫码口</string>
+    <string name="ali_max_hint_str">请打开【支付宝】的付款码\n对准机器下方扫码口</string>
+    <string name="ali_min_hint_str">使用支付宝付款</string>
+    <string name="wechat_min_hint_str">使用微信付款</string>
+
 </resources>

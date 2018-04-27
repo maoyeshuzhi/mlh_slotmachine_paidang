@@ -25,8 +25,8 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
     }
 
     @Override
-    public void homedata(String deviceNo) {
-        homeModel.getHomeData(deviceNo, new BaseObserver<BaseResult<HomeBean>>(mView.getContext()) {
+    public void homedata() {
+        homeModel.getHomeData( new BaseObserver<BaseResult<HomeBean>>(mView.getContext()) {
             @Override
             protected void onBaseNext(BaseResult<HomeBean> data) {
                 mView.onSuccess(data.getData());

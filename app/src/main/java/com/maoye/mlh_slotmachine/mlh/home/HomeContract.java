@@ -15,7 +15,7 @@ public class HomeContract {
     }
 
     interface  Presenter extends BasePresenter<View> {
-         void  homedata(String deviceNo);
+         void  homedata();
          void  statisticClickNum(int adId);
         List<List<HomeBean.ListBeanX>> handerGoodsData(List<HomeBean.ListBeanX> listBeanXES);
         void  versionInfo();

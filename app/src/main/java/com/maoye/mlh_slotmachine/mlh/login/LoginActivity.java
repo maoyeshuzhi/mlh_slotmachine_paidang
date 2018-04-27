@@ -1,6 +1,7 @@
 package com.maoye.mlh_slotmachine.mlh.login;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -15,11 +16,14 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
+import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.mlh.confirmorder.ConfirmOrderActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.TextUtil;
 import com.maoye.mlh_slotmachine.util.Toast;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +69,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     protected void initData() {
+
         rg.setOnCheckedChangeListener(this);
         accountEt.addTextChangedListener(accountTextWatcher);
         pswEt.addTextChangedListener(pswTextWatcher);
@@ -137,7 +142,11 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @Override
     public void onSuccess(Object o) {
-        openActivity(ConfirmOrderActivity.class);
+        Intent intent = new Intent(this, ConfirmOrderActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(Constant.KEY, getIntent().getSerializableExtra(Constant.KEY));
+        intent.putExtra(Constant.FROM, getIntent().getIntExtra(Constant.FROM, 0));
+        startActivity(intent);
     }
 
     @Override

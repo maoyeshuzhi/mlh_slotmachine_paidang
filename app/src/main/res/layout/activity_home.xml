@@ -42,6 +42,7 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="438dp"
+                android:layout_marginTop="@dimen/dimen8"
                 app:canLoop="true" />
 
             <ImageView
@@ -76,10 +77,10 @@
 
                 <ImageView
                     android:id="@+id/cart_img"
-                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen28"
+                    android:clickable="true"
                     android:src="@mipmap/selectedgoods" />
 
                 <LinearLayout

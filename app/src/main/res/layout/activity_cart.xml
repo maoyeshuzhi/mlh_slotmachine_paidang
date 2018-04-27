@@ -38,15 +38,41 @@
             android:textColor="@color/color_646464"
             android:textSize="@dimen/dimen13sp" />
 
-        <TextView
-            android:id="@+id/selectnum_tv"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen49"
             android:layout_marginLeft="@dimen/dimen28"
             android:layout_weight="1"
-            android:text="已选商品0件"
-            android:textColor="@color/color_646464"
-            android:textSize="@dimen/dimen13sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen49"
+                android:gravity="center_vertical"
+                android:text="已选商品"
+
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+
+            <TextView
+                android:id="@+id/selectnum_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen49"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen49"
+                android:gravity="center_vertical"
+                android:text="件"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen13sp" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/clearcart_tv"
@@ -63,9 +89,9 @@
 
         <TextView
             android:id="@+id/delete_tv"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen49"
+            android:clickable="true"
             android:drawableLeft="@mipmap/delete_icon"
             android:drawablePadding="@dimen/dimen6"
             android:gravity="center"
@@ -121,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="合计：￥2055.00"
+                android:text="合计：￥0.00"
                 android:textColor="@color/color_1e1e1e"
                 android:textSize="@dimen/dimen19sp" />
 

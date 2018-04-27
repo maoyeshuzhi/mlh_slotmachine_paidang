@@ -21,6 +21,7 @@ import com.maoye.mlh_slotmachine.mlh.cart.CartActivity;
 import com.maoye.mlh_slotmachine.mlh.goodsdetials.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
+import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
 import com.maoye.mlh_slotmachine.util.VersionManagerUtil;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
 import com.maoye.mlh_slotmachine.widget.banner.ConvenientBanner;
@@ -83,11 +84,14 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
 
         });
-    // LogUtils.e( DeviceInfoUtil.getDeviceId(this));
-        mPresenter.homedata("mlhj01");
+
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.homedata();
+    }
 
     @OnClick({R.id.quick_pay_bt, R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img})
     public void onClick(View view) {

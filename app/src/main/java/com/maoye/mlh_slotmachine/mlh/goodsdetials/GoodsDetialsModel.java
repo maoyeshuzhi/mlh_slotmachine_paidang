@@ -18,8 +18,8 @@ public class GoodsDetialsModel extends BaseModel{
         toSubscribe(observable,observer);
     }
 
-    public void addCart(String deviceNo,int id,int specId,int num ,Observer<BaseResult>observer){
-        Observable observable = mServletApi.addCart(deviceNo,id,specId,num).map(new HttpResultFunc());
+    public void addCart(int id,int specId,int num ,Observer<BaseResult>observer){
+        Observable observable = mServletApi.addCart(id,specId,num).map(new HttpResultFunc());
         toSubscribe(observable,observer);
 
     }

@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:id="@+id/item_ll"
+    android:layout_width="@dimen/dimen152"
+    android:layout_height="@dimen/dimen70"
     android:layout_marginRight="@dimen/dimen12"
-    android:orientation="horizontal">
+    android:background="@mipmap/address_select"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="@dimen/dimen152"
-        android:layout_height="@dimen/dimen70"
-        android:background="@mipmap/address_select">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/address_tv"
             android:layout_width="wrap_content"
+            android:ellipsize="end"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen10"
             android:layout_marginTop="@dimen/dimen10"
@@ -23,7 +27,8 @@
 
         <TextView
             android:id="@+id/name_tv"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen4"
             android:layout_marginTop="@dimen/dimen10"
@@ -33,26 +38,27 @@
             android:textColor="@color/color_646464"
             android:textSize="@dimen/dimen9sp" />
 
-        <View
-            android:id="@+id/line"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen1"
-            android:layout_below="@+id/name_tv"
-            android:layout_marginLeft="@dimen/dimen10"
-            android:layout_marginRight="@dimen/dimen10"
-            android:layout_marginTop="@dimen/dimen4"
-            android:background="@drawable/dotline_1e1e1e" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen1"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:layout_marginRight="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen4"
+        android:background="@drawable/dotline_1e1e1e" />
 
-        <TextView
-            android:id="@+id/address_name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line"
-            android:layout_marginLeft="@dimen/dimen10"
-            android:layout_marginRight="@dimen/dimen10"
-            android:layout_marginTop="@dimen/dimen9"
-            android:text="罗湖 深南东路4003号世界金融中心A座36楼  13506781234"
-            android:textColor="@color/color_646464"
-            android:textSize="@dimen/dimen9sp" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/detial_address_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:layout_marginRight="@dimen/dimen10"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="3"
+        android:text="罗湖 深南东路4003号世界金融中心A座36楼  13506781234"
+        android:textColor="@color/color_646464"
+        android:textSize="@dimen/dimen9sp" />
+
 </LinearLayout>

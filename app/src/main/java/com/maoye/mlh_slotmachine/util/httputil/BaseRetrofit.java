@@ -1,11 +1,13 @@
 package com.maoye.mlh_slotmachine.util.httputil;
 
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.maoye.mlh_slotmachine.util.httputil.cookies.ClearableCookieJar;
+import com.maoye.mlh_slotmachine.util.httputil.cookies.PersistentCookieJar;
+import com.maoye.mlh_slotmachine.util.httputil.cookies.cache.SetCookieCache;
+import com.maoye.mlh_slotmachine.util.httputil.cookies.persistence.SharedPrefsCookiePersistor;
 import com.maoye.mlh_slotmachine.util.MyContext;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.CustomGsonConverterFactory;
 import com.maoye.mlh_slotmachine.webservice.ApiService;
@@ -18,7 +20,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
 
@@ -32,18 +33,16 @@ public class BaseRetrofit {
     private static final int DEFAULT_TIME = 10;    //默认超时时间
     private final long RETRY_TIMES = 1;   //重订阅次数
     protected Retrofit retrofit;
-    private ApiService apiService;
+    public ApiService apiService;
+    private ClearableCookieJar cookieJar;
 
     //构造方法私有
     protected BaseRetrofit() {
-
+        cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyContext.appContext));
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(EnvConfig.instance().getWebServiceBaseUrl())
                 .client(getHttpClient())
-       /*      .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                */
                 .addConverterFactory(CustomGsonConverterFactory.create(new Gson()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -72,24 +71,20 @@ public class BaseRetrofit {
     }
 
     private void generateTokenHttpClient(OkHttpClient.Builder httpClient) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(String message) {
-                Log.d("jsonUrl", message);
-            }
-        });
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //缓存路径
         String cacheFile = MyContext.appContext.getCacheDir() + "/http";
         Cache cache = new Cache(new File(cacheFile), SIZE_OF_CACHE);
 
         httpClient
-               // .cache(cache)
+                .cookieJar(cookieJar)
+             // .cache(cache)
                 .writeTimeout(20000L, TimeUnit.MILLISECONDS)
                 .connectTimeout(40000L, TimeUnit.MILLISECONDS)
                 .readTimeout(20000L, TimeUnit.MILLISECONDS)
-               // .addInterceptor(new com.maoye.mlh_slotmachine.util.httputil.cache.CacheInterceptor())
-                .addInterceptor(loggingInterceptor).build();
+                .addInterceptor(new AddParamInterceptor())
+              // .addInterceptor(new com.maoye.mlh_slotmachine.util.httputil.cache.CacheInterceptor())
+               .build();
+
     }
 
     //在访问HttpMethods时创建单例

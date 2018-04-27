@@ -44,17 +44,18 @@ public class CodePop extends PopupWindow {
         //设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        timer = new CountDownTimer(15*1000,1000) {
+        timer = new CountDownTimer(15000,1000) {
             @Override
             public void onTick(long l) {
-                timeTv.setText(String.format(TIME_HINT,l));
+                timeTv.setText(String.format(TIME_HINT,l/1000));
             }
 
             @Override
             public void onFinish() {
                 dismiss();
             }
-        }.start();
+        };
+        timer.start();
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override

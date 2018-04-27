@@ -17,8 +17,8 @@ import io.reactivex.Observable;
 
 public class HomeModel extends BaseModel {
 
-    public void getHomeData(String deviceNo, BaseObserver<BaseResult<HomeBean>> observer) {
-        Observable observable = mServletApi.homedata(deviceNo).map(new HttpResultFunc<HomeBean>());
+    public void getHomeData( BaseObserver<BaseResult<HomeBean>> observer) {
+        Observable observable = mServletApi.homedata().map(new HttpResultFunc<HomeBean>());
         toSubscribe(observable, observer);
     }
 

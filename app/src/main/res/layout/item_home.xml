@@ -33,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen175"
                 android:scaleType="fitXY"
-
                 android:src="@mipmap/default_image" />
         </FrameLayout>
 
@@ -44,6 +43,8 @@
             android:layout_marginLeft="@dimen/dimen12"
             android:layout_marginTop="@dimen/dimen6"
             android:text="明星变色润唇膏 Dior/迪奥"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen9sp" />
 
@@ -54,7 +55,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:paddingTop="@dimen/dimen4"
+                android:paddingTop="@dimen/dimen2"
                 android:id="@+id/price_tv"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -67,7 +68,7 @@
                 android:id="@+id/buy_phone_ll"
                 android:clickable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingTop="@dimen/dimen4"
+                android:paddingTop="@dimen/dimen2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

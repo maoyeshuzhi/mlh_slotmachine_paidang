@@ -4,6 +4,7 @@ package com.maoye.mlh_slotmachine.mlh.login;
 
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.mvp.BasePresenterImpl;
+import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
 
 

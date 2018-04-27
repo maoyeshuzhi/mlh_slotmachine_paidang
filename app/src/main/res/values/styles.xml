@@ -16,4 +16,10 @@
         <!-- 是否平均分配每一行的剩余水平方向的空白区域给该行的标签 -->
         <attr name="fl_isDistributionWhiteSpacing" format="boolean" />
     </declare-styleable>
+
+    <!-- popWindow动画-->
+    <style name="table_pop" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/context_menu_enter</item>
+        <item name="android:windowExitAnimation">@anim/context_menu_exit</item>
+    </style>
 </resources>

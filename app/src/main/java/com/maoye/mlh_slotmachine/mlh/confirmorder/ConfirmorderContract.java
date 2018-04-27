@@ -1,14 +1,12 @@
 package com.maoye.mlh_slotmachine.mlh.confirmorder;
 
-import android.content.Context;
 
+import com.maoye.mlh_slotmachine.bean.AddressBean;
+import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.mvp.BasePresenter;
 import com.maoye.mlh_slotmachine.mvp.BaseView;
+import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
 
-/**
- * MVPPlugin
- *  邮箱 784787081@qq.com
- */
 
 public class ConfirmorderContract {
     interface View extends BaseView {
@@ -16,6 +14,6 @@ public class ConfirmorderContract {
     }
 
     interface  Presenter extends BasePresenter<View> {
-        
+
     }
 }
