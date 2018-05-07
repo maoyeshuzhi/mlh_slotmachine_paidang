@@ -16,7 +16,7 @@
         android:layout_marginLeft="@dimen/dimen33"
         android:layout_marginTop="@dimen/dimen40"
         android:includeFontPadding="false"
-        android:text="购物车商品（共20件）"
+        android:text="购物车商品（共0件）"
         android:textColor="@color/black"
         android:textSize="@dimen/dimen16sp" />
 

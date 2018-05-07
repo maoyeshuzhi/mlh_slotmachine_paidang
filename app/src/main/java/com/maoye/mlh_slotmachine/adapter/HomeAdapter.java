@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.google.zxing.WriterException;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
-import com.maoye.mlh_slotmachine.mlh.goodsdetials.GoodsdetialsActivity;
+import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.util.AnimUtil;
 import com.maoye.mlh_slotmachine.util.CodeUtils;
 import com.maoye.mlh_slotmachine.util.Constant;
@@ -69,6 +69,18 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
                 viewAnim(isShowCode, viewHolder);
             }
         });
+
+
+        viewHolder.goodsImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, GoodsdetialsActivity.class);
+                intent.putExtra(Constant.GOODS_ID,data.getProduct_id());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mContext.startActivity(intent);
+            }
+        });
+
         viewHolder.codeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,10 +115,10 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
     private void viewAnim(final boolean[] isShowCode, final HomeVH viewHolder) {
         isShowCode[0] = !isShowCode[0];
         if (isShowCode[0]) {
-            ((HomeVH) viewHolder).codeImg.setVisibility(View.VISIBLE);
+            ( viewHolder).codeImg.setVisibility(View.VISIBLE);
             AnimUtil.FlipAnimatorXViewShow(viewHolder.goodsImg, viewHolder.codeImg, ROTATE_TIEM);
         } else {
-            ((HomeVH) viewHolder).codeImg.setVisibility(View.INVISIBLE);
+            ( viewHolder).codeImg.setVisibility(View.INVISIBLE);
             AnimUtil.FlipAnimatorXViewShow(viewHolder.codeImg, viewHolder.goodsImg, ROTATE_TIEM);
         }
         if (isShowCode[0]) {

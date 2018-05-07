@@ -52,7 +52,7 @@
             android:layout_marginTop="@dimen/dimen4"
             android:layout_toRightOf="@+id/img"
             android:includeFontPadding="false"
-            android:text="共3件商品"
+            android:text="共0件商品"
             android:textColor="@color/color_969696"
             android:textSize="@dimen/dimen11sp" />
 
@@ -99,94 +99,305 @@
         android:layout_marginLeft="@dimen/dimen30"
         android:layout_marginRight="@dimen/dimen30"
         android:background="@color/color_b4b4b4" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen60">
-
-        <ImageView
-            android:id="@+id/pay_max_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/weichat_max" />
-
-        <TextView
-            android:id="@+id/pay_max_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/pay_max_img"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dimen14"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/wechat_max_hint_str"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimen15sp" />
-
-        <ImageView
-            android:id="@+id/min_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/pay_max_img"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dimen84"
-            android:clickable="true"
-            android:src="@mipmap/ali_min" />
-
-        <TextView
-            android:id="@+id/min_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/min_img"
-            android:layout_marginRight="@dimen/dimen73"
-            android:clickable="true"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:paddingTop="@dimen/dimen15"
-            android:text="使用支付宝付款"
-            android:textColor="@color/color_969696"
-            android:textSize="@dimen/dimen8sp" />
-    </RelativeLayout>
-
+    <!--    扫码支付界面-->
     <LinearLayout
+        android:id="@+id/pay_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/bottom_left_img"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/weipay" />
+            android:layout_marginTop="@dimen/dimen60">
+
+            <ImageView
+                android:id="@+id/pay_max_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/weichat_max" />
+
+            <TextView
+                android:id="@+id/pay_max_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pay_max_img"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dimen14"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/wechat_max_hint_str"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen15sp" />
+
+            <ImageView
+                android:id="@+id/min_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/pay_max_img"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen84"
+                android:clickable="true"
+                android:src="@mipmap/ali_min" />
+
+            <TextView
+                android:id="@+id/min_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/min_img"
+                android:layout_marginRight="@dimen/dimen73"
+                android:clickable="true"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingTop="@dimen/dimen15"
+                android:text="使用支付宝付款"
+                android:textColor="@color/color_969696"
+                android:textSize="@dimen/dimen8sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/bottom_left_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/weipay" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/dimen17"
+                android:paddingRight="@dimen/dimen17"
+                android:text=">"
+                android:textColor="@color/color_1e1e1e"
+                android:textSize="@dimen/dimen20sp" />
+
+            <ImageView
+                android:id="@+id/bottom_right_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/weixin_scan_icon" />
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/code_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:imeOptions="actionSend"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen9" />
+    </LinearLayout>
+    <!--支付失败界面-->
+    <LinearLayout
+        android:id="@+id/fail_layyout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="@dimen/dimen17"
-            android:paddingRight="@dimen/dimen17"
-            android:text=">"
-            android:textColor="@color/color_1e1e1e"
-            android:textSize="@dimen/dimen20sp" />
+            android:layout_marginTop="@dimen/dimen95"
+            android:drawablePadding="@dimen/dimen30"
+            android:drawableTop="@mipmap/payfail_icon"
+            android:gravity="center"
+            android:text="扫码失败，请重新选择支付方式"
+            android:textColor="@color/color_323232"
+            android:textSize="@dimen/dimen23sp" />
 
-        <ImageView
-            android:id="@+id/bottom_right_img"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen80"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen180"
+                android:layout_marginLeft="@dimen/dimen16"
+                android:layout_weight="1"
+                android:background="@drawable/color969696_stroke"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="本机支付"
+                    android:textColor="@color/color_1e1e1e"
+                    android:textSize="@dimen/dimen18sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dimen16"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/weichatpay_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/dimen4"
+                        android:drawableTop="@mipmap/wechat_icon"
+                        android:gravity="center"
+                        android:onClick="onClickView"
+                        android:text="微信支付"
+                        android:textColor="@color/color_1e1e1e"
+                        android:textSize="@dimen/dimen16" />
+
+                    <TextView
+                        android:id="@+id/alipay_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen15"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/dimen4"
+                        android:drawableTop="@mipmap/alipay_icon"
+                        android:gravity="center"
+                        android:onClick="onClickView"
+                        android:text="支付宝支付"
+                        android:textColor="@color/color_1e1e1e"
+                        android:textSize="@dimen/dimen16" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen180"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginRight="@dimen/dimen15"
+                android:gravity="center"
+                android:text="或"
+                android:textColor="@color/color_1e1e1e"
+                android:textSize="@dimen/dimen20sp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen180"
+                android:layout_marginRight="@dimen/dimen16"
+                android:layout_weight="1"
+                android:background="@color/color_f0f0f0"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机扫码支付"
+                    android:textColor="@color/color_1e1e1e"
+                    android:textSize="@dimen/dimen18sp" />
+
+                <LinearLayout
+                    android:id="@+id/wechat_code_ll"
+                    android:layout_width="@dimen/dimen200"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen8"
+                    android:paddingTop="@dimen/dimen8">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen35"
+                        android:layout_height="@dimen/dimen35"
+                        android:layout_marginLeft="@dimen/dimen20"
+                        android:src="@mipmap/wechat_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen16"
+                        android:text="微信二维码"
+                        android:textColor="@color/color_1e1e1e"
+                        android:textSize="@dimen/dimen14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ali_code_ll"
+                    android:layout_width="@dimen/dimen200"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen8"
+                    android:paddingTop="@dimen/dimen8">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen35"
+                        android:layout_height="@dimen/dimen35"
+                        android:layout_marginLeft="@dimen/dimen20"
+                        android:src="@mipmap/alipay_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dimen16"
+                        android:text="支付宝二维码"
+                        android:textColor="@color/color_1e1e1e"
+                        android:textSize="@dimen/dimen14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <!--支付中界面-->
+    <LinearLayout
+        android:id="@+id/paying_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="@dimen/dimen65"
+            android:layout_height="@dimen/dimen65"
+            android:layout_gravity="center"
+            android:indeterminateDuration="400" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/weixin_scan_icon" />
-
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen33"
+            android:gravity="center"
+            android:text="@string/paying_hint_str"
+            android:textColor="@color/color_dd2450"
+            android:textSize="@dimen/dimen30sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen40"
-        android:gravity="right"
         android:layout_marginBottom="@dimen/dimen34"
+        android:gravity="right"
         android:orientation="horizontal">
 
         <TextView
@@ -211,5 +422,4 @@
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen16sp" />
     </LinearLayout>
-
 </LinearLayout>

@@ -1,5 +1,11 @@
 package com.maoye.mlh_slotmachine.widget.banner.holder;
 
-public interface CBViewHolderCreator<Holder> {
-	public Holder createHolder();
+import android.view.View;
+
+import com.bigkoo.convenientbanner.holder.*;
+
+
+public interface CBViewHolderCreator {
+	com.bigkoo.convenientbanner.holder.Holder createHolder(View itemView);
+	int getLayoutId();
 }

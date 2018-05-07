@@ -6,20 +6,26 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+
     <include layout="@layout/layout_head" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen1"
+        android:background="@color/color_b4b4b4" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-
         <ScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:overScrollMode="@null"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,6 +52,7 @@
                         android:layout_toRightOf="@id/goods_img"
                         android:includeFontPadding="false"
                         android:lineSpacingMultiplier="0.9"
+                        android:layout_marginTop="@dimen/dimen15"
                         android:text="明星变色润唇膏 Dior/迪奥"
                         android:textColor="@color/color_1e1e1e"
                         android:textSize="@dimen/dimen17sp" />
@@ -125,6 +132,7 @@
                                 android:layout_width="@dimen/dimen33"
                                 android:layout_height="@dimen/dimen10"
                                 android:layout_below="@+id/saleprice_tv"
+                                android:layout_marginBottom="@dimen/dimen9"
                                 android:layout_marginTop="@dimen/dimen12"
                                 android:background="@drawable/color1e1e1e_stroke"
                                 android:gravity="center"
@@ -137,6 +145,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dimen10"
                                 android:layout_below="@+id/saleprice_tv"
+                                android:layout_marginBottom="@dimen/dimen9"
                                 android:layout_marginLeft="@dimen/dimen7"
                                 android:layout_marginTop="@dimen/dimen12"
                                 android:layout_toRightOf="@+id/deliverway_tv"
@@ -152,6 +161,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dimen10"
                                 android:layout_below="@+id/saleprice_tv"
+                                android:layout_marginBottom="@dimen/dimen9"
                                 android:layout_marginLeft="@dimen/dimen12"
                                 android:layout_marginTop="@dimen/dimen12"
                                 android:layout_toRightOf="@+id/pickup_tv"
@@ -168,10 +178,11 @@
                                 android:layout_height="@dimen/dimen10"
                                 android:layout_alignParentRight="true"
                                 android:layout_below="@+id/saleprice_tv"
+                                android:layout_marginBottom="@dimen/dimen9"
                                 android:layout_marginRight="@dimen/dimen2"
                                 android:layout_marginTop="@dimen/dimen12"
                                 android:gravity="center"
-                                android:text="本商品购买预计可积84~120分"
+                                android:text="本商品购买预计可积0~0分"
                                 android:textColor="@color/color_646464"
                                 android:textSize="@dimen/dimen8sp" />
                         </RelativeLayout>
@@ -187,12 +198,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen15"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="购买数量"
+                                android:layout_gravity="center"
                                 android:textColor="@color/color_1e1e1e"
                                 android:textSize="@dimen/dimen11sp" />
                             <!--  件数加减-->
@@ -200,6 +213,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dimen13"
                                 android:layout_marginLeft="@dimen/dimen13"
+                                android:layout_gravity="center"
                                 android:background="@drawable/color646464_stroke"
                                 android:orientation="horizontal">
 
@@ -250,6 +264,7 @@
                                 android:id="@+id/stock_num_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/dimen6"
                                 android:text="(库存还剩20件)"
                                 android:textColor="@color/color_1e1e1e"
@@ -260,18 +275,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen50"
-                    android:layout_marginTop="@dimen/dimen15">
+                    android:layout_height="@dimen/dimen53"
+                    android:layout_marginBottom="@dimen/dimen38"
+                    android:layout_marginTop="@dimen/dimen14">
 
                     <RelativeLayout
                         android:id="@+id/goods_img_rl"
                         android:layout_width="@dimen/dimen270"
-                        android:layout_height="@dimen/dimen50">
+                        android:layout_height="@dimen/dimen53">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/goods_recycler"
+                            android:layout_marginLeft="@dimen/dimen8"
                             android:layout_width="@dimen/dimen270"
-                            android:layout_height="@dimen/dimen50" />
+                            android:layout_height="@dimen/dimen53" />
 
                         <ImageView
                             android:id="@+id/left_scroll_img"
@@ -352,7 +369,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen28"
-                    android:layout_marginTop="@dimen/dimen40"
                     android:includeFontPadding="false"
                     android:text="@string/warmprompt_str"
                     android:textColor="@color/color_1e1e1e"
@@ -367,64 +383,14 @@
                     android:background="@drawable/dotline_1e1e1e"
                     android:layerType="software" />
 
-
-                <RelativeLayout
+                <WebView
+                    android:id="@+id/hint_webview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <WebView
-                        android:id="@+id/hint_webview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen28"
-                        android:layout_marginRight="@dimen/dimen150"
-                        android:layout_marginTop="@dimen/dimen14"
-                        android:scrollbars="none" />
-
-                    <TextView
-                        android:id="@+id/warmhint_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dimen14"
-                        android:layout_marginTop="@dimen/dimen20"
-                        android:background="@mipmap/hinticon"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:text="温馨提示"
-                        android:textSize="@dimen/dimen9sp" />
-
-                    <TextView
-                        android:id="@+id/address_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/warmhint_bt"
-                        android:layout_marginRight="@dimen/dimen14"
-                        android:layout_marginTop="@dimen/dimen10"
-                        android:background="@mipmap/hinticon"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:text="取货地址"
-                        android:textSize="@dimen/dimen9sp" />
-
-                    <TextView
-                        android:id="@+id/detial_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/address_bt"
-                        android:layout_marginRight="@dimen/dimen14"
-                        android:layout_marginTop="@dimen/dimen10"
-                        android:background="@mipmap/hinticon"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:text="商品详情"
-                        android:textSize="@dimen/dimen9sp" />
-                </RelativeLayout>
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen28"
+                    android:layout_marginRight="@dimen/dimen150"
+                    android:layout_marginTop="@dimen/dimen14"
+                    android:scrollbars="none" />
 
                 <LinearLayout
                     android:id="@+id/address_ll"
@@ -438,7 +404,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                        android:text="去获取地址"
+                        android:text="取货地址"
                         android:textColor="@color/color_1e1e1e"
                         android:textSize="@dimen/dimen18sp" />
 
@@ -481,33 +447,76 @@
             </LinearLayout>
         </ScrollView>
 
-        <ImageButton
-            android:id="@+id/top_imgbt"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/dimen132"
             android:layout_marginRight="@dimen/dimen15"
-            android:background="@null"
-            android:src="@drawable/top" />
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/warmhint_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen10"
+                android:background="@mipmap/hinticon"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="温馨提示"
+                android:textSize="@dimen/dimen9sp" />
 
-        <ImageView
-            android:id="@+id/cart_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/top_imgbt"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/dimen11"
-            android:layout_marginRight="@dimen/dimen15"
-            android:clickable="true"
-            android:src="@mipmap/selectedgoods" />
+            <TextView
+                android:id="@+id/address_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen10"
+                android:background="@mipmap/hinticon"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="取货地址"
+                android:textSize="@dimen/dimen9sp" />
+
+            <TextView
+                android:id="@+id/detial_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen20"
+                android:background="@mipmap/hinticon"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="商品详情"
+                android:textSize="@dimen/dimen9sp" />
+
+            <ImageView
+                android:id="@+id/cart_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/top_imgbt"
+                android:layout_marginBottom="@dimen/dimen11"
+                android:clickable="true"
+                android:src="@mipmap/selectedgoods" />
+
+            <ImageButton
+                android:id="@+id/top_imgbt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/top" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen40">
+        android:layout_height="@dimen/dimen45">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen1"
+            android:background="@color/color_b4b4b4" />
 
         <TextView
             android:id="@+id/back"

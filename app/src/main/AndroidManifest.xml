@@ -5,7 +5,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.usb.host" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <application
         android:name="com.maoye.mlh_slotmachine.MlhApplication"
         android:allowBackup="true"
@@ -14,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".mlh.home.HomeActivity"
+        <activity android:name=".view.homeactivity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,11 +27,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mlh.goodsdetials.GoodsdetialsActivity" />
-        <activity android:name=".mlh.login.LoginActivity"
+        <activity android:name=".view.goodsdetialsactivity.GoodsdetialsActivity" />
+        <activity android:name=".view.loginactivity.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".mlh.confirmorder.ConfirmOrderActivity" />
-        <activity android:name=".mlh.cart.CartActivity" />
+        <activity android:name=".view.confirmorderactivity.ConfirmOrderActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.cartactivity.CartActivity" />
+        <activity android:name=".view.h5activity.H5Activity" />
+        <activity android:name=".view.adactivity.AdActivity" />
+        <activity android:name=".view.printreceiptactivity.PrintReceiptActivity" />
+
+        <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+            android:resource="@xml/device_filter" />
+
+        <receiver android:name=".receiver.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.ShutdownBroadcastReceiver" >
+            <intent-filter >
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

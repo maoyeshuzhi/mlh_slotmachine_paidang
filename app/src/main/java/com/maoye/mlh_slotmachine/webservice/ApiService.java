@@ -2,12 +2,15 @@ package com.maoye.mlh_slotmachine.webservice;
 
 
 import com.maoye.mlh_slotmachine.bean.AddressBean;
+import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.FeeBean;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
+import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.bean.OrderIdBean;
+import com.maoye.mlh_slotmachine.bean.PayCodeBean;
 import com.maoye.mlh_slotmachine.bean.ProvinceBean;
 import com.maoye.mlh_slotmachine.bean.SubmitOrderBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
@@ -123,7 +126,7 @@ public interface ApiService {
 
     /**
      * 删除购物车
-     *
+     *  type 2
      * @return
      */
     @GET(URL.DELETE_CART_ALL)
@@ -154,5 +157,57 @@ public interface ApiService {
      */
     @POST(URL.SUBMIT_ORDER)
     Observable<BaseResult<OrderIdBean>> submitOrder(@Body SubmitOrderBean submitOrderBean);
+
+    /**
+     * 订单详情
+     * @param order_id
+     * @return
+     */
+    @GET(URL.ORDER_DETIALS)
+    Observable<BaseResult<OrderDetialBean>> orderDetials(@Query("order_id") int order_id);
+
+    /**
+     * 广告轮播
+     * @param type 1:登录界面  2：支付成功界面 3.屏保
+     * @return
+     */
+    @GET(URL.ADVERT)
+    Observable<BaseResult<List<AdvertBean>>> advert(@Query("type") int type);
+
+
+    /**
+     * 打印机状态
+     * @param paper_status 0 打印机正常 1:无纸 2：打印机异常
+     * @return
+     */
+    @GET(URL.PRINTER_STATUS)
+    Observable<BaseResult> printer_status(@Query("paper_status") int paper_status);
+
+    /**
+     * 设备是否关机
+     * @param machine_status 0-关机1开机
+     * @return
+     */
+    @GET(URL.PRINTER_STATUS)
+    Observable<BaseResult> deveice_status(@Query("machine_status") int machine_status);
+
+    /**
+     * 获取支付二维码
+     * @param pay_type  支付类型 1-微信|2-支付宝
+     * @param order_id 订单ID
+     * @return
+     */
+    @GET(URL.PAY_CODE)
+    Observable<BaseResult<PayCodeBean>> pay_code(@Query("pay_type") int pay_type , @Query("order_id") int order_id);
+
+    /**
+     * 扫码支付
+     * @param pay_type  授权码以1开头为微信，否则为支付宝
+     * @param order_id   订单id
+     * @param auth_code  授权码
+     * @return
+     */
+    @GET(URL.SCAN_PAY)
+    Observable<BaseResult> scanPay(@Query("pay_type") int pay_type , @Query("order_id") int order_id,@Query("auth_code") String auth_code);
 
 }

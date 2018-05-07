@@ -3,6 +3,7 @@ package com.maoye.mlh_slotmachine.util.httputil.subscribers;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonWriter;
+import com.maoye.mlh_slotmachine.util.LogUtils;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -30,11 +31,13 @@ public class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBo
 
     @Override
     public RequestBody convert(T value) throws IOException {
+
         okio.Buffer buffer = new okio.Buffer();
         Writer writer = new OutputStreamWriter(buffer.outputStream(), UTF_8);
         JsonWriter jsonWriter = gson.newJsonWriter(writer);
         adapter.write(jsonWriter, value);
         jsonWriter.close();
-        return RequestBody.create(MEDIA_TYPE, buffer.readByteString());
+        RequestBody requestBody = RequestBody.create(MEDIA_TYPE, buffer.readByteString());
+        return requestBody;
     }
 }

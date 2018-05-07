@@ -1,10 +1,16 @@
 package com.maoye.mlh_slotmachine.widget.banner.holder;
 
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public interface Holder<T>{
-    View createView(Context context);
-    void UpdateUI(Context context, int position, T data);
+public abstract class Holder<T> extends RecyclerView.ViewHolder {
+    public Holder(View itemView) {
+        super(itemView);
+        initView(itemView);
+    }
+
+    protected abstract void initView(View itemView);
+
+    public abstract void updateUI(T data);
 }

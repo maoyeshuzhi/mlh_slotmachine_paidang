@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 
 
 import com.maoye.mlh_slotmachine.widget.StatusBarView;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -32,15 +32,15 @@ import java.lang.reflect.Method;
  */
 
 public class StatusBarUtils {
-    public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
+/*    public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
 
-    /**
+    *//**
      * 设置状态栏字体图标为深色，需要MIUIV6以上
      *
      * @param window 需要设置的窗口
      * @param dark   是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回true
-     */
+     *//*
     public static boolean MIUISetStatusBarLightMode(Window window, boolean dark) {
         boolean result = false;
         if (window != null) {
@@ -64,14 +64,14 @@ public class StatusBarUtils {
         return result;
     }
 
-    /**
+    *//**
      * 设置状态栏图标为深色和魅族特定的文字风格
      * 可以用来判断是否为Flyme用户
      *
      * @param window 需要设置的窗口
      * @param dark   是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回true
-     */
+     *//*
     public static boolean FlymeSetStatusBarLightMode(Window window, boolean dark) {
         boolean result = false;
         if (window != null) {
@@ -112,10 +112,10 @@ public class StatusBarUtils {
         }
     }
 
-    /**
+    *//**
      *
      * @param activity
-     */
+     *//*
     public static void fullScreen(Activity activity){
         View decorView = activity.getWindow().getDecorView();
         int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -123,12 +123,12 @@ public class StatusBarUtils {
     }
 
 
-    /**
+    *//**
      * 沉浸式
      *
      * @param activity
      * @param type     0表示白色
-     */
+     *//*
     public static void immersion(Activity activity, int type) {
         if (Build.VERSION.SDK_INT >= 21) {
             if (type != 0) {
@@ -215,9 +215,9 @@ public class StatusBarUtils {
     }
 
 
-    /**
+    *//**
      * 改变通知栏颜色
-     */
+     *//*
     public static void setActionBar(Activity context, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(context, true);
@@ -241,14 +241,14 @@ public class StatusBarUtils {
         win.setAttributes(winParams);
     }
 
-    /**
+    *//**
      * 使状态栏半透明
      * <p>
      * 适用于图片作为背景的界面,此时需要图片填充到状态栏
      *
      * @param activity       需要设置的activity
      * @param statusBarAlpha 状态栏透明度
-     */
+     *//*
     public static void setTranslucent(Activity activity, int statusBarAlpha) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return;
@@ -257,11 +257,11 @@ public class StatusBarUtils {
         addTranslucentView(activity, statusBarAlpha);
     }
 
-    /**
+    *//**
      * 为有 ImageView 的Activity 添加半透明状态栏
      *
      * @param activity 需要设置的Activity
-     */
+     *//*
     private static void setTranslucentForImageView(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             activity.getWindow()
@@ -272,12 +272,12 @@ public class StatusBarUtils {
         }
     }
 
-    /**
+    *//**
      * 添加半透明矩形条
      *
      * @param activity       需要设置的 activity
      * @param statusBarAlpha 透明值
-     */
+     *//*
     private static void addTranslucentView(Activity activity, int statusBarAlpha) {
         ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         // 移除半透明矩形,以免叠加
@@ -288,12 +288,12 @@ public class StatusBarUtils {
         }
     }
 
-    /**
+    *//**
      * 创建半透明矩形 View
      *
      * @param alpha 透明值
      * @return 半透明 View
-     */
+     *//*
     private static StatusBarView createTranslucentStatusBarView(Activity activity, int alpha) {
         // 绘制一个和状态栏一样高的矩形
         StatusBarView statusBarView = new StatusBarView(activity);
@@ -304,23 +304,23 @@ public class StatusBarUtils {
         return statusBarView;
     }
 
-    /**
+    *//**
      * 获取状态栏高度
      *
      * @param context context
      * @return 状态栏高度
-     */
+     *//*
     private static int getStatusBarHeight(Context context) {
         // 获得状态栏高度
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         return context.getResources().getDimensionPixelSize(resourceId);
     }
 
-    /**
+    *//**
      * 设置状态栏全透明
      *
      * @param activity 需要设置的activity
-     */
+     *//*
     public static void setTransparent(Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return;
@@ -329,9 +329,9 @@ public class StatusBarUtils {
         setRootView(activity);
     }
 
-    /**
+    *//**
      * 使状态栏透明
-     */
+     *//*
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private static void transparentStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -344,13 +344,13 @@ public class StatusBarUtils {
         }
     }
 
-    /**
+    *//**
      * 使状态栏透明(5.0以上半透明效果,不建议使用)
      * <p>
      * 适用于图片作为背景的界面,此时需要图片填充到状态栏
      *
      * @param activity 需要设置的activity
-     */
+     *//*
     public static void setTranslucentDiff(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 设置状态栏透明
@@ -359,12 +359,12 @@ public class StatusBarUtils {
         }
     }
 
-    /**
+    *//**
      * 设置根布局参数
-     */
+     *//*
     private static void setRootView(Activity activity) {
         ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
         rootView.setFitsSystemWindows(true);
         rootView.setClipToPadding(true);
-    }
+    }*/
 }

@@ -55,15 +55,15 @@
 
         <TextView
             android:id="@+id/addAddress_tv"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen32"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:drawableLeft="@mipmap/addicon"
             android:drawablePadding="@dimen/dimen4"
-            android:paddingBottom="@dimen/dimen18"
             android:gravity="center"
+            android:paddingBottom="@dimen/dimen18"
             android:paddingTop="@dimen/dimen9"
             android:text="添加收货地址"
             android:textColor="@color/color_1e1e1e"
@@ -95,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/dimen18"
+
         android:layout_weight="1" />
 
 

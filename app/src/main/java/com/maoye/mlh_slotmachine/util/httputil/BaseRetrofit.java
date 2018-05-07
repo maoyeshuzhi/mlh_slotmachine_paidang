@@ -14,9 +14,13 @@ import com.maoye.mlh_slotmachine.webservice.ApiService;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 
 import java.io.File;
+import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -49,17 +53,29 @@ public class BaseRetrofit {
         apiService = retrofit.create(ApiService.class);
     }
 
-    protected <T> void toSubscribe(io.reactivex.Observable<T> observable, io.reactivex.Observer<T> observer) {
+    public  <T> void toSubscribe(io.reactivex.Observable<T> observable, io.reactivex.Observer<T> observer) {
         observable.subscribeOn(Schedulers.io())    // 指定subscribe()发生在IO线程
                 .observeOn(AndroidSchedulers.mainThread())  // 指定Subscriber的回调发生在io线程
-              //  .timeout(DEFAULT_TIME, TimeUnit.SECONDS)    //重连间隔时间
-                .retry(RETRY_TIMES)
-//          .repeatWhen(new Function<Observable<Object>, ObservableSource<?>>() {
-//                @Override
-//                public ObservableSource<?> apply(@NonNull Observable<Object> objectObservable) throws Exception {
-//                    return null;
-//                }
-//           })
+                .subscribe(observer);   //订阅
+    }
+
+    /**
+     *
+     * @param time 重复请求次数
+     * @param observable
+     * @param observer
+     * @param <T>
+     */
+    protected <T> void toSubscribe(int time, io.reactivex.Observable<T> observable, io.reactivex.Observer<T> observer) {
+        observable.subscribeOn(Schedulers.io())    // 指定subscribe()发生在IO线程
+                .observeOn(AndroidSchedulers.mainThread())  // 指定Subscriber的回调发生在io线程
+                .retry(time)
+                .repeatWhen(new Function<io.reactivex.Observable<Object>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(@NonNull io.reactivex.Observable<Object> objectObservable) throws Exception {
+                        return null;
+                    }
+                })
                 .subscribe(observer);   //订阅
     }
 
@@ -77,13 +93,13 @@ public class BaseRetrofit {
 
         httpClient
                 .cookieJar(cookieJar)
-             // .cache(cache)
-                .writeTimeout(20000L, TimeUnit.MILLISECONDS)
-                .connectTimeout(40000L, TimeUnit.MILLISECONDS)
-                .readTimeout(20000L, TimeUnit.MILLISECONDS)
+                // .cache(cache)
+                .writeTimeout(1, TimeUnit.MINUTES)
+                .connectTimeout(2, TimeUnit.MINUTES)
+                .readTimeout(1, TimeUnit.MINUTES)
                 .addInterceptor(new AddParamInterceptor())
-              // .addInterceptor(new com.maoye.mlh_slotmachine.util.httputil.cache.CacheInterceptor())
-               .build();
+                // .addInterceptor(new com.maoye.mlh_slotmachine.util.httputil.cache.CacheInterceptor())
+                .build();
 
     }
 

@@ -125,9 +125,9 @@
             android:background="@drawable/color969696_stroke"
             android:gravity="top"
             android:textCursorDrawable="@drawable/shap_cursor"
-            android:hint="建议您如实填写详细收货地址，例如街道名称，门牌号
-码，楼层和房间号等信息"
+            android:hint="@string/address_hint_str"
             android:paddingLeft="@dimen/dimen8"
+            android:paddingRight="@dimen/dimen8"
             android:paddingTop="@dimen/dimen8"
             android:textSize="@dimen/dimen13sp" />
     </LinearLayout>
@@ -139,12 +139,13 @@
         android:layout_marginLeft="@dimen/dimen30"
         android:layout_marginRight="@dimen/dimen25"
         android:layout_marginTop="@dimen/dimen14"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen31"
-            android:gravity="top"
+            android:gravity="center_vertical"
             android:text="* 收货人姓名"
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen14sp" />
@@ -157,14 +158,12 @@
             android:layout_weight="1"
             android:inputType="text"
             android:layout_gravity="center"
-            android:includeFontPadding="false"
             android:background="@drawable/color969696_stroke"
             android:gravity="center_vertical"
             android:hint="长度不超过25个字符"
             android:maxLength="25"
             android:maxLines="1"
             android:paddingLeft="@dimen/dimen8"
-            android:paddingTop="@dimen/dimen8"
             android:textSize="@dimen/dimen13sp" />
     </LinearLayout>
 
@@ -200,7 +199,6 @@
             android:maxLength="25"
             android:maxLines="1"
             android:paddingLeft="@dimen/dimen8"
-            android:paddingTop="@dimen/dimen8"
             android:textSize="@dimen/dimen13sp" />
     </LinearLayout>
 

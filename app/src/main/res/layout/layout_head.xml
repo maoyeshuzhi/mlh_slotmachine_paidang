@@ -16,6 +16,6 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/home_title_str"
-        android:textColor="@color/black"
+        android:textColor="@color/color_1e1e1e"
         android:textSize="@dimen/dimen20sp" />
 </RelativeLayout>

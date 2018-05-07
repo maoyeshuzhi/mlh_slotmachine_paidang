@@ -8,6 +8,24 @@ public class OrderIdBean {
 
     private String order_no;
     private int order_id;
+    private String sap_id;
+    private String order_amount;
+
+    public String getSap_id() {
+        return sap_id;
+    }
+
+    public void setSap_id(String sap_id) {
+        this.sap_id = sap_id;
+    }
+
+    public String getOrder_amount() {
+        return order_amount;
+    }
+
+    public void setOrder_amount(String order_amount) {
+        this.order_amount = order_amount;
+    }
 
     public String getOrder_no() {
         return order_no;

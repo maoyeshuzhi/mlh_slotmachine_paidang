@@ -21,4 +21,13 @@ public interface URL {
     String DELETE_CART_ALL = "home/machine/delCart";
     String FREIGHT = "home/m/getFreight";//运费计算
     String SUBMIT_ORDER = "home/machine/orderSubmit";
+    String ORDER_DETIALS = "home/machine/orderGet";//订单详情
+    String ADVERT = "home/machine/getAdvert";
+    String PRINTER_STATUS = "home/machine/updateMachine";//打印机,设备状态
+    String PAY_CODE = "home/machine/get-qrcode-pay-url";
+    String ORDER_DETIAL_H5 = "user/order-info?id=";//h5订单详情接口
+    String BILL = "jfinal-order/invoice?parmId=99&type=true&msg=";
+    String VIP_CN = "http://weixin.qq.com/r/WzilvZrE2selrd7e921J";
+    String SCAN_PAY = "home/machine/goto-micro-pay";
+
 }

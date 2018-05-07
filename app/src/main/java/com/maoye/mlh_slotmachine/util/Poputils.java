@@ -1,7 +1,9 @@
 package com.maoye.mlh_slotmachine.util;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,23 +33,14 @@ public class Poputils {
         final WindowManager.LayoutParams params = activity.getWindow().getAttributes();
         params.alpha = 0.7f;
         activity.getWindow().setAttributes(params);
-        View rootview = LayoutInflater.from(activity).inflate(parent, null);
         view.setFocusable(true);
         view.setFocusableInTouchMode(true);
+        View rootview = LayoutInflater.from(activity).inflate(parent, null);
         pop.setBackgroundDrawable(new BitmapDrawable());
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    pop.dismiss();
-                }
-                return false;
-            }
-        });
+  
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                pop.dismiss();
                 backgroundAlpha(1f, activity);
             }
         });

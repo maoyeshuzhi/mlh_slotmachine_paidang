@@ -258,12 +258,12 @@ public final class DateUtils {
     /**
      * 判断给定字符串时间是否为今日
      *
-     * @param opDate
+     * @param opTime 时间戳
      * @return boolean
      */
-    public static boolean isToday(String opDate) {
+    public static boolean isToday(long opTime) {
+       String opDate = format(opTime, Pattern.YYYYMMDD);
         boolean isToday = false;
-        opDate = opDate.substring(0, 8);
         String today = String.format(Locale.getDefault(), "%1$tY%1$tm%1$td",
                 System.currentTimeMillis());
         if (today.equals(opDate)) {

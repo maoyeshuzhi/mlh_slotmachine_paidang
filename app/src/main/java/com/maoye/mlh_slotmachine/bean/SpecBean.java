@@ -45,5 +45,13 @@ public class SpecBean {
         public void setItemName(String itemName) {
             this.itemName = itemName;
         }
+
+
+        @Override
+        public String toString() {
+            return "SpecItemListBean{" +
+                    "itemName='" + itemName + '\'' +
+                    '}';
+        }
     }
 }

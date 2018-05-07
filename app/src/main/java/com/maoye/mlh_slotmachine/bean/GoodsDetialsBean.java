@@ -587,7 +587,7 @@ private int cartNum;
          */
 
         private String image_url;
-        private int is_default;
+        private int is_default;//1为选中
 
         public String getImage_url() {
             return image_url;
@@ -607,34 +607,6 @@ private int cartNum;
     }
 
     public static class SpecListBean {
-        /**
-         * activity_spec_id : 181
-         * id : 976
-         * old_price : 100.00
-         * price : 1000.00
-         * stock : 72
-         * sku_code :
-         * spec_val_list : ["XXS","黑色"]
-         * spec_vals : XXS,黑色
-         * is_default : 1
-         * sap_Ean11 : 0100866401
-         * sap_Akpos : 000000
-         * sap_Aktnr :
-         * sap_Akart :
-         * sap_Ztacname :
-         * sap_Vkdab : 0000-00-00
-         * sap_Vktim : 00:00:00
-         * sap_Vedab : 0000-00-00
-         * sap_Vetim : 00:00:00
-         * sap_Ztacid : 00000000
-         * sap_ZpDiscount : 0.0
-         * sap_ZcashRate : 0.0
-         * sap_BrandCname : 卡帕
-         * sap_BrandNo : 100581
-         * sap_NameL : 深圳市克瑞斯特体育用品有限公司
-         * sap_Lifnr : 0010003332
-         */
-
         private int activity_spec_id;
         private int id;
         private String old_price;

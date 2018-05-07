@@ -1,6 +1,9 @@
 package com.maoye.mlh_slotmachine.event;
 
+import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Rs on 2018/4/26.
@@ -14,6 +17,8 @@ public class GoodsEventBean implements Serializable {
     private int orderId;
     private int goodsNum;//商品件数
     private String price;//金额
+
+
 
     public int getPayType() {
         return payType;

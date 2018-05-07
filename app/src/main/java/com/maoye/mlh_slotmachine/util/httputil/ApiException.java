@@ -8,7 +8,7 @@ import com.maoye.mlh_slotmachine.util.Toast;
  */
 public class ApiException extends RuntimeException {
 
-    public static final int USER_NOT_EXIST = 1000007;
+
     public static final int WRONG_PASSWORD = 101;
     public static final int ERROR_404 = -1;
     /*错误码*/
@@ -45,10 +45,6 @@ public class ApiException extends RuntimeException {
     private static String getApiExceptionMessage(int code, String detailMessage) {
         String message = "";
         switch (code) {
-            case USER_NOT_EXIST:
-                message = "请登录";
-
-                break;
             case WRONG_PASSWORD:
                 message = "密码错误";
                 break;
@@ -59,7 +55,7 @@ public class ApiException extends RuntimeException {
                     message = "未知错误";
                 }
         }
-        Toast.getInstance().toast(MyContext.appContext, message, 2);
+            Toast.getInstance().toast(MyContext.appContext, message, 2);
         new Throwable(code + "");
         return message;
     }

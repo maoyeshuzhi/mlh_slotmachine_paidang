@@ -11,6 +11,11 @@ public class ProdConfig extends EnvConfig{
     }
 
     @Override
+    public String getH5BaseUrl() {
+        return "http://172.31.10.3:8899/";
+    }
+
+    @Override
     public int getEnvType() {
         return 1;
     }

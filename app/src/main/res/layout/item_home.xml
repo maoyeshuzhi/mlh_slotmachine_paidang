@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen4"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
     <View
@@ -13,26 +13,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen175"
             tools:context="me.chunyu.spike.wcl_flip_anim_demo.MainActivity">
-           <ImageView
-               android:id="@+id/code_img"
-               android:clickable="true"
-               android:visibility="invisible"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/dimen175"
-               android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/code_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen175"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:visibility="invisible" />
+
             <ImageView
                 android:id="@+id/goods_img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen175"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/default_image" />
         </FrameLayout>
 
@@ -42,9 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen12"
             android:layout_marginTop="@dimen/dimen6"
-            android:text="明星变色润唇膏 Dior/迪奥"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:text="明星变色润唇膏 Dior/迪奥"
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen9sp" />
 
@@ -55,28 +57,29 @@
             android:orientation="horizontal">
 
             <TextView
-                android:paddingTop="@dimen/dimen2"
                 android:id="@+id/price_tv"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/dimen2"
                 android:text="￥955.00"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen10sp" />
 
             <LinearLayout
                 android:id="@+id/buy_phone_ll"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingTop="@dimen/dimen2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen2">
+
                 <TextView
 
-                    android:layout_gravity="center"
                     android:layout_width="@dimen/dimen35"
                     android:layout_height="@dimen/dimen10"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dimen10"
                     android:background="@drawable/black_stroke"
                     android:gravity="center"

@@ -24,7 +24,7 @@ public class AddParamInterceptor implements Interceptor {
                 .addQueryParameter("device_no", DeviceInfoUtil.getDeviceId())
                 .build();
         Request build = request.newBuilder().url(httpUrl).build();
-        LogUtils.e("-quest---"+httpUrl.toString());
+        LogUtils.e("-请求Url---"+httpUrl.toString());
         return chain.proceed(build);
     }
 }

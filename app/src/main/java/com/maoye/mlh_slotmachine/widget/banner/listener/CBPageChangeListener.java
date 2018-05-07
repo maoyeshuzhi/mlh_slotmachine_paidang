@@ -1,32 +1,30 @@
 package com.maoye.mlh_slotmachine.widget.banner.listener;
 
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+
+import com.bigkoo.convenientbanner.listener.OnPageChangeListener;
 
 import java.util.ArrayList;
 
-/**
- * 翻页指示器适配器
- */
-public class CBPageChangeListener implements ViewPager.OnPageChangeListener {
+
+public class CBPageChangeListener implements OnPageChangeListener {
     private ArrayList<ImageView> pointViews;
     private int[] page_indicatorId;
-    private ViewPager.OnPageChangeListener onPageChangeListener;
+    private OnPageChangeListener onPageChangeListener;
     public CBPageChangeListener(ArrayList<ImageView> pointViews,int page_indicatorId[]){
         this.pointViews=pointViews;
         this.page_indicatorId = page_indicatorId;
     }
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        if(onPageChangeListener != null)onPageChangeListener.onPageScrollStateChanged(state);
+
+    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        if(onPageChangeListener != null)onPageChangeListener.onScrollStateChanged(recyclerView, newState);
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if(onPageChangeListener != null)onPageChangeListener.onPageScrolled(position,positionOffset,positionOffsetPixels);
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        if(onPageChangeListener != null)onPageChangeListener.onScrolled(recyclerView,dx,dy);
     }
 
-    @Override
     public void onPageSelected(int index) {
         for (int i = 0; i < pointViews.size(); i++) {
             pointViews.get(index).setImageResource(page_indicatorId[1]);
@@ -38,7 +36,7 @@ public class CBPageChangeListener implements ViewPager.OnPageChangeListener {
 
     }
 
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener) {
+    public void setOnPageChangeListener(OnPageChangeListener onPageChangeListener) {
         this.onPageChangeListener = onPageChangeListener;
     }
 }

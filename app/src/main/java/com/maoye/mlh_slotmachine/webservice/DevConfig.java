@@ -5,9 +5,15 @@ package com.maoye.mlh_slotmachine.webservice;
  */
 
 public class DevConfig extends EnvConfig {
+   /* http://172.31.10.229:9999/*/
     @Override
     public String getWebServiceBaseUrl() {
-        return "http://172.29.36.72/";
+        return "http://172.29.100.9/";
+    }
+   /* http://172.31.10.3:8899/*/
+    @Override
+    public String getH5BaseUrl() {
+        return "http://172.31.10.229:8080/";
     }
 
     @Override

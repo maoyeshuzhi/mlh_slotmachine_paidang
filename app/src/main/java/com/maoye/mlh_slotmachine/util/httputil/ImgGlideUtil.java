@@ -31,9 +31,7 @@ public class ImgGlideUtil {
         try {
             Glide.with(imageView.getContext())
                     .load(url)
-                    .crossFade(500)
                     .diskCacheStrategy(iscache ?DiskCacheStrategy.RESULT:DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
                     .placeholder(R.mipmap.default_image)
                     .error(R.mipmap.default_image)
                     .into(imageView);

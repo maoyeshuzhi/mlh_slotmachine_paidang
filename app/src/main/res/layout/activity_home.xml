@@ -1,167 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refreshlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:scrollbars="none">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/layout_head" />
-
-
-        <com.maoye.mlh_slotmachine.widget.banner.ConvenientBanner
-            android:id="@+id/head_banner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen220"
-            app:canLoop="true" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="438dp">
-
-            <ImageView
-                android:id="@+id/leftpage_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimen7"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:onClick="onClick"
-                android:src="@mipmap/left_arrow_white" />
-
-            <com.maoye.mlh_slotmachine.widget.banner.ConvenientBanner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="438dp"
-                android:layout_marginTop="@dimen/dimen8"
-                app:canLoop="true" />
-
-            <ImageView
-                android:id="@+id/rightpage_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen7"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:rotation="180"
-                android:src="@mipmap/left_arrow_white" />
-        </RelativeLayout>
-
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/dimen7"
-            android:layout_weight="1"
-            android:gravity="bottom"
             android:orientation="vertical">
+
+            <include layout="@layout/layout_head" />
+
+            <com.youth.banner.Banner
+                android:id="@+id/head_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen220"
+                app:banner_default_image="@mipmap/default_banner"
+                app:delay_time="1500"
+                app:image_scale_type="fit_xy"
+                app:indicator_drawable_selected="@drawable/shape_selected"
+                app:indicator_drawable_unselected="@drawable/shape_noraml"
+                app:is_auto_play="true" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen40"
-                android:orientation="horizontal">
+                android:layout_height="438dp">
 
                 <ImageView
-                    android:id="@+id/cart_img"
+                    android:id="@+id/leftpage_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen28"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen7"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
-                    android:src="@mipmap/selectedgoods" />
+                    android:onClick="onClick"
+                    android:src="@mipmap/left_arrow_white" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/print_ll"
-                    android:gravity="right"
-                    android:orientation="vertical">
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen438"
+                    android:layout_marginTop="@dimen/dimen8"
+                    android:paddingRight="@dimen/dimen10"
+                    android:paddingLeft="@dimen/dimen10"
+                    app:autoTurningTime="5000"
+                    app:canLoop="true"/>
 
-                    <TextView
-                        android:id="@+id/quick_pay_bt"
-                        android:layout_width="@dimen/dimen143"
-                        android:layout_height="@dimen/dimen46"
-                        android:background="@color/black"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:text="@string/quick_pay_str"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen6"
-                        android:text="@string/quick_pay_hint_str"
-                        android:textColor="@color/color_646464"
-                        android:textSize="@dimen/dimen7sp" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/print_ll"
+                <ImageView
+                    android:id="@+id/rightpage_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/dimen6"
-                    android:layout_marginRight="@dimen/dimen17"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/print_bill_bt"
-                        android:layout_width="@dimen/dimen143"
-                        android:layout_height="@dimen/dimen46"
-                        android:background="@drawable/black_stroke"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:text="@string/print_bill_str"
-                        android:textColor="@color/color_1e1e1e" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dimen6"
-                        android:gravity="center"
-                        android:text="@string/print_bill_hint_str"
-                        android:textColor="@color/color_646464"
-                        android:textSize="@dimen/dimen7sp" />
-                </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen7"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:rotation="180"
+                    android:src="@mipmap/left_arrow_white" />
             </RelativeLayout>
 
-            <ImageView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen36"
-                android:src="@mipmap/homebottomimg" />
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dimen7"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dimen3"
-                android:drawableLeft="@mipmap/shuzhilogo"
-                android:drawablePadding="@dimen/dimen4"
-                android:gravity="center"
-                android:text="在专柜通过快付下的订单, 可以在本机扫码买单"
-                android:textColor="@color/color_646464"
-                android:textSize="@dimen/dimen7sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen40"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/cart_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen28"
+                        android:clickable="true"
+                        android:src="@mipmap/selectedgoods" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/print_ll"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/quick_pay_bt"
+                            android:layout_width="@dimen/dimen143"
+                            android:layout_height="@dimen/dimen46"
+                            android:background="@color/black"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/quick_pay_str"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen6"
+                            android:text="@string/quick_pay_hint_str"
+                            android:textColor="@color/color_646464"
+                            android:textSize="@dimen/dimen7sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/print_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/dimen6"
+                        android:layout_marginRight="@dimen/dimen17"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/print_bill_bt"
+                            android:layout_width="@dimen/dimen143"
+                            android:layout_height="@dimen/dimen46"
+                            android:background="@drawable/black_stroke"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/print_bill_str"
+                            android:textColor="@color/color_1e1e1e" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dimen6"
+                            android:gravity="center"
+                            android:text="@string/print_bill_hint_str"
+                            android:textColor="@color/color_646464"
+                            android:textSize="@dimen/dimen7sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen36"
+                    android:src="@mipmap/homebottomimg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen3"
+                    android:drawableLeft="@mipmap/shuzhilogo"
+                    android:drawablePadding="@dimen/dimen4"
+                    android:gravity="center"
+                    android:text="在专柜通过快付下的订单, 可以在本机扫码买单"
+                    android:textColor="@color/color_646464"
+                    android:textSize="@dimen/dimen7sp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
-
-</ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

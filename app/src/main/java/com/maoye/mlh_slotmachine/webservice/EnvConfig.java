@@ -13,6 +13,8 @@ public abstract class EnvConfig {
                 return new DevConfig();
             case PROD:
                 return new ProdConfig();
+            case LUOCHAO:
+                return new LuoChao();
             default:
                 return null;
         }
@@ -20,9 +22,11 @@ public abstract class EnvConfig {
 
     public abstract String getWebServiceBaseUrl();
 
+    public  abstract String getH5BaseUrl();
+
     public abstract int getEnvType();
 
     public enum Stage {
-        DEV, PROD
+        DEV, PROD ,LUOCHAO
     }
 }

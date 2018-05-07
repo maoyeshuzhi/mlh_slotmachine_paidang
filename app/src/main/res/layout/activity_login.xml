@@ -9,11 +9,16 @@
 
     <include layout="@layout/layout_head" />
 
-    <ImageView
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        app:is_auto_play="true"
+        app:delay_time="1500"
+        app:indicator_drawable_selected="@drawable/shape_selected"
+        app:indicator_drawable_unselected="@drawable/shape_noraml"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen220"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/default_image" />
+        app:image_scale_type="fit_xy"
+        app:banner_default_image="@mipmap/default_banner"
+        android:layout_height="@dimen/dimen220"/>
 
     <RadioGroup
         android:id="@+id/rg"
@@ -75,8 +80,6 @@
         android:layout_marginLeft="@dimen/dimen80"
         android:layout_marginRight="@dimen/dimen80"
         android:background="@color/color_646464" />
-
-
     <EditText
         android:id="@+id/psw_et"
         android:layout_width="match_parent"
@@ -86,7 +89,7 @@
         android:background="@null"
         android:hint="请输入密码"
         android:gravity="bottom"
-        android:inputType="phone"
+        android:inputType="textPassword"
         android:maxLines="1"
         android:paddingBottom="@dimen/dimen11"
         android:paddingTop="@dimen/dimen68"

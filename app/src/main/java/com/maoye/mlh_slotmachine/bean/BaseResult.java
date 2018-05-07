@@ -10,7 +10,6 @@ public class BaseResult<T> {
    private String msg;
    private boolean state;
    private int code;
-    //用来模仿Data
     @SerializedName("data")
     private T data;
 

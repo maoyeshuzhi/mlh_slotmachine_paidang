@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'io.objectbox'
 android {
     compileSdkVersion 26
 
@@ -14,13 +14,29 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        signingConfigs {
+            debug {
+                storeFile file('mlhj.jks')
+                storePassword "maoye2018"
+                keyAlias "mlhshopping"
+                keyPassword "maoye2018"
+            }
+
+            release {
+                storeFile file('mlhj.jks')
+                storePassword "maoye2018"
+                keyAlias "mlhshopping"
+                keyPassword "maoye2018"
+            }
         }
     }
 
@@ -53,9 +69,17 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
     // implementation 'com.github.xiaoyanger0825:NiceVieoPlayer:v2.2'//小视频播放
-    implementation files('libs/systembartint-1.0.4.jar')
+
+    implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'com.bigkoo:ConvenientBanner:2.0.8'
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation files('libs/alipaySdk-20180403.jar')
     implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation files('libs/printsdk-v2.2.jar')
+    implementation files('libs/usbprintsdk-v2.10.jar')
+ implementation "io.objectbox:objectbox-android:$objectboxVersion"
+annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
+
 }

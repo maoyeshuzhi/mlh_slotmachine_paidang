@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.youth.banner.Banner xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/banner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:banner_default_image="@mipmap/default_banner"
+    app:delay_time="1500"
+    app:image_scale_type="fit_xy"
+    app:indicator_drawable_selected="@drawable/shape_selected"
+    app:indicator_drawable_unselected="@drawable/shape_noraml"
+    app:is_auto_play="true">
+
+</com.youth.banner.Banner>

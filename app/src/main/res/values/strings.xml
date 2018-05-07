@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">茂乐惠机</string>
+    <string name="time_hint_str">剩120秒自动关闭</string>
     <string name="RMB">￥</string>
     <string name="phoneBuy">手机购买</string>
     <string name="home_title_str">随时随地随心买正品</string>
@@ -32,5 +33,10 @@
     <string name="ali_max_hint_str">请打开【支付宝】的付款码\n对准机器下方扫码口</string>
     <string name="ali_min_hint_str">使用支付宝付款</string>
     <string name="wechat_min_hint_str">使用微信付款</string>
+    <string name="query_order_info_str">跟踪订单状态\n查看订单信息</string>
+    <string name="succ_code_hint_str">扫码二维码\n凭借您收到的短信账号信息登录茂乐惠\n查询实时订单状态</string>
+    <string name="paying_hint_str">扫描成功！支付中......\n请勿操作页面</string>
+    <string name="print_bill_title_str">请打开订单二维码图片\n对准下方扫码口</string>
+    <string name="address_hint_str">建议您如实填写详细收货地址，例如街道名称，门牌号\n码，楼层和房间号等信息</string>
 
 </resources>

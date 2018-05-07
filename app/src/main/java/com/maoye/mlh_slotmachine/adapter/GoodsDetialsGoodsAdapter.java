@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
@@ -27,18 +28,24 @@ public class GoodsDetialsGoodsAdapter extends BaseRecyclerAdapter<GoodsDetialsBe
     @Override
     public void onBind(RecyclerView.ViewHolder viewHolder, int RealPosition, GoodsDetialsBean.ImageListBean data, int size) {
         if (viewHolder instanceof GoodPicVH) {
-            ImgGlideUtil.displayImage(data.getImage_url(),((GoodPicVH) viewHolder).img,true);
+            ImgGlideUtil.displayImage(data.getImage_url(), ((GoodPicVH) viewHolder).img, true);
+            if(data.getIs_default()==1){
+                ((GoodPicVH) viewHolder).backgroundLl.setBackgroundColor(mContext.getResources().getColor(R.color.color_dd2450));
+            }else {
+                ((GoodPicVH) viewHolder).backgroundLl.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            }
         }
     }
 
     protected class GoodPicVH extends BaseVH {
         @BindView(R.id.img)
         ImageView img;
+        @BindView(R.id.background_ll)
+        LinearLayout backgroundLl;
+
         public GoodPicVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
-
 }

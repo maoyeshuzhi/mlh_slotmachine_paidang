@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 
+import com.maoye.mlh_slotmachine.util.LogUtils;
+import com.maoye.mlh_slotmachine.util.MyContext;
+import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.widget.WaiteDialog;
 
 
@@ -28,11 +31,11 @@ public class ProgressDialogHandler extends Handler {
     }
 
     private void initProgressDialog() {
-        if (pd == null) {
+        if (pd == null &&context!=null) {
             pd = new WaiteDialog(context);
             pd.setCancelable(cancelable);
         }
-            if (cancelable) {
+            if (cancelable &&pd!=null) {
                 pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialogInterface) {
@@ -41,13 +44,17 @@ public class ProgressDialogHandler extends Handler {
                 });
             }
 
-            if (!pd.isShowing()) {
-                pd.show();
+            if (pd!=null &&!pd.isShowing()) {
+                try {
+                    pd.show();
+                } catch (Exception e) {
+                    LogUtils.e("Unable to add window -- token null is not for an application");
+                }
             }
     }
 
     private void dismissProgressDialog() {
-        if (pd != null) {
+        if (pd!=null &&pd != null) {
             pd.dismiss();
             pd = null;
         }

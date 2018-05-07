@@ -16,11 +16,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-/**
- * Created on 2016/11/29.
- *
- * @author WangYi
- */
+
 
 public final class CacheManager {
 

@@ -185,7 +185,7 @@ public class DialogAddLocalAddress extends AlertDialog {
         protected void onBaseError(Throwable t) {
             provinceTv.setClickable(true);
             provinceTv.setEnabled(true);
-            LogUtils.e(t.getMessage());
+           // LogUtils.e(t.getMessage());
         }
     };
 
