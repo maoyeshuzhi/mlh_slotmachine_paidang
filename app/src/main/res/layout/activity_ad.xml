@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:banner_default_image="@mipmap/default_banner"
-    app:delay_time="1500"
+    app:delay_time="3000"
     app:image_scale_type="fit_xy"
     app:indicator_drawable_selected="@drawable/shape_selected"
     app:indicator_drawable_unselected="@drawable/shape_noraml"

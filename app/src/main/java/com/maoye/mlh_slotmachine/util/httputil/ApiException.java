@@ -1,5 +1,7 @@
 package com.maoye.mlh_slotmachine.util.httputil;
 
+import android.text.TextUtils;
+
 import com.maoye.mlh_slotmachine.util.MyContext;
 import com.maoye.mlh_slotmachine.util.Toast;
 
@@ -49,7 +51,7 @@ public class ApiException extends RuntimeException {
                 message = "密码错误";
                 break;
             default:
-                if (detailMessage != null) {
+                if (!TextUtils.isEmpty(detailMessage)) {
                     message = detailMessage;
                 } else {
                     message = "未知错误";

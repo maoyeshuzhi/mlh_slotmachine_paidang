@@ -12,6 +12,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
@@ -19,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -33,19 +33,24 @@ import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
 import com.maoye.mlh_slotmachine.bean.SpecBean;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
 import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
-import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
-import com.maoye.mlh_slotmachine.view.loginactivity.LoginActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.DateUtils;
 import com.maoye.mlh_slotmachine.util.DensityUtil;
+import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.httputil.ImgGlideUtil;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
+import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
+import com.maoye.mlh_slotmachine.view.loginactivity.LoginActivity;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
 import com.maoye.mlh_slotmachine.widget.CodePop;
+import com.maoye.mlh_slotmachine.widget.GlideImageLoaderCenter;
+import com.maoye.mlh_slotmachine.widget.MyScrollView;
 import com.maoye.mlh_slotmachine.widget.NoLineSpaceTextView;
+import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +61,8 @@ import butterknife.OnClick;
 
 
 public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.View, GoodsdetialsPresenter> implements GoodsdetialsContract.View {
-    @BindView(R.id.goods_img)
-    ImageView goodsImg;
+    @BindView(R.id.banner)
+    Banner banner;
     @BindView(R.id.good_title_tv)
     TextView goodTitleTv;
     @BindView(R.id.titme_tv)
@@ -116,8 +121,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     ImageButton topImgbt;
     @BindView(R.id.cart_img)
     ImageView cartImg;
-    @BindView(R.id.scrollview)
-    ScrollView scrollview;
+
     @BindView(R.id.address_tv)
     TextView addressTv;
     @BindView(R.id.phone_tv)
@@ -132,6 +136,12 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     TextView addressBt;
     @BindView(R.id.detial_bt)
     TextView detialBt;
+    @BindView(R.id.back_imgbt)
+    ImageView backImgbt;
+    @BindView(R.id.bottom_rl)
+    RelativeLayout bottomRl;
+    @BindView(R.id.scrollview)
+    MyScrollView scrollview;
     private CountDownTimer timer;
     private int timeState;//时间状态
     public static final int UN_START = 0;//未开始
@@ -152,6 +162,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     public static final String ALREAD_SALE = "已售罄";
     public static final String STOCK_NUM = "(库存还剩%s件)";
     public static final String INTEGRAL = "本商品购买预计可积%s~%s分";
+    public static final String INTEGRAL_2 = "本商品购买预计可积%s分";
     private BadgeView badgeView;
     private int cartNum;//购物车商品数量
     private int goodsId;
@@ -166,30 +177,49 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     }
 
     protected void initData() {
+        banner.setImageLoader(new GlideImageLoaderCenter());
+        banner.start();
         badgeView = new BadgeView(this);
+        badgeView.setStyle(1);
+        badgeView.setTargetView(cartImg);
+        badgeView.setBadgeMargin(10, 0, 0, 10);
+
         initWebSetting();
         goodsPicAdapter = new GoodsDetialsGoodsAdapter();
         goodsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         goodsRecycler.setAdapter(goodsPicAdapter);
-        specAdapter = new SpecAdapter();
-        specificationRecycler.setLayoutManager(new LinearLayoutManager(this));
-        specificationRecycler.setAdapter(specAdapter);
         goodsPicAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Object data) {
                 picPisition = position;
                 for (int i = 0; i < image_list.size(); i++) {
-                     if(picPisition ==i){
-                         image_list.get(i).setIs_default(1);
-                     }else {
-                         image_list.get(i).setIs_default(0);
-                     }
+                    if (picPisition == i) {
+                        image_list.get(i).setIs_default(1);
+                    } else {
+                        image_list.get(i).setIs_default(0);
+                    }
                 }
                 goodsPicAdapter.addDatas(image_list);
-                ImgGlideUtil.displayImage(image_list.get(position).getImage_url(), goodsImg, true);
+                upDataBanner(position);
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.specId = 0;
+        specAdapter = new SpecAdapter();
+        specificationRecycler.setLayoutManager(new LinearLayoutManager(this));
+        specificationRecycler.setAdapter(specAdapter);
+        mPresenter.getGoodsDetialsData(goodsId);
+        Object query = CacheUtil.query(CacheUtil.GOODS_DETIALS + goodsId, GoodsDetialsBean.class);
+        if (query != null) {
+            bean = (GoodsDetialsBean) query;
+            handleData();
+        }
         specAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onChildItemClick(View view, int type, int position, Object data) {
@@ -198,21 +228,9 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 stockNumTv.setText(String.format(STOCK_NUM, stockNum + ""));
                 switchStockState(stockNum);
                 salepriceTv.setText(String.format(Constant.PRICE_FORMAT, mPresenter.getPrice(bean.getSpec_list())));
-                specAdapter.addDatas(specList);
+                // specAdapter.addDatas(specList);
             }
         });
-
-        Object query = CacheUtil.query(CacheUtil.GOODS_DETIALS + goodsId, GoodsDetialsBean.class);
-        if(query!=null){
-            bean = (GoodsDetialsBean) query;
-            handleData();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.getGoodsDetialsData(goodsId);
     }
 
     private void initWebSetting() {
@@ -247,7 +265,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         CacheBean cacheBean = new CacheBean();
         cacheBean.setId(CacheUtil.GOODS_DETIAL_ACTIVITY_ID);
         cacheBean.setJsonUrl(new Gson().toJson(bean));
-        cacheBean.setName(CacheUtil.GOODS_DETIALS+goodsId);
+        cacheBean.setName(CacheUtil.GOODS_DETIALS + goodsId);
         CacheUtil.put(cacheBean);
         handleData();
 
@@ -255,9 +273,8 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
     private void handleData() {
         cartNum = bean.getCartNum();
-        badgeView.setTargetView(cartImg);
+        salednumTv.setText(String.format("%s件已售", bean.getSales()+""));
         badgeView.setBadgeCount(cartNum);
-        badgeView.setBadgeMargin(0, 0, 15, 0);
         String WEB_STYLE = "<style>*{padding:0;margin:0;  color:#505050 !important; font-size:8px !important;} p {font-size:8px;}</style>";
         String warmHintWebContent = bean.getNotice().replace("<img", "<img style='max-width:100%;height:auto;'");
         String CONTENT_STYLE = "<style>*{padding:0;margin:0; } img {line-height:0px;}</style>";
@@ -265,7 +282,6 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         if (warmHintWebContent != null)
             hintWebview.loadDataWithBaseURL(null, WEB_STYLE + warmHintWebContent, "text/html", "utf-8", null);
         discriptionWb.loadDataWithBaseURL(null, CONTENT_STYLE + goodsDetialsWebContent, "text/html", "utf-8", null);
-        ImgGlideUtil.displayImage(bean.getDefault_image(), goodsImg, true);
         goodTitleTv.setText(bean.getName() + "");
         timehandler();
         salepriceTv.setText(String.format(Constant.PRICE_FORMAT, bean.getPrice() + ""));
@@ -278,16 +294,44 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         phoneTv.setText(String.format("电话：%s", bean.getService_phone() + ""));
         stockNumTv.setText(String.format(STOCK_NUM, bean.getStock() + ""));
         if (bean.getDelivery_type() == 1) {//自提
-            expressTv.setVisibility(View.INVISIBLE);
-        } else if (bean.getDelivery_type() == 2) {//快递
+            expressTv.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.unselect_hui_icon), null, null, null);
             addressLl.setVisibility(View.GONE);
-            expressTv.setVisibility(View.INVISIBLE);
+        } else if (bean.getDelivery_type() == 2) {//快递
+            pickupTv.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.unselect_hui_icon), null, null, null);
         }
-        integralTv.setText(String.format(INTEGRAL, bean.getMin_points() + "", bean.getMax_points() + ""));
+        if (bean.getMax_points() == 0) {
+            integralTv.setVisibility(View.GONE);
+        } else if (bean.getMax_points() == bean.getMax_points()) {
+            integralTv.setText(String.format(INTEGRAL_2, bean.getMax_points() + ""));
+        } else {
+            integralTv.setText(String.format(INTEGRAL, bean.getMin_points() + "", bean.getMax_points() + ""));
+        }
         specList = mPresenter.handleSpecifi(bean.getSpec_name_list(), bean.getSpec_list());
         specAdapter.addDatas(specList);
         image_list = bean.getImage_list();
+        List<String> resultList = new ArrayList<>();
+        for (GoodsDetialsBean.ImageListBean imageListBean : image_list) {
+            resultList.add(imageListBean.getImage_url());
+        }
+        banner.update(resultList);
         goodsPicAdapter.addDatas(image_list);
+
+        final int heigth = DensityUtil.dip2px(this, 270 + 106);
+        scrollview.setScrollViewListener(new MyScrollView.ScrollViewListener() {
+            @Override
+            public void onScrollChanged(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
+                if (oldy >= heigth) {
+                    topImgbt.setVisibility(View.VISIBLE);
+                    backImgbt.setVisibility(View.GONE);
+                    bottomRl.setVisibility(View.VISIBLE);
+                } else {
+                    topImgbt.setVisibility(View.INVISIBLE);
+                    backImgbt.setVisibility(View.VISIBLE);
+                    bottomRl.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -321,7 +365,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     private void timehandler() {
         if (bean.getActivity_type() == 0) {
             titmeTv.setVisibility(View.GONE);
-        } else if (bean.getActivity_type() == 1) {
+        } else if (bean.getActivity_type() == 1 || bean.getActivity_type() == 2) {
             titmeTv.setVisibility(View.VISIBLE);
             if (DateUtils.compareNowTime(bean.getStart_time())) {
                 //活动未开始
@@ -417,7 +461,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     }
 
 
-    @OnClick({R.id.subtract_tv, R.id.add_tv, R.id.left_scroll_img, R.id.right_scroll_img, R.id.addcart_tv, R.id.immdl_buy_tv, R.id.phonebuy_tv, R.id.back, R.id.addcart_bottom_tv, R.id.immdl_buy_bottom_tv, R.id.top_imgbt, R.id.cart_img, R.id.warmhint_bt, R.id.address_bt, R.id.detial_bt})
+    @OnClick({R.id.subtract_tv, R.id.add_tv, R.id.left_scroll_img, R.id.right_scroll_img, R.id.addcart_tv, R.id.immdl_buy_tv, R.id.phonebuy_tv, R.id.back, R.id.addcart_bottom_tv, R.id.immdl_buy_bottom_tv, R.id.top_imgbt, R.id.cart_img, R.id.warmhint_bt, R.id.address_bt, R.id.detial_bt, R.id.back_imgbt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.subtract_tv:
@@ -441,41 +485,60 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
                 break;
             case R.id.addcart_bottom_tv:
-            case R.id.addcart_tv:
-                //加入购物车
-                if (Integer.parseInt(selectGoodsNumTv.getText().toString()) > stockNum) {
-                    Toast.getInstance().toast(this, "商品不能超过库存数", 2);
-                    return;
+                if (bean.getSpec_name_list().size() == 0) {
+                    addCart();
+                } else if (bean.getSpec_name_list().size() > 0 && mPresenter.specId != 0) {
+                    addCart();
+                } else {
+                    scrollview.smoothScrollTo(0, 0);
+                    Toast.getInstance().toast(this, "请先选择规格", 2);
                 }
-                mPresenter.addCart(bean.getId(), mPresenter.getSpecId(bean.getSpec_list()), Integer.parseInt(selectGoodsNumTv.getText().toString()));
-
                 break;
-
-            case R.id.left_scroll_img:
-                if (picPisition != 0) {
-                    goodsRecycler.scrollToPosition(picPisition - 1);
-                    picPisition = picPisition - 1;
+            case R.id.addcart_tv://加入购物车
+                if (bean.getSpec_name_list().size() == 0) {
+                    addCart();
+                } else if (bean.getSpec_name_list().size() > 0 && mPresenter.specId != 0) {
+                    addCart();
+                } else {
+                    Toast.getInstance().toast(this, "请先选择规格", 2);
                 }
+                break;
+            case R.id.left_scroll_img:
+                int i = leftScroll();
+                if (i >= 0) upDataBanner(i);
+                //  goodsRecycler.scrollTo(DensityUtil.dip2px(this,60)*(picPisition-1),0);
                 break;
             case R.id.right_scroll_img:
-                if (picPisition != image_list.size() - 1) {
-                    goodsRecycler.scrollToPosition(picPisition + 1);
-                    picPisition = picPisition + 1;
-                }
+                int position = rightscroll();
+                if (position <= image_list.size() - 1)
+                    upDataBanner(position);
 
                 break;
             case R.id.phonebuy_tv:
-                if (codePop == null) {
-                    codePop = new CodePop(this, EnvConfig.instance().getWebServiceBaseUrl() + "goods?id=" + bean.getId());
-                }
+                codePop = new CodePop(this, EnvConfig.instance().getWebServiceBaseUrl() + "goods?id=" + bean.getId());
                 codePop.showAsDropDown(phonebuyTv);
                 break;
             case R.id.back:
                 finish();
                 break;
             case R.id.immdl_buy_tv:
+                if (bean.getSpec_name_list().size() == 0) {
+                    SkipConfirmActivity();
+                } else if (bean.getSpec_name_list().size() > 0 && mPresenter.specId != 0) {
+                    SkipConfirmActivity();
+                } else {
+                    Toast.getInstance().toast(this, "请先选择规格", 2);
+                }
+                break;
             case R.id.immdl_buy_bottom_tv:
-                SkipConfirmActivity();
+                if (bean.getSpec_name_list().size() == 0) {
+                    SkipConfirmActivity();
+                } else if (bean.getSpec_name_list().size() > 0 && mPresenter.specId != 0) {
+                    SkipConfirmActivity();
+                } else {
+                    scrollview.smoothScrollTo(0, 0);
+                    Toast.getInstance().toast(this, "请先选择规格", 2);
+                }
 
                 break;
             case R.id.top_imgbt:
@@ -488,20 +551,78 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
             case R.id.warmhint_bt:
                 //滑到温馨提示
-                int  i = DensityUtil.dip2px(this, 270 + 106);
-                scrollview.smoothScrollTo(0, i);
+                scrollview.smoothScrollTo(0, DensityUtil.dip2px(this, 270 + 106));
                 break;
             case R.id.address_bt:
                 //滑到取货地址
-                 int height = DensityUtil.dip2px(this, 270 + 106+15+40)+ DensityUtil.getViewHeight(hintWebview);
-                scrollview.smoothScrollTo(0,height);
+                int height = DensityUtil.dip2px(this, 270 + 106 + 15 + 40) + DensityUtil.getViewHeight(hintWebview);
+                scrollview.smoothScrollTo(0, height);
                 break;
             case R.id.detial_bt:
                 //滑到详情
-                int i2 = DensityUtil.dip2px(this, 270 + 106+15+40+18) + DensityUtil.getViewHeight(hintWebview)+DensityUtil.getViewHeight(addressLl);
-                scrollview.smoothScrollTo(0,i2);
+                int i2 = DensityUtil.dip2px(this, 270 + 106 + 15 + 40 + 18) + DensityUtil.getViewHeight(hintWebview) + DensityUtil.getViewHeight(addressLl);
+                scrollview.smoothScrollTo(0, i2);
+                break;
+            case R.id.back_imgbt:
+                finish();
                 break;
         }
+    }
+
+
+    private int leftScroll() {
+        int position = 0;
+        for (int i = 0; i < image_list.size(); i++) {
+            if (image_list.get(i).getIs_default() == 1) {
+                position = i;
+                if (position != 0) image_list.get(i).setIs_default(0);
+            }
+        }
+        position = position - 1;
+        if (position >= 0) {
+            image_list.get(position).setIs_default(1);
+            goodsPicAdapter.addDatas(image_list);
+            goodsRecycler.smoothScrollToPosition(position);
+        }
+        return position;
+    }
+
+    private int rightscroll() {
+        int position = 0;
+        for (int i = 0; i < image_list.size(); i++) {
+            if (image_list.get(i).getIs_default() == 1) {
+                position = i;
+                if (position != image_list.size() - 1)
+                    image_list.get(i).setIs_default(0);
+            }
+
+        }
+        position = position + 1;
+        if (position < image_list.size()) {
+            image_list.get(position).setIs_default(1);
+            goodsPicAdapter.addDatas(image_list);
+            goodsRecycler.smoothScrollToPosition(position);
+        }
+        return position;
+    }
+
+    private void upDataBanner(int position) {
+        List<String> list = new ArrayList<>();
+        list.add(image_list.get(position).getImage_url());
+        for (GoodsDetialsBean.ImageListBean imageListBean : image_list) {
+            if (imageListBean.getIs_default() == 0) {
+                list.add(imageListBean.getImage_url());
+            }
+        }
+        banner.update(list);
+    }
+
+    private void addCart() {
+        if (Integer.parseInt(selectGoodsNumTv.getText().toString()) > stockNum) {
+            Toast.getInstance().toast(this, "商品不能超过库存数", 2);
+            return;
+        }
+        mPresenter.addCart(bean.getId(), mPresenter.getSpecId(bean.getSpec_list()), Integer.parseInt(selectGoodsNumTv.getText().toString()));
     }
 
     private void SkipConfirmActivity() {
@@ -515,6 +636,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         paramsBean.setSpec_id(mPresenter.getSpecId(bean.getSpec_list()));
         paramsBean.setProduct_name(bean.getName());
         paramsBean.setSpec_vals(mPresenter.getSpec_vals(bean.getSpec_list()));
+        paramsBean.setDelivery_type(bean.getDelivery_type());
         list.add(paramsBean);
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra(Constant.FROM, Constant.FROM_BUY);
@@ -525,7 +647,8 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
     @Override
     public void addCardSucc(BaseResult baseResult) {
-        ++cartNum;
+        int i = Integer.parseInt(selectGoodsNumTv.getText().toString());
+        cartNum = cartNum + i;
         badgeView.setBadgeCount(cartNum);
         Toast.getInstance().toast(this, "添加成功！购物车等您亲", 2);
     }

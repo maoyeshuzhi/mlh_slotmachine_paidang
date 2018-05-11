@@ -15,6 +15,7 @@ public class Constant {
     public static final String KEY = "key";
     public static final String GOODS_ID = "goodsId";
     public static final String PRICE_FORMAT = "￥%s";
+    public static final String GOODS_NUM_FORMAT = "x%s";
     public static final String PLEASE_INPUT_RIGHT_PHONE= "请输入正确的手机号码";
     public static final String NOOVER_STOCK= "商品不能超过库存数";
 
@@ -32,5 +33,6 @@ public class Constant {
     public static final String WEIXIN_CODE = "微信二维码;";
     public static final String WALI_CODE = "支付宝二维码;";
     public static final int countDownTime = 120*1000;//倒计时时间
+    public static final String countDownTimeFormat = "剩%s秒自动关闭";
 
 }

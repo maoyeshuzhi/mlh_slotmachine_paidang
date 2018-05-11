@@ -28,6 +28,7 @@
                 app:banner_default_image="@mipmap/default_banner"
                 app:delay_time="1500"
                 app:image_scale_type="fit_xy"
+                app:indicator_margin="@dimen/dimen8"
                 app:indicator_drawable_selected="@drawable/shape_selected"
                 app:indicator_drawable_unselected="@drawable/shape_noraml"
                 app:is_auto_play="true" />
@@ -37,6 +38,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="438dp">
 
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen438"
+                    android:layout_marginTop="@dimen/dimen8"
+                    app:autoTurningTime="5000"
+                    app:canLoop="true"/>
                 <ImageView
                     android:id="@+id/leftpage_img"
                     android:layout_width="wrap_content"
@@ -45,18 +53,7 @@
                     android:layout_marginLeft="@dimen/dimen7"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
-                    android:onClick="onClick"
                     android:src="@mipmap/left_arrow_white" />
-
-                <com.bigkoo.convenientbanner.ConvenientBanner
-                    android:id="@+id/banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen438"
-                    android:layout_marginTop="@dimen/dimen8"
-                    android:paddingRight="@dimen/dimen10"
-                    android:paddingLeft="@dimen/dimen10"
-                    app:autoTurningTime="5000"
-                    app:canLoop="true"/>
 
                 <ImageView
                     android:id="@+id/rightpage_img"
@@ -101,6 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/print_ll"
                         android:gravity="right"
+
                         android:orientation="vertical">
 
                         <TextView
@@ -170,8 +168,8 @@
                     android:drawableLeft="@mipmap/shuzhilogo"
                     android:drawablePadding="@dimen/dimen4"
                     android:gravity="center"
-                    android:text="在专柜通过快付下的订单, 可以在本机扫码买单"
-                    android:textColor="@color/color_646464"
+                    android:text="由茂业数智联合信息技术（深圳）有限公司提供技术支持"
+                    android:textColor="@color/color_b4b4b4"
                     android:textSize="@dimen/dimen7sp" />
             </LinearLayout>
         </LinearLayout>

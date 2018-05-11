@@ -25,6 +25,7 @@
     <string name="submitorder">提交订单</string>
     <string name="selecrall_str">全选</string>
     <string name="cancel_str">取消</string>
+    <string name="number">0123456789</string>
     <string name="confirm_str">确定</string>
     <string name="add_attress_str">创建地址</string>
     <string name="close_str">关闭</string>
@@ -38,5 +39,6 @@
     <string name="paying_hint_str">扫描成功！支付中......\n请勿操作页面</string>
     <string name="print_bill_title_str">请打开订单二维码图片\n对准下方扫码口</string>
     <string name="address_hint_str">建议您如实填写详细收货地址，例如街道名称，门牌号\n码，楼层和房间号等信息</string>
+    <string name="payscan_hint_str"><![CDATA[请打开<微信>或<支付宝>的付款码, 对准机器下方扫码口]]></string>
 
 </resources>

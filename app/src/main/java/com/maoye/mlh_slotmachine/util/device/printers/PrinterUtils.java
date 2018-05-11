@@ -113,9 +113,10 @@ public class PrinterUtils {
             buffer.append("x" + productListBean.getNum() + "                      "+Double.valueOf(productListBean.getPrice())*productListBean.getNum()+"元" + "\n");
         }
         //商品信息
+        double goodsPrice = Double.valueOf(bean.getPaid_amount()) - Double.valueOf(bean.getFreight_amount());
         buffer.append(Constant.DOT_LINE);
-        buffer.append("邮费：                  "+bean.getFreight_amount()+"元"+"\n");
-        buffer.append("商品合计：              " + bean.getPaid_amount()+"元" + "\n\n");
+        buffer.append("商品合计：              " +String.format("%.2f",goodsPrice)+"元" + "\n");
+        buffer.append("邮费：                  "+bean.getFreight_amount()+"元"+"\n\n");
         buffer.append("折扣金额：              " +"0.00元"+ "\n");
         buffer.append("优惠券：                " +"0.00元"+ "\n");
         buffer.append("积分抵扣：              " +"0.00元" + "\n\n");
@@ -199,7 +200,6 @@ public class PrinterUtils {
     }
 
 
-
     /**
      * 将彩色图转换为纯黑白二色
      *
@@ -263,7 +263,7 @@ public class PrinterUtils {
         switch (iStatus) {
             case 0:
                 questStatus(0);
-                sMsg.append(Constant.Normal_CN);       // 正常
+               // sMsg.append(Constant.Normal_CN);       // 正常
                 iRet = 0;
                 break;
             case 8:
@@ -299,6 +299,7 @@ public class PrinterUtils {
                 sMsg.append(Constant.Abnormal_CN);     // 异常
                 break;
         }
+        if(iStatus!=0)
         com.maoye.mlh_slotmachine.util.Toast.getInstance().toast(MyContext.appContext,sMsg+"",2);
 
         return iRet;

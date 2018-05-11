@@ -1,10 +1,12 @@
 package com.maoye.mlh_slotmachine.widget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -29,7 +31,8 @@ public class CodePop extends PopupWindow {
     public static final String TIME_HINT = "点击隐藏 %ss";
 
     public  CodePop(Activity context,String linkUrl){
-        view = LayoutInflater.from(context).inflate(R.layout.pop_code, null);
+        LayoutInflater  inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.pop_code, null);
          v = view.findViewById(R.id.view);
         codeImg = view.findViewById(R.id.code_img);
         timeTv = view.findViewById(R.id.time_tv);
@@ -39,7 +42,9 @@ public class CodePop extends PopupWindow {
             e.printStackTrace();
         }
         this.setContentView(view);
-        this.setFocusable(false);
+        this.setFocusable(true);
+        view.setFocusableInTouchMode(true);
+
         this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         //设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);

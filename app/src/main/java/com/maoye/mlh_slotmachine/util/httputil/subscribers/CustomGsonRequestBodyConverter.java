@@ -24,7 +24,7 @@ public class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBo
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    CustomGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    public CustomGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }

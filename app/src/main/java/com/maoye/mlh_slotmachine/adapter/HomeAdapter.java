@@ -98,11 +98,11 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
         });
 
         if (RealPosition == 1 || RealPosition == 4) {
-            viewHolder.leftLineV.setVisibility(View.VISIBLE);
-            viewHolder.rightLineV.setVisibility(View.VISIBLE);
+           // viewHolder.leftLineV.setVisibility(View.VISIBLE);
+            //viewHolder.rightLineV.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.leftLineV.setVisibility(View.GONE);
-            viewHolder.rightLineV.setVisibility(View.GONE);
+            //viewHolder.leftLineV.setVisibility(View.GONE);
+            //viewHolder.rightLineV.setVisibility(View.GONE);
         }
     }
 
@@ -133,8 +133,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
     }
 
     protected class HomeVH extends BaseVH {
-        @BindView(R.id.left_line_v)
-        View leftLineV;
+
         @BindView(R.id.code_img)
         ImageView codeImg;
         @BindView(R.id.goods_img)

@@ -17,6 +17,15 @@ public class GoodsBean implements Serializable{
     private String spec_vals;
     private int index;
     private boolean isSelect;
+    private int delivery_type;//配送方式(0-不限制 1-自提 2-快递)
+
+    public int getDelivery_type() {
+        return delivery_type;
+    }
+
+    public void setDelivery_type(int delivery_type) {
+        this.delivery_type = delivery_type;
+    }
 
     public boolean isSelect() {
         return isSelect;

@@ -9,7 +9,26 @@ public class BaseResult<T> {
 
    private String msg;
    private boolean state;
-   private int code;
+   private int status;//0表示成功快付）
+    private String errorMsg;//（快付）
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    private int code;
     @SerializedName("data")
     private T data;
 

@@ -17,7 +17,7 @@ public class ConfirmContract {
     interface View extends BaseView {
           void getFreight(double fee);
           void getPayCode(String codeUrl);
-          void  paySucc(OrderDetialBean orderDetialBean);
+          void  paySucc(OrderDetialBean orderDetialBean,boolean isfromSubmit);
           void payFail(Throwable throwable);
     }
 
@@ -30,6 +30,7 @@ public class ConfirmContract {
         double getGoodsPrice(List<GoodsBean>list);
         void  submitOrder(SubmitOrderBean submitOrderBean,BaseObserver<BaseResult<OrderIdBean>> baseObserver);
        void  getPayCode(int orderId,int payType);
-       void orderDetials(int orderId);
+       void orderDetials(int orderId,boolean isfromSubmi);
+        int getDeliveryType(List<GoodsBean>list);
     }
 }

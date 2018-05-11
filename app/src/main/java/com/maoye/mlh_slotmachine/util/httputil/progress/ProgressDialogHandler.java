@@ -39,7 +39,11 @@ public class ProgressDialogHandler extends Handler {
                 pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialogInterface) {
-                        mProgressCancelListener.onCancelProgress();
+                        try {
+                            mProgressCancelListener.onCancelProgress();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }

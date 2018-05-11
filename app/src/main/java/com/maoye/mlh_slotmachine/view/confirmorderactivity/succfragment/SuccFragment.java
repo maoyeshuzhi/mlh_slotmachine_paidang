@@ -11,18 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
+import com.maoye.mlh_slotmachine.mvp.MVPBaseFragment;
+import com.maoye.mlh_slotmachine.util.CodeUtils;
+import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
 import com.maoye.mlh_slotmachine.view.homeactivity.GlideImageLoader;
 import com.maoye.mlh_slotmachine.view.homeactivity.HomeActivity;
-import com.maoye.mlh_slotmachine.mvp.MVPBaseFragment;
-import com.maoye.mlh_slotmachine.util.CodeUtils;
-import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 import com.maoye.mlh_slotmachine.webservice.URL;
 import com.youth.banner.Banner;
@@ -33,6 +34,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
@@ -57,6 +59,8 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
     @BindView(R.id.banner)
     Banner banner;
     Unbinder unbinder;
+    @BindView(R.id.back_ll)
+    LinearLayout backLl;
     private List<AdvertBean> list = new ArrayList<>();
     private CountDownTimer countDownTimer;
 
@@ -70,7 +74,6 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
     }
 
     private void initData() {
-
         banner.setImageLoader(new GlideImageLoader());
         banner.start();
         mPresenter.getBannerData(2);
@@ -84,7 +87,7 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
                     //调外部链接
                     Intent intent = new Intent(getActivity(), H5Activity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(Constant.KEY,advertBean.getLink_url());
+                    intent.putExtra(Constant.KEY, advertBean.getLink_url());
                     startActivity(intent);
                 } else if (advertBean.getProduct_id() != 0) {
                     Intent intent = new Intent(getActivity(), GoodsdetialsActivity.class);
@@ -106,19 +109,19 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
         }
 
         countDownTimer = new CountDownTimer(10 * 1000, 1000) {
-              @Override
-              public void onTick(long l) {
-                  countDownTv.setText(l / 1000 + "s");
-              }
+            @Override
+            public void onTick(long l) {
+                countDownTv.setText(l / 1000 + "s");
+            }
 
-              @Override
-              public void onFinish() {
-                  Intent intent = new Intent(getActivity(), HomeActivity.class);
-                  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                  startActivity(intent);
-                  getActivity().finish();
-              }
-          }.start();
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        }.start();
     }
 
     @Override
@@ -155,5 +158,13 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.back_ll)
+    public void onClick() {
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

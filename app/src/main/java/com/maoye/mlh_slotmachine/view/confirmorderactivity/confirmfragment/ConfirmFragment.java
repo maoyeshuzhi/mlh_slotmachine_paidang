@@ -3,6 +3,7 @@ package com.maoye.mlh_slotmachine.view.confirmorderactivity.confirmfragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -123,8 +124,12 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
     public static final int TIME = 120 * 1000;
     public static final String TIME_FORMAT = "剩%s秒自动关闭";
     private int payType;
-    private boolean isFinish;
+    private boolean isInterrupt;
     private String add_address_link;
+    private boolean ISWECHAT_PAY;
+    private OrderDetialBean orderDetialBean;
+    private int deliveryType;
+    private boolean isConfirm;
 
     //定义一个回调接口
     public interface CallBackConfirmFragment {
@@ -148,8 +153,8 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
     }
 
     private void initView() {
-        // LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        payView = LayoutInflater.from(getContext()).inflate(R.layout.pop_pay, null);
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        payView = layoutInflater.inflate(R.layout.pop_pay, null);
         time2Tv = payView.findViewById(R.id.time2_tv);
         time1Tv = payView.findViewById(R.id.time1_tv);
         priceTvPop = payView.findViewById(R.id.price_tv);
@@ -169,12 +174,31 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
 
     private void initData() {
         initcountDownTimer();
-        switchSelivryWay(0);
         goodsList = (List<GoodsBean>) getActivity().getIntent().getSerializableExtra(Constant.KEY);
+        deliveryType = mPresenter.getDeliveryType(goodsList);
+        if (deliveryType == 1) {
+            switchSelivryWay(0);
+             expressRb.setClickable(false);
+             expressRb.setEnabled(false);
+             expressRb.setTextColor(Color.parseColor("#ffffff"));
+             expressRb.setBackgroundColor(getResources().getColor(R.color.color_c8c8c8));
+        } else if (deliveryType == 2) {
+            expressRb.setChecked(true);
+            switchSelivryWay(1);
+            pickupRb.setClickable(false);
+            pickupRb.setEnabled(false);
+            pickupRb.setTextColor(Color.parseColor("#ffffff"));
+            pickupRb.setBackgroundColor(getResources().getColor(R.color.color_c8c8c8));
+            getAddress();
+        } else {
+            getAddress();
+            switchSelivryWay(0);
+        }
+
+
         GOODS_PRICE = mPresenter.getGoodsPrice(goodsList);
         ALL_PRICE = GOODS_PRICE;
-
-        priceTv.setText(String.format(PRICE_FORMAT, String.format("%.2f", ALL_PRICE)  + ""));
+        priceTv.setText(String.format(PRICE_FORMAT, String.format("%.2f", ALL_PRICE) + ""));
         rg.setOnCheckedChangeListener(this);
         addressAdapter = new AddressAdapter();
         addressRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -195,6 +219,14 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                     SoftUtil.showSoft(1, editText);
                 } else if (type == 1) {
                     addressCodeDialog = new DialogAddressCode(getContext(), add_address_link + "");
+                    addressCodeDialog.setOnItemChildClickListener(new OnItemChildClickListener() {
+                        @Override
+                        public void onChildItemClick(View view, int type, int position, Object data) {
+                            if (deliveryType != 1) {
+                                getAddress();
+                            }
+                        }
+                    });
                     addressCodeDialog.show();
                 }
             }
@@ -237,10 +269,20 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                     }
                 }
                 addressAdapter.addDatas(addressList);
+                if (expresstypeRb.isChecked()) {
+                    mPresenter.getFeight(mPresenter.getArea_id(addressList), 0, mPresenter.productInfo(goodsList));
+                } else if (EMSRb.isChecked()) {
+                    mPresenter.getFeight(mPresenter.getArea_id(addressList), 1, mPresenter.productInfo(goodsList));
+                } else if (mailRb.isChecked()) {
+                    mPresenter.getFeight(mPresenter.getArea_id(addressList), 2, mPresenter.productInfo(goodsList));
+
+                }
             }
+
+
         });
 
-        getAddress();
+
     }
 
     BaseObserver addressObserver = new BaseObserver<BaseResult<AddressBean>>(getContext()) {
@@ -248,7 +290,13 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
         protected void onBaseNext(BaseResult<AddressBean> data) {
             addressList = data.getData().getList();
             add_address_link = data.getData().getAdd_address_link();
-            addressAdapter.addDatas(addressList);
+            if(addressList==null ||addressList.size()==0){
+                addressRecycler.setVisibility(View.GONE);
+            }else {
+                addressRecycler.setVisibility(View.VISIBLE);
+                addressAdapter.addDatas(addressList);
+            }
+
         }
 
         @Override
@@ -277,6 +325,7 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        isInterrupt = true;
         countDownTimer1.cancel();
         countDownTimer2.cancel();
     }
@@ -310,6 +359,7 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
 
                 break;
             case R.id.weichatpay_tv:
+                isInterrupt = true;
                 payType = ConfirmOrderActivity.WECHAT_PAY;
                 callBackPayWay(ConfirmOrderActivity.WECHAT_PAY);
                 countDownTimer1.cancel();
@@ -317,7 +367,9 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                 payPopWindow.dismiss();
                 break;
             case R.id.alipay_tv:
+                isInterrupt = true;
                 payType = ConfirmOrderActivity.ALI_PAY;
+
                 callBackPayWay(ConfirmOrderActivity.ALI_PAY);
                 countDownTimer1.cancel();
                 countDownTimer2.cancel();
@@ -325,20 +377,23 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                 break;
             case R.id.wechat_code_ll:
                 //弹出微信支付二维码
-
+                ISWECHAT_PAY = true;
+                isInterrupt = false;
+                orderDetialBean.setSelectWechat(true);
                 payType = ConfirmOrderActivity.WECHAT_CODE_PAY;
                 mPresenter.getPayCode(ORDER_ID, 1);
                 codeNameTv.setText("微信二维码");
                 break;
             case R.id.ali_code_ll:
                 //弹出支付宝支付二维码
-
+                isInterrupt = false;
                 payType = ConfirmOrderActivity.ALI_CODE_PAY;
                 mPresenter.getPayCode(ORDER_ID, 2);
                 codeNameTv.setText("支付宝二维码");
                 break;
             case R.id.select_other_pay_tv:
                 //选择其它付款方式
+                isInterrupt = true;
                 codeNameTv.setText("微信二维码");
                 paypop_2.setVisibility(View.GONE);
                 paypop_1.setVisibility(View.VISIBLE);
@@ -350,7 +405,8 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                 break;
             case R.id.confirm_payed_tv:
                 //确认已付款
-                mPresenter.orderDetials(ORDER_ID);
+                isConfirm = true;
+                mPresenter.orderDetials(ORDER_ID, false);
                 break;
         }
     }
@@ -366,7 +422,7 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
 
             @Override
             public void onFinish() {
-                isFinish = true;
+                isInterrupt = true;
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -383,7 +439,7 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
 
             @Override
             public void onFinish() {
-                isFinish = true;
+                isInterrupt = true;
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -398,22 +454,9 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
      * 回调支付方式
      */
     private void callBackPayWay(int type) {
-        OrderDetialBean bean = new OrderDetialBean();
-        bean.setPayType(type);
-        bean.setOrder_no(ORDER_NO);
-        bean.setOrder_id(ORDER_ID);
-        bean.setGoodsImg(goodsList.get(0).getProduct_image());
-        bean.setGoodsName(goodsList.get(0).getProduct_name());
-        double price = 0.00;
-        int goodsNum = 0;
-        for (GoodsBean goodsBean : goodsList) {
-            price = Double.valueOf(goodsBean.getPrice()) * goodsBean.getNum();
-            goodsNum = goodsNum + goodsBean.getNum();
-        }
-        bean.setGoodsNum(goodsNum);
-
-        bean.setPrice(String.format("%.2f", price + FEE) + "");
-        callBackConfirmFragment.onCallBack(type, bean);
+        orderDetialBean.setSelectWechat(ISWECHAT_PAY);
+        orderDetialBean.setPayType(type);
+        callBackConfirmFragment.onCallBack(type, orderDetialBean);
     }
 
     /**
@@ -427,16 +470,10 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
         bean.setShip_type(getDeliveryWay());
         bean.setIs_cart(getActivity().getIntent().getIntExtra(Constant.FROM, 0));
         bean.setProduct_list(new Gson().toJson(goodsList));
-        LogUtils.e(new Gson().toJson(bean));
         mPresenter.submitOrder(bean, new BaseObserver<BaseResult<OrderIdBean>>(getContext(), true) {
             @Override
             protected void onBaseNext(BaseResult<OrderIdBean> data) {
-                payPopWindow = Poputils.getPop(payView, R.layout.layout_submitorder, getActivity());
-                priceTvPop.setText(String.format(Constant.PRICE_FORMAT, ALL_PRICE + ""));
-                ORDER_ID = data.getData().getOrder_id();
-                ORDER_NO = data.getData().getOrder_no();
-                callBackConfirmFragment.onCallBack(ConfirmOrderActivity.CONFIRMF_RAGGMENT, null);
-                countDownTimer1.start();
+                mPresenter.orderDetials(data.getData().getOrder_id(), true);
             }
 
             @Override
@@ -472,15 +509,16 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                 break;
             case R.id.express_rb:
                 switchSelivryWay(1);
-                if (expresstypeRb.isChecked()) {
-                    mPresenter.getFeight(mPresenter.getArea_id(addressList), 0, mPresenter.productInfo(goodsList));
-                } else if (EMSRb.isChecked()) {
-                    mPresenter.getFeight(mPresenter.getArea_id(addressList), 1, mPresenter.productInfo(goodsList));
-                } else if (mailRb.isChecked()) {
-                    mPresenter.getFeight(mPresenter.getArea_id(addressList), 2, mPresenter.productInfo(goodsList));
+                if (addressList.size() > 0) {
+                    if (expresstypeRb.isChecked()) {
+                        mPresenter.getFeight(mPresenter.getArea_id(addressList), 0, mPresenter.productInfo(goodsList));
+                    } else if (EMSRb.isChecked()) {
+                        mPresenter.getFeight(mPresenter.getArea_id(addressList), 1, mPresenter.productInfo(goodsList));
+                    } else if (mailRb.isChecked()) {
+                        mPresenter.getFeight(mPresenter.getArea_id(addressList), 2, mPresenter.productInfo(goodsList));
 
+                    }
                 }
-
                 break;
         }
     }
@@ -490,20 +528,23 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
      * 快递方式 0为门店自提
      *
      * @param type
+     * @param type
      */
     private void switchSelivryWay(int type) {
         if (type == 0) {
             addressLl.setVisibility(View.GONE);
             addressBottomLl.setVisibility(View.GONE);
             pickupRb.setTextColor(getResources().getColor(R.color.white));
+            expressRb.setTextColor(getResources().getColor(R.color.color_1e1e1e));
             isdeliveryTv.setText(FEE_HINT);
-            ALL_PRICE = GOODS_PRICE;
-            priceTv.setText(String.format(PRICE_FORMAT, GOODS_PRICE + ""));
-        } else {
+            ALL_PRICE = Double.valueOf(String.format("%.2f", GOODS_PRICE));
+            priceTv.setText(String.format(PRICE_FORMAT, ALL_PRICE + ""));
+        } else if (type == 1) {
             isdeliveryTv.setText(String.format(FEE_FORMAT, FEE + ""));
             ALL_PRICE = Double.valueOf(String.format("%.2f", GOODS_PRICE + FEE));
             priceTv.setText(String.format(PRICE_FORMAT, String.format("%.2f", ALL_PRICE) + ""));
             pickupRb.setTextColor(getResources().getColor(R.color.color_1e1e1e));
+            expressRb.setTextColor(getResources().getColor(R.color.white));
             addressLl.setVisibility(View.VISIBLE);
             addressBottomLl.setVisibility(View.VISIBLE);
         }
@@ -530,30 +571,50 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
         paypop_1.setVisibility(View.GONE);
         try {
             codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, DensityUtil.dip2px(getContext(), 300)));
+            mPresenter.orderDetials(ORDER_ID, false);
         } catch (WriterException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void paySucc(OrderDetialBean orderDetialBean) {
-        if (orderDetialBean.getPaid_status() == 1) {
-            countDownTimer1.cancel();
-            countDownTimer2.cancel();
-            orderDetialBean.setPayType(payType);
-            payPopWindow.dismiss();
-            callBackConfirmFragment.onCallBack(ConfirmOrderActivity.PAY_SUCC, orderDetialBean);
+    public void paySucc(OrderDetialBean orderDetialBean, boolean isFromSubmit) {
+        this.orderDetialBean = orderDetialBean;
+        ORDER_ID = orderDetialBean.getOrder_id();
+        ORDER_NO = orderDetialBean.getOrder_no();
+        if (isFromSubmit) {
+            payPopWindow = Poputils.getPop(payView, R.layout.layout_submitorder, getActivity());
+            priceTvPop.setText(String.format(Constant.PRICE_FORMAT, String.format("%.2f", ALL_PRICE) + ""));
+            callBackConfirmFragment.onCallBack(ConfirmOrderActivity.CONFIRMF_RAGGMENT, null);
+            countDownTimer1.start();
         } else {
-            if (!isFinish) {
-                mPresenter.orderDetials(ORDER_ID);
+            if (orderDetialBean.getPaid_status() == 1) {
+                countDownTimer1.cancel();
+                countDownTimer2.cancel();
+                orderDetialBean.setPayType(payType);
+                orderDetialBean.setSelectWechat(ISWECHAT_PAY);
+                payPopWindow.dismiss();
+                callBackConfirmFragment.onCallBack(ConfirmOrderActivity.PAY_SUCC, orderDetialBean);
+            } else {
+                if (isConfirm) {
+                    orderDetialBean.setPayType(payType);
+                    countDownTimer1.cancel();
+                    countDownTimer2.cancel();
+                    payPopWindow.dismiss();
+                    orderDetialBean.setSelectWechat(ISWECHAT_PAY);
+                    orderDetialBean.setPayType(ConfirmOrderActivity.PAY_FAIL);
+                    callBackConfirmFragment.onCallBack(ConfirmOrderActivity.PAY_FAIL, orderDetialBean);
+                } else if (!isInterrupt) {
+                    mPresenter.orderDetials(ORDER_ID, false);
+                }
             }
         }
     }
 
     @Override
     public void payFail(Throwable throwable) {
-        if (!isFinish) {
-            mPresenter.orderDetials(ORDER_ID);
+        if (!isInterrupt) {
+            mPresenter.orderDetials(ORDER_ID, false);
         }
     }
 }

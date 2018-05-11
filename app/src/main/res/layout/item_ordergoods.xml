@@ -22,7 +22,7 @@
         android:layout_marginTop="@dimen/dimen24"
         android:layout_toRightOf="@+id/goods_img"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1"
         android:text="明星变色润唇膏 Dior/迪奥润唇膏变色润唇膏"
         android:textColor="@color/color_1e1e1e"
         android:textSize="@dimen/dimen15sp" />

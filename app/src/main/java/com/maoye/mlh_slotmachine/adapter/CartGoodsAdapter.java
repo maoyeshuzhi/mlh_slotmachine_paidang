@@ -47,9 +47,10 @@ public class CartGoodsAdapter extends BaseRecyclerAdapter<GoodsBean> {
             ((CartGoodsVH) viewHolder).selectImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemChildClickListener.onChildItemClick(view, SELECT_GOODS, RealPosition, data);
                     data.setSelect(!data.isSelect());
                     notifyItemChanged(RealPosition);
+                    onItemChildClickListener.onChildItemClick(view, SELECT_GOODS, RealPosition, data);
+
                 }
             });
 

@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen4"
+    android:layout_marginLeft="@dimen/dimen4"
+    android:layout_marginRight="@dimen/dimen4"
     android:orientation="horizontal">
 
-    <View
+  <!--  <View
         android:id="@+id/left_line_v"
         android:layout_width="@dimen/dimen8"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,8 +44,7 @@
             android:id="@+id/discription_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen12"
-            android:layout_marginTop="@dimen/dimen6"
+            android:layout_marginTop="@dimen/dimen4"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="明星变色润唇膏 Dior/迪奥"
@@ -51,9 +52,10 @@
             android:textSize="@dimen/dimen9sp" />
 
         <LinearLayout
+            android:id="@+id/buy_phone_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen12"
+            android:clickable="true"
             android:orientation="horizontal">
 
             <TextView
@@ -61,32 +63,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingTop="@dimen/dimen2"
+                android:paddingTop="@dimen/dimen1"
                 android:text="￥955.00"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen10sp" />
 
-            <LinearLayout
-                android:id="@+id/buy_phone_ll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/dimen2">
-
-                <TextView
-
-                    android:layout_width="@dimen/dimen35"
-                    android:layout_height="@dimen/dimen10"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dimen10"
-                    android:background="@drawable/black_stroke"
-                    android:gravity="center"
-                    android:text="@string/phoneBuy"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen7sp" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="@dimen/dimen35"
+                android:layout_height="@dimen/dimen10"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen1"
+                android:background="@drawable/black_stroke"
+                android:gravity="center"
+                android:text="@string/phoneBuy"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen7sp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -94,5 +86,6 @@
     <View
         android:id="@+id/right_line_v"
         android:layout_width="@dimen/dimen8"
+        android:visibility="gone"
         android:layout_height="wrap_content" />
 </LinearLayout>

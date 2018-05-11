@@ -90,7 +90,7 @@ public class ConfirmPresenter extends BasePresenterImpl<ConfirmContract.View> im
             price = price+Double.valueOf(bean.getPrice()+"")*bean.getNum();
         }
 
-        return price;
+        return  Double.valueOf(String.format("%.2f",price));
     }
 
     @Override
@@ -115,11 +115,11 @@ public class ConfirmPresenter extends BasePresenterImpl<ConfirmContract.View> im
     }
 
     @Override
-    public void orderDetials(int orderId) {
-        mModel.orderDetials(orderId, new BaseObserver<BaseResult<OrderDetialBean>>(mView.getContext(),true) {
+    public void orderDetials(int orderId, final boolean isFromSubmit) {
+        mModel.orderDetials(orderId, new BaseObserver<BaseResult<OrderDetialBean>>(mView.getContext(),isFromSubmit) {
             @Override
             protected void onBaseNext(BaseResult<OrderDetialBean> data) {
-                  mView.paySucc(data.getData());
+                  mView.paySucc(data.getData(),isFromSubmit);
             }
 
             @Override
@@ -129,4 +129,37 @@ public class ConfirmPresenter extends BasePresenterImpl<ConfirmContract.View> im
         });
     }
 
+    /**
+     *
+     * @param list
+     * @return  (0-不限制 1-自提 2-快递)
+     */
+    @Override
+    public int getDeliveryType(List<GoodsBean> list) {
+        boolean isPickUp = false;//是否存在自提
+        boolean isExpress = false;//是否存在快递
+        boolean  isNotLimite = false;//是否存在没有限制
+        for (GoodsBean bean : list) {
+              if(bean.getDelivery_type() ==1){
+                  isPickUp = true;
+              }else if(bean.getDelivery_type() ==2){
+                isExpress = true;
+            }else if(bean.getDelivery_type() ==0){
+                  isNotLimite = true;
+              }
+        }
+
+      if(isPickUp){
+            return  1;
+      }else if(!isPickUp){
+          if(isExpress &&isNotLimite){
+              return 0;
+          }else if(isExpress &&!isNotLimite){
+              return 2;
+          }else {
+              return 0;
+          }
+      }
+        return 0;
+    }
 }

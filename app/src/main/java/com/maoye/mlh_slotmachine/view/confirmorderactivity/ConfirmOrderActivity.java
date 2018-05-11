@@ -49,6 +49,7 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
     public static final int ALI_CODE_PAY = 1;
     public static final int WECHAT_CODE_PAY = 2;
     public static final int PAY_SUCC = 5;
+    public static final int PAY_FAIL = 6;
     @BindView(R.id.cart_arrowline_img)
     ImageView cartArrowlineImg;
 
@@ -94,6 +95,7 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
             break;
             case WECHAT_PAY://微信支付
             case ALI_PAY://支付宝支付
+            case PAY_FAIL:
                 PayFragment payFragment = new PayFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constant.KEY, bean);
@@ -103,11 +105,11 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
             case PAY_SUCC:
                 flow4Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b4), null, null);
                 //打印小票
-                PrinterUtils printerUtils = PrinterUtils.getInstanse();
+             /*   PrinterUtils printerUtils = PrinterUtils.getInstanse();
                 if(! printerUtils.PrintConnStatus(mUsbDriver,mUsbManager)){
                     return;
                 }
-                printerUtils.getPrintTicketData(mUsbDriver,bean,this);
+                printerUtils.getPrintTicketData(mUsbDriver,bean,this);*/
                 SuccFragment succFragment = new SuccFragment();
                 Bundle succBundle = new Bundle();
                 succBundle.putSerializable(Constant.KEY, bean);

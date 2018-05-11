@@ -105,89 +105,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen60">
-
-            <ImageView
-                android:id="@+id/pay_max_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/weichat_max" />
-
-            <TextView
-                android:id="@+id/pay_max_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/pay_max_img"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dimen14"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="@string/wechat_max_hint_str"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen15sp" />
-
-            <ImageView
-                android:id="@+id/min_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/pay_max_img"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dimen84"
-                android:clickable="true"
-                android:src="@mipmap/ali_min" />
-
-            <TextView
-                android:id="@+id/min_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/min_img"
-                android:layout_marginRight="@dimen/dimen73"
-                android:clickable="true"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:paddingTop="@dimen/dimen15"
-                android:text="使用支付宝付款"
-                android:textColor="@color/color_969696"
-                android:textSize="@dimen/dimen8sp" />
-        </RelativeLayout>
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen38"
+            android:drawablePadding="@dimen/dimen14"
+            android:drawableTop="@mipmap/wei_new_icon"
+            android:gravity="center"
+            android:text="@string/payscan_hint_str"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:background="@color/color_f0f0f0"
+            android:layout_marginTop="@dimen/dimen36"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dimen23"
+            android:paddingTop="@dimen/dimen23">
 
             <ImageView
                 android:id="@+id/bottom_left_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/weipay" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingLeft="@dimen/dimen17"
-                android:paddingRight="@dimen/dimen17"
-                android:text=">"
-                android:textColor="@color/color_1e1e1e"
-                android:textSize="@dimen/dimen20sp" />
+                android:src="@mipmap/weixin_new" />
 
             <ImageView
                 android:id="@+id/bottom_right_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/weixin_scan_icon" />
-
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen23"
+                android:src="@mipmap/ali_new" />
         </LinearLayout>
 
 
@@ -369,17 +323,20 @@
     <!--支付中界面-->
     <LinearLayout
         android:id="@+id/paying_layout"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="@dimen/dimen65"
-            android:layout_height="@dimen/dimen65"
+            android:layout_width="@dimen/dimen35"
+            android:indeterminateDrawable="@drawable/progress"
+            android:layout_height="@dimen/dimen35"
             android:layout_gravity="center"
+            android:indeterminateOnly="true"
+            android:indeterminateBehavior="repeat"
             android:indeterminateDuration="400" />
 
         <TextView
@@ -419,7 +376,7 @@
             android:layout_marginRight="@dimen/dimen50"
             android:gravity="center"
             android:text="剩120秒自动关闭"
-            android:textColor="@color/color_1e1e1e"
+            android:textColor="@color/color_646464"
             android:textSize="@dimen/dimen16sp" />
     </LinearLayout>
 </LinearLayout>

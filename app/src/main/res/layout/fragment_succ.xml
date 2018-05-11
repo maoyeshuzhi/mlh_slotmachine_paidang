@@ -19,7 +19,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dimen30"
         android:includeFontPadding="false"
-        android:text="打印成功，正在打印小票"
+        android:text="支付成功，正在打印小票"
         android:textColor="@color/color_323232"
         android:textSize="@dimen/dimen23sp" />
 
@@ -134,14 +134,14 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen44"
+        android:layout_marginLeft="@dimen/dimen40"
         android:layout_marginTop="@dimen/dimen16"
         android:layout_weight="1">
 
         <ImageView
             android:id="@+id/code_img"
-            android:layout_width="@dimen/dimen100"
-            android:layout_height="@dimen/dimen100"
+            android:layout_width="@dimen/dimen116"
+            android:layout_height="@dimen/dimen116"
             android:scaleType="fitXY"
             android:src="@mipmap/default_image" />
 
@@ -150,7 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/code_img"
-            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen10"
             android:layout_toRightOf="@+id/code_img"
             android:text="@string/query_order_info_str"
             android:textColor="@color/color_1e1e1e"
@@ -160,7 +160,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text1"
-            android:layout_marginLeft="@dimen/dimen10"
             android:layout_marginTop="@dimen/dimen7"
             android:layout_toRightOf="@+id/code_img"
             android:text="@string/succ_code_hint_str"
@@ -169,14 +168,17 @@
 
         <TextView
             android:id="@+id/text2"
+            android:layout_marginLeft="@dimen/dimen12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/code_img"
+            android:layout_alignBottom="@+id/code_img"
             android:text="茂乐惠, 随时随地买正品"
             android:textColor="@color/color_323232"
             android:textSize="@dimen/dimen9sp" />
 
         <LinearLayout
+            android:id="@+id/back_ll"
+            android:clickable="true"
             android:layout_width="@dimen/dimen136"
             android:layout_height="@dimen/dimen40"
             android:layout_alignBottom="@+id/text2"

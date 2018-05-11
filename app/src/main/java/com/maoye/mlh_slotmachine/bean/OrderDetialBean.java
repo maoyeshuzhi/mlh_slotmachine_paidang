@@ -6,13 +6,7 @@ import java.util.List;
 
 public class OrderDetialBean implements Serializable{
     private int payType;//支付类型 1微信，2支付宝
-    private String goodsImg;
-    private String goodsName;
-    private int goodsNum;//商品件数
-    private String price;//金额
-
-
-
+    private boolean isSelectWechat;//是否选择过微信支付
     private int order_id;
     private String order_no;
     private int paid_status;//支付状态(0-未支付，1-已支付)
@@ -29,6 +23,32 @@ public class OrderDetialBean implements Serializable{
     private String sap_id;//门店storeId
     private String freight_amount;//邮费
     private int payment_type;//支付方式(1-微信 2-支付宝)
+    private int order_status;//代发货：10  待取货：30 待收货：20   已完成：81、82
+    private Double refund_amount;//退款金额
+
+    public Double getRefund_amount() {
+        return refund_amount;
+    }
+
+    public void setRefund_amount(Double refund_amount) {
+        this.refund_amount = refund_amount;
+    }
+
+    public int getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(int order_status) {
+        this.order_status = order_status;
+    }
+
+    public boolean isSelectWechat() {
+        return isSelectWechat;
+    }
+
+    public void setSelectWechat(boolean selectWechat) {
+        isSelectWechat = selectWechat;
+    }
 
     public int getPayment_type() {
         return payment_type;
@@ -76,38 +96,6 @@ public class OrderDetialBean implements Serializable{
 
     public void setPayType(int payType) {
         this.payType = payType;
-    }
-
-    public String getGoodsImg() {
-        return goodsImg;
-    }
-
-    public void setGoodsImg(String goodsImg) {
-        this.goodsImg = goodsImg;
-    }
-
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
-    public int getGoodsNum() {
-        return goodsNum;
-    }
-
-    public void setGoodsNum(int goodsNum) {
-        this.goodsNum = goodsNum;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 
     public int getOrder_id() {

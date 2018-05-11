@@ -40,6 +40,7 @@
         <activity android:name=".view.h5activity.H5Activity" />
         <activity android:name=".view.adactivity.AdActivity" />
         <activity android:name=".view.printreceiptactivity.PrintReceiptActivity" />
+        <activity android:name=".view.quickpayactivity.QuickpayActivity" />
 
         <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
             android:resource="@xml/device_filter" />
@@ -55,6 +56,12 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
 
                 <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.ApkInstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 

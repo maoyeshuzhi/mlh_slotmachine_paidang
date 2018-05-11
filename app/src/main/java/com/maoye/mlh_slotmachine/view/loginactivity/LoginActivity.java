@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,14 +18,14 @@ import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
-import com.maoye.mlh_slotmachine.view.confirmorderactivity.ConfirmOrderActivity;
-import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
-import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
-import com.maoye.mlh_slotmachine.view.homeactivity.GlideImageLoader;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.TextUtil;
 import com.maoye.mlh_slotmachine.util.Toast;
+import com.maoye.mlh_slotmachine.view.confirmorderactivity.ConfirmOrderActivity;
+import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
+import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
+import com.maoye.mlh_slotmachine.view.homeactivity.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -64,6 +65,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     TextView loginTv;
     @BindView(R.id.banner)
     Banner banner;
+
     private int loginType;
     public static final int ACCOUNT_LOIGN = 0;
     public static final int MOBILE_LOIGN = 1;//手机登录
@@ -72,6 +74,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initData();
@@ -96,7 +99,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                     //调外部链接
                     Intent intent = new Intent(LoginActivity.this, H5Activity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(Constant.KEY,advertBean.getLink_url());
+                    intent.putExtra(Constant.KEY, advertBean.getLink_url());
                     startActivity(intent);
                 } else if (advertBean.getProduct_id() != 0) {
                     Intent intent = new Intent(LoginActivity.this, GoodsdetialsActivity.class);
@@ -106,6 +109,14 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pswEt.setText("");
+        accountEt.setText("");
+        phoneEt.setText("");
     }
 
     TextWatcher phoneTw = new TextWatcher() {
@@ -247,13 +258,10 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             phoneView.setVisibility(View.VISIBLE);
             accountEt.setVisibility(View.GONE);
             accountView.setVisibility(View.GONE);
-            pswEt.setVisibility(View.GONE);
-            pswView.setVisibility(View.GONE);
+            pswEt.setVisibility(View.INVISIBLE);
+            pswView.setVisibility(View.INVISIBLE);
         }
     }
-
-
-
 
 
     @Override

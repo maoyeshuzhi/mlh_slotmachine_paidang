@@ -2,8 +2,11 @@ package com.maoye.mlh_slotmachine.view.homeactivity;
 
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +16,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ToxicBakery.viewpager.transforms.DefaultTransformer;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnPageChangeListener;
 import com.google.gson.Gson;
 import com.maoye.mlh_slotmachine.R;
+import com.maoye.mlh_slotmachine.apkmanager.DownLoadApk;
+import com.maoye.mlh_slotmachine.apkmanager.FileDownloadManager;
 import com.maoye.mlh_slotmachine.bean.CacheBean;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
@@ -31,6 +35,8 @@ import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
 import com.maoye.mlh_slotmachine.view.printreceiptactivity.PrintReceiptActivity;
+import com.maoye.mlh_slotmachine.view.quickpayactivity.QuickpayActivity;
+import com.maoye.mlh_slotmachine.webservice.URL;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
 import com.youth.banner.Banner;
 import com.youth.banner.Transformer;
@@ -66,10 +72,8 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
     @BindView(R.id.banner)
     ConvenientBanner banner;
     private BadgeView goodsNumView;
-
     private List<List<HomeBean.ListBeanX>> goodList = new ArrayList<>();
     private List<HomeBean.AdvertBean> advertBeanList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,11 +82,12 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
         ButterKnife.bind(this);
         goodsNumView = new BadgeView(HomeActivity.this);
+        goodsNumView.setStyle(1);
         goodsNumView.setTargetView(cartImg);
-        goodsNumView.setBadgeMargin(0, 2, 10, 0);
+        goodsNumView.setBadgeMargin(10, 0, 0, 10);
 
         headBanner.setImageLoader(new GlideImageLoader());
-        headBanner.setBannerAnimation(Transformer.DepthPage);
+        headBanner.setBannerAnimation(Transformer.BackgroundToForeground);
         headBanner.start();
         headBanner.setOnBannerListener(new OnBannerListener() {
             @Override
@@ -134,6 +139,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
     protected void onResume() {
         super.onResume();
         mPresenter.homedata(true);
+        mPresenter.versionInfo();
         banner.startTurning();
     }
 
@@ -148,7 +154,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         switch (view.getId()) {
             case R.id.quick_pay_bt:
                 //快付买单
-
+                openActivity(QuickpayActivity.class);
                 break;
             case R.id.print_bill_bt:
                 //补打小票
@@ -247,7 +253,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
     @Override
     public void getVersionInfo(VersionInfoBean versionInfoBean) {
         if (!versionInfoBean.getVersionName().equals(VersionManagerUtil.getVersion(this))) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            DownLoadApk.download(this,URL.APK_LOADDOWN, "茂乐惠机",  "mlhj");
 
         }
     }

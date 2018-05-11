@@ -5,7 +5,6 @@ package com.maoye.mlh_slotmachine.bean;
  */
 
 public class OrderIdBean {
-
     private String order_no;
     private int order_id;
     private String sap_id;

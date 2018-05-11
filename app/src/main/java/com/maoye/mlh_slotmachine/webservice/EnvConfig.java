@@ -21,6 +21,7 @@ public abstract class EnvConfig {
     }
 
     public abstract String getWebServiceBaseUrl();
+    public abstract String getQuickPayWebServiceBaseUrl();
 
     public  abstract String getH5BaseUrl();
 

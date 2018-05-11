@@ -11,6 +11,11 @@ public class LuoChao extends EnvConfig {
     }
 
     @Override
+    public String getQuickPayWebServiceBaseUrl() {
+        return "http://172.29.36.195/";
+    }
+
+    @Override
     public String getH5BaseUrl() {
         return "http://172.31.10.229:9999/";
     }

@@ -38,7 +38,7 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
     }
 
     @Override
-    public void addCart( int id, int specId, int num) {
+    public void addCart(int id, int specId, int num) {
         goodsDetialsModel.addCart(id, specId, num, new BaseObserver<BaseResult>(mView.getContext()) {
             @Override
             protected void onBaseNext(BaseResult data) {
@@ -47,14 +47,18 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
 
             @Override
             protected void onBaseError(Throwable t) {
-          LogUtils.e(t+"");
+                LogUtils.e(t + "");
             }
         });
     }
 
     @Override
-    public int getSpecId( List<GoodsDetialsBean.SpecListBean> spec_list) {
-        return specId !=0?specId:spec_list.get(0).getId();
+    public int getSpecId(List<GoodsDetialsBean.SpecListBean> spec_list) {
+        if (specId != 0) {
+            return specId;
+        } else {
+            return spec_list.get(0).getId();
+        }
     }
 
 
@@ -87,12 +91,12 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
 
     @Override
     public String getSpec_vals(List<GoodsDetialsBean.SpecListBean> spec_list) {
-        return TextUtils.isEmpty(spec_vals)?spec_list.get(0).getSpec_vals()+"":spec_vals;
+        return TextUtils.isEmpty(spec_vals) ? spec_list.get(0).getSpec_vals() + "" : spec_vals;
     }
 
     @Override
     public String getPrice(List<GoodsDetialsBean.SpecListBean> spec_list) {
-        return  price.equals("0.00")?spec_list.get(0).getPrice()+"":price;
+        return price.equals("0.00") ? spec_list.get(0).getPrice() + "" : price;
     }
 
 
@@ -121,36 +125,51 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
                 itemListBean.setItemName(specListBean.getSpec_val_list().get(i));
                 boolean flag = true;
                 for (SpecBean.SpecItemListBean specItemListBean : pecItemList) {
-                    if(itemListBean.getItemName().equals(specItemListBean.getItemName())){
+                    if (itemListBean.getItemName().equals(specItemListBean.getItemName())) {
                         flag = false;
                     }
                 }
-                if(flag){
+                if (flag) {
                     pecItemList.add(itemListBean);
                 }
 
+            }
+        }
+
+
+        boolean isMoreSpecifi = false;
+        for (SpecBean bean : list) {
+            if (bean.getPecItemList().size() > 1) {
+                isMoreSpecifi = true;
+            }
+        }
+
+        if (!isMoreSpecifi) {
+            for (SpecBean bean : list) {
+                for (SpecBean.SpecItemListBean itemListBean : bean.getPecItemList()) {
+                    itemListBean.setSelect(true);
+                }
             }
         }
         return list;
     }
 
 
-
-    public int getStockNum(List<SpecBean> specList,int type,int position,GoodsDetialsBean bean,int oldStockNum) {
+    public int getStockNum(List<SpecBean> specList, int type, int position, GoodsDetialsBean bean, int oldStockNum) {
         int stockNum = 0;
         List<SpecBean.SpecItemListBean> pecItemList = specList.get(type).getPecItemList();
         for (int i = 0; i < pecItemList.size(); i++) {
-            if(i ==position){
+            if (i == position) {
                 pecItemList.get(i).setSelect(true);
-            }else {
+            } else {
                 pecItemList.get(i).setSelect(false);
             }
         }
         StringBuffer buffer = new StringBuffer();
         for (SpecBean specBean : specList) {
             for (SpecBean.SpecItemListBean itemListBean : specBean.getPecItemList()) {
-                if(itemListBean.isSelect()){
-                    buffer.append(itemListBean.getItemName()+",");
+                if (itemListBean.isSelect()) {
+                    buffer.append(itemListBean.getItemName() + ",");
                 }
             }
         }
@@ -159,7 +178,7 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
         String substring = buffer.toString().substring(0, buffer.length() - 1);
         boolean isallSelect = true;
         for (GoodsDetialsBean.SpecListBean specListBean : bean.getSpec_list()) {
-            if(specListBean.getSpec_vals().equals(substring)) {
+            if (specListBean.getSpec_vals().equals(substring)) {
                 stockNum = specListBean.getStock();
                 specId = specListBean.getId();
                 spec_vals = specListBean.getSpec_vals();
@@ -168,9 +187,9 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
             }
         }
 
-        if(isallSelect){
+        if (isallSelect) {
             spec_vals = bean.getSpec_list().get(0).getSpec_vals();
-            specId = bean.getSpec_list().get(0).getId();
+            // specId = bean.getSpec_list().get(0).getId();
             price = bean.getSpec_list().get(0).getPrice();
             stockNum = oldStockNum;
         }

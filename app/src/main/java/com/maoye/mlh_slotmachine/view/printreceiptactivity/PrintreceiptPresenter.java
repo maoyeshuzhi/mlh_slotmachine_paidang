@@ -19,7 +19,7 @@ public class PrintreceiptPresenter extends BasePresenterImpl<PrintreceiptContrac
         model.orderDetials(orderId, new BaseObserver<BaseResult<OrderDetialBean>>(mView.getContext(),true) {
             @Override
             protected void onBaseNext(BaseResult<OrderDetialBean> data) {
-                mView.onSuccess(data);
+                mView.onSuccess(data.getData());
             }
 
             @Override

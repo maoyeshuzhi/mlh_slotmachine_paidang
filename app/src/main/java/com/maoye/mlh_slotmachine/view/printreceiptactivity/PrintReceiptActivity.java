@@ -8,8 +8,11 @@ import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +21,8 @@ import android.widget.TextView;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
+import com.maoye.mlh_slotmachine.util.LogUtils;
+import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.device.printers.PrinterUtils;
 import com.maoye.mlh_slotmachine.view.homeactivity.HomeActivity;
 import com.printsdk.usbsdk.UsbDriver;
@@ -57,7 +62,9 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
     public static final String TIME2 = "剩余操作时长%s秒";
     private CountDownTimer countDownTimer1, countDownTimer2;
     private String authCode = "";
-    private boolean isPrintFail;
+    private boolean isPrintSucc;
+    private String orderId = "";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,21 +101,42 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
             }
         }.start();
 
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(codeEt.getWindowToken(),0);
+
+     codeEt.addTextChangedListener(new TextWatcher() {
+         @Override
+         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+         }
+
+         @Override
+         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+         }
+
+         @Override
+         public void afterTextChanged(Editable editable) {
+             LogUtils.e(editable+"");
+
+         }
+     });
 
         codeEt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (KeyEvent.KEYCODE_ENTER == i && KeyEvent.ACTION_DOWN == keyEvent.getAction()) {
                     //处理事件
-                    if (isPrintFail || !authCode.equals(codeEt.getText() + "")) {
-                        authCode = codeEt.getText() + "";
+                     authCode = codeEt.getText().toString();
+                    String[] split = authCode.split("=");
+                    codeEt.setText("");
+                    if (split[split.length-1]!=null&&!orderId.equals(split[split.length-1])) {
                         try {
-                            String orderId = authCode.substring(authCode.indexOf("="));
+                            orderId = split[split.length-1];
+                            LogUtils.e("orderid"+orderId);
                             mPresenter.OrderDetial(Integer.valueOf(orderId));
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }
-                        codeEt.setText("");
+
                     }
                     return true;
                 }
@@ -128,18 +156,28 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
 
     @Override
     public void onSuccess(Object o) {
-        PrinterUtils printerUtils = PrinterUtils.getInstanse();
-        if (!printerUtils.PrintConnStatus(mUsbDriver, mUsbManager)) {
-            isPrintFail = true;
-            return;
-        }
-        printerUtils.getPrintTicketData(mUsbDriver, (OrderDetialBean) o, this);
-        flow2Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b5), null, null);
-        isPrintFail = false;
-        printTitleTv.setVisibility(View.GONE);
-        succTv.setVisibility(View.VISIBLE);
-        timeBackTv.setVisibility(View.VISIBLE);
-        countDownTimer1.start();
+     /*   代发货：
+        待取货：30
+        待收货：20
+        已完成：81、82*/
+        OrderDetialBean bean = (OrderDetialBean) o;
+        int status = bean.getOrder_status();
+       if(status ==10||status ==20||status ==30||status ==81||status ==82) {
+           PrinterUtils printerUtils = PrinterUtils.getInstanse();
+           if (!printerUtils.PrintConnStatus(mUsbDriver, mUsbManager)) {
+               if(!isPrintSucc) orderId = "";
+               return;
+           }
+           isPrintSucc = true;
+           printerUtils.getPrintTicketData(mUsbDriver, bean, this);
+           flow2Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b5), null, null);
+           printTitleTv.setVisibility(View.GONE);
+           succTv.setVisibility(View.VISIBLE);
+           timeBackTv.setVisibility(View.VISIBLE);
+           countDownTimer1.start();
+       }else {
+           Toast.getInstance().toast(this,"该订单状态无法打印小票",2);
+       }
     }
 
     @Override

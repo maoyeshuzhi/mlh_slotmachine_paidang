@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen39"
+    android:layout_marginRight="@dimen/dimen39"
+    android:layout_marginTop="@dimen/dimen38"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/order_no_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/unselect"
+            android:drawablePadding="@dimen/dimen10"
+            android:paddingBottom="@dimen/dimen13"
+            android:paddingTop="@dimen/dimen13"
+            android:text="10052311115559893004"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen17sp" />
+
+        <TextView
+            android:id="@+id/brand_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dior/迪奥专柜"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color969696_stroke"
+        android:orientation="vertical">
+
+        <com.maoye.mlh_slotmachine.widget.NotScrollRecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen14"
+            android:layout_marginRight="@dimen/dimen19"
+            android:layout_marginTop="@dimen/dimen12"
+            android:layout_gravity="right"
+            android:includeFontPadding="false"
+            android:text="合计：￥1810.00"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen19sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-
     <include layout="@layout/layout_head" />
 
     <LinearLayout
@@ -32,6 +31,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen10"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dimen51"
                 android:layout_marginRight="@dimen/dimen51"
@@ -99,6 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:focusable="true"
         android:cursorVisible="false"
         android:imeOptions="actionSend"
         android:textColor="@color/white"
@@ -134,6 +135,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/dimen6"
             android:layout_marginRight="@dimen/dimen57"
@@ -162,11 +164,20 @@
                 android:textSize="@dimen/dimen9sp" />
         </LinearLayout>
 
-        <LinearLayout
+      <!--  <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="206dp"
+            android:layout_marginTop="@dimen/dimen64"
+            android:orientation="vertical">  -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dimen6"
+            android:layout_marginRight="@dimen/dimen57"
             android:layout_marginTop="@dimen/dimen64"
             android:orientation="vertical">
 
@@ -187,7 +198,7 @@
                 android:layout_marginTop="@dimen/dimen9"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="在专柜通过快付下的订单可以在本机扫码买单"
+                android:text="本机在线购物"
                 android:textColor="@color/color_464646"
                 android:textSize="@dimen/dimen9sp" />
         </LinearLayout>

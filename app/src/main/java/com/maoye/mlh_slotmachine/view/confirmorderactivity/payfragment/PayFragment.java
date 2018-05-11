@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,10 @@ import android.widget.TextView;
 import com.google.zxing.WriterException;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
+import com.maoye.mlh_slotmachine.bean.OrderIdBean;
+import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
+import com.maoye.mlh_slotmachine.util.LogUtils;
+import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.view.confirmorderactivity.ConfirmOrderActivity;
 import com.maoye.mlh_slotmachine.view.homeactivity.HomeActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseFragment;
@@ -27,6 +32,7 @@ import com.maoye.mlh_slotmachine.util.CodeUtils;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.Poputils;
 import com.maoye.mlh_slotmachine.util.httputil.ImgGlideUtil;
+import com.maoye.mlh_slotmachine.widget.GiveUpPayDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,14 +52,6 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
     TextView orderNoTv;
     @BindView(R.id.price_tv)
     TextView priceTv;
-    @BindView(R.id.pay_max_img)
-    ImageView payMaxImg;
-    @BindView(R.id.pay_max_tv)
-    TextView payMaxTv;
-    @BindView(R.id.min_img)
-    ImageView minImg;
-    @BindView(R.id.min_tv)
-    TextView minTv;
     @BindView(R.id.give_up_pay_tv)
     TextView giveUpPayTv;
     @BindView(R.id.time_tv)
@@ -87,9 +85,11 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
     private CountDownTimer countDownTimer;
     private PopupWindow popupWindow;
     private View payView;
-    private TextView time2Tv, codeNameTv,popPriceTv;
+    private TextView time2Tv, codeNameTv, popPriceTv;
     private ImageView codeImg;
-    private boolean isQuestOrder = true;
+    private String authCode;
+    private boolean isConfirmPay,isInterrupt;
+    private boolean IS_WXPAY_CODE;
 
 
     public interface CallBackPayFragment {
@@ -115,6 +115,7 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
         codeImg = payView.findViewById(R.id.code_img);
         payView.findViewById(R.id.confirm_payed_tv).setOnClickListener(this);
         payView.findViewById(R.id.select_other_pay_tv).setOnClickListener(this);
+        payView.findViewById(R.id.dismiss_img).setOnClickListener(this);
 
     }
 
@@ -122,6 +123,12 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
     public void onAttach(Context context) {
         super.onAttach(context);
         callBackPayFragment = (CallBackPayFragment) getActivity();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        authCode = "";
     }
 
     private void initdata() {
@@ -133,7 +140,7 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
 
             @Override
             public void onFinish() {
-                isQuestOrder = false;
+                isInterrupt = true;
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -142,14 +149,32 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
             }
         }.start();
         bean = (OrderDetialBean) getArguments().getSerializable(Constant.KEY);
+
         if (bean != null) {
+            if (bean.isSelectWechat()) {
+                mPresenter.changeOrderNo(bean.getOrder_id());
+            }
+            OrderDetialBean.ProductListBean productListBean1 = bean.getProduct_list().get(0);
             payType = bean.getPayType();
-            ImgGlideUtil.displayImage(bean.getGoodsImg(), img, true);
-            nameTv.setText(bean.getGoodsName() + "");
-            goodsNumTv.setText(String.format("共%d件商品", bean.getGoodsNum()));
+            ImgGlideUtil.displayImage(productListBean1.getProduct_image(), img, true);
+
+            if (bean.getProduct_list().size() > 1) {
+                nameTv.setText(productListBean1.getProduct_name() + "等");
+            } else {
+                nameTv.setText(productListBean1.getProduct_name() + "");
+            }
+
+            int num = 0;
+            double price = 0.00;
+            for (OrderDetialBean.ProductListBean productListBean : bean.getProduct_list()) {
+                num = num + productListBean.getNum();
+                price = price + Double.valueOf(productListBean.getPrice()) * productListBean.getNum();
+            }
+            Double allPrice = Double.valueOf(String.format("%.2f", price)) + Double.valueOf(bean.getFreight_amount());
+            goodsNumTv.setText(String.format("共%d件商品", num));
             orderNoTv.setText(String.format("订单号%s", bean.getOrder_no()));
-            priceTv.setText(String.format(Constant.PRICE_FORMAT, bean.getPrice() + ""));
-            popPriceTv.setText(bean.getPrice()+"元");
+            priceTv.setText(String.format(Constant.PRICE_FORMAT, allPrice + ""));
+            popPriceTv.setText(allPrice + "元");
             switchPayType();
         }
 
@@ -158,45 +183,49 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (KeyEvent.KEYCODE_ENTER == i && KeyEvent.ACTION_DOWN == keyEvent.getAction()) {
                     //处理事件
-                    payingLayout.setVisibility(View.GONE);
-                    payLayout.setVisibility(View.VISIBLE);
-                    failLayyout.setVisibility(View.GONE);
-                    String authCode = codeEt.getText() + "";
-                    if (authCode.startsWith("1")) {//支付宝支付
-                        mPresenter.scanPay(1, bean.getOrder_id(), authCode);
+                    if (TextUtils.isEmpty(authCode)) {
+                        if (TextUtils.isEmpty(codeEt.getText())) {
+                            Toast.getInstance().toast(getContext(), "扫描失败，请重新扫描", 2);
+                            return true;
+                        } else {
+                            payingLayout.setVisibility(View.VISIBLE);
+                            authCode = codeEt.getText() + "";
+                            payLayout.setVisibility(View.GONE);
+                            failLayyout.setVisibility(View.GONE);
+                            if (authCode.startsWith("1")) {//支付宝支付
+                                mPresenter.scanPay(1, bean.getOrder_id(), authCode);
+                            } else {
+                                mPresenter.scanPay(2, bean.getOrder_id(), authCode);
+                            }
+                            return true;
+                        }
                     } else {
-                        mPresenter.scanPay(2, bean.getOrder_id(), authCode);
+                        return true;
                     }
-                    codeEt.setText("");
-                    return true;
                 }
                 return false;
             }
         });
     }
 
+    @Override
+    public void getOrderInfo(OrderIdBean orderIdBean) {
+        bean.setOrder_no(orderIdBean.getOrder_no());
+        orderNoTv.setText(orderIdBean.getOrder_no() + "");
+    }
+
 
     private void switchPayType() {
-        if (payType == ConfirmOrderActivity.ALI_PAY) {
-            payMaxImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ali_max));
-            minImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.wechat_min));
-            payMaxTv.setText(R.string.ali_max_hint_str);
-            minTv.setText(R.string.ali_min_hint_str);
-            bottomLeftImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.alipay));
-            bottomRightImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ali_can_icon));
-        } else {
-            payMaxImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.weichat_max));
-            minImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ali_min));
-            bottomLeftImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.weipay));
-            bottomRightImg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.weixin_scan_icon));
-
-            payMaxTv.setText(R.string.wechat_max_hint_str);
-            minTv.setText(R.string.ali_min_hint_str);
+        if (payType == ConfirmOrderActivity.PAY_FAIL) {
+            payingLayout.setVisibility(View.GONE);
+            payLayout.setVisibility(View.GONE);
+            failLayyout.setVisibility(View.VISIBLE);
         }
     }
 
     /**
      * 支付成功
+     *
      * @param o
      */
     @Override
@@ -206,6 +235,7 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
 
     /**
      * 支付失败
+     *
      * @param throwable
      */
     @Override
@@ -217,15 +247,24 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
 
     @Override
     public void orderDetial(OrderDetialBean orderDetialBean) {
+        Toast.getInstance().toast(getContext(),"status:"+orderDetialBean.getPaid_status(),2);
         if (orderDetialBean.getPaid_status() == 1) {
             callBackPayFragment.onCallBack(ConfirmOrderActivity.PAY_SUCC, orderDetialBean);
-        } else if (isQuestOrder && orderDetialBean.getPaid_status() == 0) {
-            mPresenter.orderDetials(bean.getOrder_id());
+        } else {
+           if (!isConfirmPay&&!isInterrupt) {
+                mPresenter.orderDetials(bean.getOrder_id());
+            } else if(isConfirmPay){
+                countDownTimer.start();
+                payingLayout.setVisibility(View.GONE);
+                payLayout.setVisibility(View.GONE);
+                failLayyout.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void orderDetialFial(Throwable throwable) {
+        if(!isInterrupt)
         mPresenter.orderDetials(bean.getOrder_id());
     }
 
@@ -237,27 +276,17 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
         countDownTimer.cancel();
     }
 
-    @OnClick({R.id.min_img, R.id.min_tv, R.id.give_up_pay_tv, R.id.weichatpay_tv, R.id.alipay_tv, R.id.wechat_code_ll, R.id.ali_code_ll})
+    @OnClick({R.id.give_up_pay_tv, R.id.weichatpay_tv, R.id.alipay_tv, R.id.wechat_code_ll, R.id.ali_code_ll})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.min_img:
-            case R.id.min_tv:
-                if (payType == ConfirmOrderActivity.ALI_PAY) {
-                    payType = ConfirmOrderActivity.WECHAT_PAY;
-                } else {
-                    payType = ConfirmOrderActivity.ALI_PAY;
-                }
-                switchPayType();
-
-                break;
             case R.id.give_up_pay_tv:
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                getActivity().finish();
-                break;
+                showGiveUpdialog();
 
+                break;
             case R.id.weichatpay_tv:
+                isInterrupt = true;
+                isConfirmPay = false;
+                mPresenter.changeOrderNo(bean.getOrder_id());
                 payLayout.setVisibility(View.VISIBLE);
                 failLayyout.setVisibility(View.GONE);
                 payingLayout.setVisibility(View.GONE);
@@ -266,6 +295,8 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
                 countDownTimer.start();
                 break;
             case R.id.alipay_tv:
+                isInterrupt = true;
+                isConfirmPay = false;
                 payLayout.setVisibility(View.VISIBLE);
                 failLayyout.setVisibility(View.GONE);
                 payingLayout.setVisibility(View.GONE);
@@ -274,30 +305,55 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
                 countDownTimer.start();
                 break;
             case R.id.wechat_code_ll:
+                isConfirmPay = false;
+                IS_WXPAY_CODE = true;
                 codeNameTv.setText(Constant.WEIXIN_CODE);
                 countDownTimer.start();
                 mPresenter.getPayCode(bean.getOrder_id(), 1);
                 break;
             case R.id.ali_code_ll:
+                isConfirmPay = false;
                 codeNameTv.setText(Constant.WALI_CODE);
                 countDownTimer.start();
                 mPresenter.getPayCode(bean.getOrder_id(), 2);
                 break;
             case R.id.confirm_payed_tv:
                 //确认支付
+                isConfirmPay = true;
                 countDownTimer.start();
                 mPresenter.orderDetials(bean.getOrder_id());
                 break;
             case R.id.select_other_pay_tv:
+                isConfirmPay = false;
+                isInterrupt = true;
                 popupWindow.dismiss();
                 break;
+            case R.id.dismiss_img:
+                showGiveUpdialog();
+                break;
         }
+    }
+
+    private void showGiveUpdialog() {
+        GiveUpPayDialog dialog = new GiveUpPayDialog(getContext());
+        dialog.show();
+        dialog.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, Object data) {
+                if (popupWindow != null && popupWindow.isShowing()) popupWindow.dismiss();
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         countDownTimer.cancel();
+        isInterrupt = true;
     }
 
     @Override
@@ -305,8 +361,11 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
         popupWindow = Poputils.getPop(payView, R.layout.layout_submitorder, getActivity());
         try {
             codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, 300));
+            mPresenter.orderDetials(bean.getOrder_id());
         } catch (WriterException e) {
             e.printStackTrace();
         }
     }
+
+
 }

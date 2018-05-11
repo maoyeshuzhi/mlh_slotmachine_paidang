@@ -45,7 +45,8 @@
         android:layout_marginLeft="@dimen/dimen10"
         android:layout_marginRight="@dimen/dimen10"
         android:layout_marginTop="@dimen/dimen4"
-        android:background="@drawable/dotline_1e1e1e" />
+        android:layerType="software"
+        android:background="@drawable/dotline_b4b4b4" />
 
     <TextView
         android:id="@+id/detial_address_tv"

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.zxing.WriterException;
 import com.maoye.mlh_slotmachine.R;
+import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
 import com.maoye.mlh_slotmachine.util.CodeUtils;
 import com.maoye.mlh_slotmachine.util.DensityUtil;
 
@@ -26,6 +27,10 @@ public class DialogAddressCode extends AlertDialog {
     @BindView(R.id.cancel_tv)
     TextView cancelTv;
     private String linkUrl;
+    private OnItemChildClickListener onItemChildClickListener;
+    public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener){
+        this.onItemChildClickListener  = onItemChildClickListener;
+    }
 
     public DialogAddressCode(Context context, String linkUrl) {
         super(context);
@@ -48,6 +53,9 @@ public class DialogAddressCode extends AlertDialog {
 
     @OnClick(R.id.cancel_tv)
     public void onClick() {
+        if(onItemChildClickListener!=null){
+            onItemChildClickListener.onChildItemClick(null,0,0,null);
+        }
         dismiss();
     }
 }

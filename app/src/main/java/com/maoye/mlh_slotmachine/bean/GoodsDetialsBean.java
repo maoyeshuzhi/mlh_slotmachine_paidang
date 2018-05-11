@@ -66,7 +66,8 @@ public class GoodsDetialsBean {
      * activity_end_time : 04月30日00点
      * is_index : 1
      */
-private int cartNum;
+    private int sales;
+    private int cartNum;
     private int id;
     private int shop_id;
     private int comp_id;
@@ -86,7 +87,7 @@ private int cartNum;
     private int enabled;
     private int is_refund;
     private int is_activity;
-    private int activity_type;
+    private int activity_type;//0：普通1：特卖2：秒杀
     private String activity_title;
     private int activity_id;
     private int goods_type;
@@ -123,6 +124,14 @@ private int cartNum;
     private List<String> spec_name_list;
     private List<ImageListBean> image_list;
     private List<SpecListBean> spec_list;
+
+    public int getSales() {
+        return sales;
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
+    }
 
     public int getCartNum() {
         return cartNum;

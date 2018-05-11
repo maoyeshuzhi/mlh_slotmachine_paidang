@@ -85,10 +85,13 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(cartGoodsAdapter);
         cartGoodsAdapter.setOnItemChildClickListener(this);
-        mPresenter.getCartGoods();
         selctallCb.setOnCheckedChangeListener(this);
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getCartGoods();
     }
 
 
@@ -157,9 +160,9 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
             case CartGoodsAdapter.SELECT_GOODS:
                 //是否被选中
                 if (list.get(position).isSelect()) {
-                    selectnumTv.setText(Integer.valueOf(selectnumTv.getText().toString()) -1 + "");
+                    selectnumTv.setText(Integer.valueOf(selectnumTv.getText().toString()) +1 + "");
                 } else {
-                    selectnumTv.setText(Integer.valueOf(selectnumTv.getText().toString()) + 1 + "");
+                    selectnumTv.setText(Integer.valueOf(selectnumTv.getText().toString()) - 1 + "");
                 }
                  priceTv.setText( mPresenter.getPrice(list));
                 break;
@@ -167,7 +170,12 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
                 mPresenter.changeGoodsNum(position, ((GoodsBean) data).getNum() + 1);
                 break;
             case CartGoodsAdapter.SUBTRICT_GOODS:
-                mPresenter.changeGoodsNum(position, ((GoodsBean) data).getNum() - 1);
+                if(((GoodsBean) data).getNum()<=1){
+                    Toast.getInstance().toast(this,"至少选择一件商品",2);
+                }else {
+                    mPresenter.changeGoodsNum(position, ((GoodsBean) data).getNum() - 1);
+                }
+
                 break;
         }
     }
@@ -177,10 +185,14 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
         GoodsBean bean = list.get(postion);
         bean.setNum(goodsNum);
         cartGoodsAdapter.addDatas(list);
+        if(bean.isSelect()){
+            priceTv.setText(mPresenter.getPrice(list));
+        }
     }
 
     @Override
     public void deleteAllResult(BaseResult baseResult) {
+        if (selctallCb.isChecked()) selctallCb.setChecked(false);
         nodataViewRl.setVisibility(View.VISIBLE);
         recycler.setVisibility(View.GONE);
         list = new ArrayList<>();

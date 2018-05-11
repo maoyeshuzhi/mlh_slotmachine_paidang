@@ -38,7 +38,7 @@ public class CustomGsonResponseBodyConverter<T>implements Converter<ResponseBody
         LogUtils.e("json",response);
         if (!httpStatus.isState()){
             value.close();
-            throw new ApiException(httpStatus.getCode(),httpStatus.getMsg());
+            throw new ApiException(httpStatus.getCode(),httpStatus.getMsg()+"");
         }
 
         MediaType contentType = value.contentType();

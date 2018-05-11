@@ -37,13 +37,15 @@ public class BadgeView extends android.support.v7.widget.AppCompatTextView {
     public void setStyle(int mStyle) {
         style = mStyle;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            if (style == 1) {
+            setTextColor(getResources().getColor(R.color.color_dd2450));
+            setBackground(9, Color.parseColor("#dd2450"), style);
+          /*  if (style == 1) {
                 setTextColor(getResources().getColor(R.color.color_dd2450));
-                setBackground(9, Color.parseColor("#F74940"), style);
+                setBackground(9, Color.parseColor("#dd2450"), style);
             } else {
                 setTextColor(Color.WHITE);
-                setBackground(9, Color.parseColor("#F74940"));
-            }
+                setBackground(9, Color.parseColor("#dd2450"));
+            }*/
         }
     }
 
@@ -97,7 +99,8 @@ public class BadgeView extends android.support.v7.widget.AppCompatTextView {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void setBackground(int dipRadius, int badgeColor, int style) {
-        setBackground(getResources().getDrawable(R.drawable.dot_dd24f0_stroke));
+        //setBackground(getResources().getDrawable(R.drawable.dot_dd24f0_stroke));
+        setBackground(getResources().getDrawable(R.drawable.colordd2450_stroke));
     }
 
     /**

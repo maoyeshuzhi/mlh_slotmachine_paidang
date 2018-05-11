@@ -23,6 +23,7 @@ public class BaseModel extends BaseRetrofit{
     public BaseModel() {
         super();
         mServletApi = retrofit.create(ApiService.class);
+
     }
 
 

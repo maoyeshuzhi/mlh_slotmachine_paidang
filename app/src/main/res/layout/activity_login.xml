@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <include layout="@layout/layout_head" />
 
     <com.youth.banner.Banner
         android:id="@+id/banner"
-        app:is_auto_play="true"
-        app:delay_time="1500"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen220"
+        app:banner_default_image="@mipmap/default_banner"
+        app:delay_time="3000"
+        app:image_scale_type="fit_xy"
+        app:indicator_margin="@dimen/dimen8"
         app:indicator_drawable_selected="@drawable/shape_selected"
         app:indicator_drawable_unselected="@drawable/shape_noraml"
-        android:layout_width="match_parent"
-        app:image_scale_type="fit_xy"
-        app:banner_default_image="@mipmap/default_banner"
-        android:layout_height="@dimen/dimen220"/>
+        app:is_auto_play="true" />
 
     <RadioGroup
         android:id="@+id/rg"
@@ -27,7 +29,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/dimen80"
         android:layout_marginRight="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen96"
+        android:layout_marginTop="@dimen/dimen95"
         android:orientation="horizontal">
 
         <RadioButton
@@ -63,40 +65,18 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen80"
         android:layout_marginRight="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen57"
+        android:paddingTop="@dimen/dimen57"
         android:background="@null"
+        android:digits="@string/number"
         android:hint="请输入茂业会员账号"
         android:inputType="phone"
         android:maxLength="11"
         android:maxLines="1"
         android:paddingBottom="@dimen/dimen11"
-        android:paddingTop="@dimen/dimen11"
         android:textCursorDrawable="@drawable/shap_cursor" />
 
     <View
         android:id="@+id/account_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen0.5"
-        android:layout_marginLeft="@dimen/dimen80"
-        android:layout_marginRight="@dimen/dimen80"
-        android:background="@color/color_646464" />
-    <EditText
-        android:id="@+id/psw_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen80"
-        android:layout_marginRight="@dimen/dimen80"
-        android:background="@null"
-        android:hint="请输入密码"
-        android:gravity="bottom"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:paddingBottom="@dimen/dimen11"
-        android:paddingTop="@dimen/dimen68"
-        android:textCursorDrawable="@drawable/shap_cursor" />
-
-    <View
-        android:id="@+id/psw_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen0.5"
         android:layout_marginLeft="@dimen/dimen80"
@@ -110,14 +90,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen80"
         android:layout_marginRight="@dimen/dimen80"
-        android:layout_marginTop="@dimen/dimen57"
+        android:paddingTop="@dimen/dimen57"
         android:background="@null"
+        android:digits="@string/number"
         android:hint="请输入购买手机号"
         android:inputType="phone"
         android:maxLength="11"
         android:maxLines="1"
         android:paddingBottom="@dimen/dimen11"
-        android:paddingTop="@dimen/dimen11"
         android:textCursorDrawable="@drawable/shap_cursor"
         android:visibility="gone" />
 
@@ -130,18 +110,42 @@
         android:background="@color/color_646464"
         android:visibility="gone" />
 
+
+    <EditText
+        android:id="@+id/psw_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen80"
+        android:layout_marginRight="@dimen/dimen80"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/dimen11"
+        android:paddingTop="@dimen/dimen40"
+        android:textCursorDrawable="@drawable/shap_cursor" />
+
+    <View
+        android:id="@+id/psw_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen0.5"
+        android:layout_marginLeft="@dimen/dimen80"
+        android:layout_marginRight="@dimen/dimen80"
+        android:background="@color/color_646464" />
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dimen100"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="bottom"
         android:orientation="vertical">
-
-
         <Button
             android:id="@+id/login_bt"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="@dimen/dimen42"
             android:layout_marginLeft="@dimen/dimen80"
             android:layout_marginRight="@dimen/dimen80"
@@ -149,7 +153,8 @@
             android:gravity="center"
             android:text="@string/login_str"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen18sp" />
+            android:textSize="@dimen/dimen18sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/login_tv"
@@ -184,13 +189,14 @@
             android:textColor="@color/color_505050"
             android:textSize="@dimen/dimen9sp" />
 
-        <ImageButton
-            android:id="@+id/back_imgbt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen28"
-            android:layout_marginLeft="@dimen/dimen28"
-            android:background="@null"
-            android:src="@mipmap/back_login" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/back_imgbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen28"
+        android:layout_marginLeft="@dimen/dimen28"
+        android:background="@null"
+        android:src="@mipmap/back_login" />
 </LinearLayout>

@@ -10,7 +10,13 @@ public class DevConfig extends EnvConfig {
     public String getWebServiceBaseUrl() {
         return "http://172.29.100.9/";
     }
-   /* http://172.31.10.3:8899/*/
+
+    @Override
+    public String getQuickPayWebServiceBaseUrl() {
+        return "http://172.31.10.229:8081/";
+    }
+
+    /* http://172.31.10.3:8899/*/
     @Override
     public String getH5BaseUrl() {
         return "http://172.31.10.229:8080/";

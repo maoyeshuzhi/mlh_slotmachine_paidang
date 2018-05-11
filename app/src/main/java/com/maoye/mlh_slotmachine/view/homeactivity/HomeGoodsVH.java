@@ -1,8 +1,10 @@
 package com.maoye.mlh_slotmachine.view.homeactivity;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,15 +50,6 @@ public class HomeGoodsVH extends Holder<Object> {
         if (data == null) return;
         final List<HomeBean.ListBeanX> itemList = (List<HomeBean.ListBeanX>) data;
         adapter = new HomeAdapter();
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, Object data) {
-                Intent intent = new Intent(context, GoodsdetialsActivity.class);
-                intent.putExtra(Constant.GOODS_ID,itemList.get(position).getProduct_id());
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                context.startActivity(intent);
-            }
-        });
         recycler.setAdapter(adapter);
         adapter.addDatas(itemList);
     }

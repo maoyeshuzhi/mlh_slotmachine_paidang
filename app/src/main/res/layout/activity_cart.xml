@@ -83,7 +83,7 @@
             android:drawablePadding="@dimen/dimen6"
             android:gravity="center"
             android:paddingRight="@dimen/dimen10"
-            android:text="键清空购物车"
+            android:text="一键清空购物车"
             android:textColor="@color/color_646464"
             android:textSize="12sp" />
 

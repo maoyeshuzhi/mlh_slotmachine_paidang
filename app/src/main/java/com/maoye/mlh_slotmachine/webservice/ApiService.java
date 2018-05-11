@@ -12,10 +12,12 @@ import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.bean.OrderIdBean;
 import com.maoye.mlh_slotmachine.bean.PayCodeBean;
 import com.maoye.mlh_slotmachine.bean.ProvinceBean;
+import com.maoye.mlh_slotmachine.bean.QuickOrderBean;
 import com.maoye.mlh_slotmachine.bean.SubmitOrderBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -209,5 +211,22 @@ public interface ApiService {
      */
     @GET(URL.SCAN_PAY)
     Observable<BaseResult> scanPay(@Query("pay_type") int pay_type , @Query("order_id") int order_id,@Query("auth_code") String auth_code);
+
+
+    /**
+     * 刷新订单
+     * @param order_id
+     * @return
+     */
+    @GET(URL.REFRESH_ORDER)
+    Observable<BaseResult<OrderIdBean>> changeOrderNo(@Query("order_id") int order_id );
+
+
+    @GET(URL.QUICK_ORDER_LIST)
+    Observable<BaseResult<ArrayList<QuickOrderBean>>> quickOrderList(@Query("phone") String phone );
+
+
+    @GET(URL.QUICK_WXPAY)
+    Observable<BaseResult> quickWxPay(@Query("saleNo") String saleNo ,@Query("money")String money);
 
 }

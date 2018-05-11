@@ -119,8 +119,8 @@
             android:layout_marginRight="@dimen/dimen16"
             android:layout_marginTop="@dimen/dimen20"
             android:text="@string/time_hint_str"
-            android:textColor="@color/color_1e1e1e"
-            android:textSize="@dimen/dimen14sp"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen16sp"
             android:visibility="gone" />
 
     </LinearLayout>

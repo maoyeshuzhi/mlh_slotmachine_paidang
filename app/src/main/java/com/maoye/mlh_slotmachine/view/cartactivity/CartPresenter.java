@@ -94,6 +94,7 @@ public class CartPresenter extends BasePresenterImpl<CartContract.View> implemen
                 price =price + Double.valueOf(bean.getPrice())*bean.getNum();
             }
         }
-        return String.format("合计：￥%s",price+"");
+
+        return String.format("合计：￥%s", String.format("%.2f",price)+"");
     }
 }

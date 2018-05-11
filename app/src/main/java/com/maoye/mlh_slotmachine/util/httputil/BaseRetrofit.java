@@ -31,25 +31,32 @@ import retrofit2.Retrofit;
  * Created by liukun on 16/3/9.
  */
 public class BaseRetrofit {
-
     private static final int DEFAULT_TIMEOUT = 5;
     private static final int SIZE_OF_CACHE = 10 * 1024 * 1024; // 10 MiB
     private static final int DEFAULT_TIME = 10;    //默认超时时间
     private final long RETRY_TIMES = 1;   //重订阅次数
-    protected Retrofit retrofit;
-    public ApiService apiService;
+    protected Retrofit retrofit,quickPayRetrofit;
+    public ApiService apiService ,quickApiService;
     private ClearableCookieJar cookieJar;
 
     //构造方法私有
     protected BaseRetrofit() {
         cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyContext.appContext));
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
+       // Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(EnvConfig.instance().getWebServiceBaseUrl())
                 .client(getHttpClient())
                 .addConverterFactory(CustomGsonConverterFactory.create(new Gson()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
+
+        quickPayRetrofit = new Retrofit.Builder()
+                .baseUrl(EnvConfig.instance().getQuickPayWebServiceBaseUrl())
+                .client(getHttpClient())
+                .addConverterFactory(CustomGsonConverterFactoryQuickPay.create(new Gson()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        quickApiService = quickPayRetrofit.create(ApiService.class);
         apiService = retrofit.create(ApiService.class);
     }
 
