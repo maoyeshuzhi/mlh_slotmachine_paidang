@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ import com.maoye.mlh_slotmachine.bean.HomeBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
+import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.VersionManagerUtil;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
 import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
@@ -85,9 +87,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         goodsNumView.setStyle(1);
         goodsNumView.setTargetView(cartImg);
         goodsNumView.setBadgeMargin(10, 0, 0, 10);
-
         headBanner.setImageLoader(new GlideImageLoader());
-        headBanner.setBannerAnimation(Transformer.BackgroundToForeground);
         headBanner.start();
         headBanner.setOnBannerListener(new OnBannerListener() {
             @Override
@@ -140,12 +140,14 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         super.onResume();
         mPresenter.homedata(true);
         mPresenter.versionInfo();
+        if(goodList.size()>0)
         banner.startTurning();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if(goodList.size()>0)
         banner.stopTurning();
     }
 
@@ -154,16 +156,19 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         switch (view.getId()) {
             case R.id.quick_pay_bt:
                 //快付买单
-                openActivity(QuickpayActivity.class);
+                Toast.getInstance().toast(this,"正在开发中,敬请期待",2);
+                //openActivity(QuickpayActivity.class);
                 break;
             case R.id.print_bill_bt:
                 //补打小票
                 openActivity(PrintReceiptActivity.class);
                 break;
             case R.id.leftpage_img:
+                if(goodList.size()>0)
                 banner.setCurrentItem(banner.getCurrentItem() - 1);
                 break;
             case R.id.rightpage_img:
+                if(goodList.size()>0)
                 banner.setCurrentItem(banner.getCurrentItem() + 1);
                 break;
             case R.id.cart_img:
@@ -181,6 +186,9 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
      */
     private void goodsData(HomeBean data) {
         goodList = mPresenter.handerGoodsData(data.getList());
+        if(goodList.size()==0){
+            return;
+        }
         banner.setPages(new CBViewHolderCreator() {
             @Override
             public Holder createHolder(View itemView) {
@@ -192,7 +200,6 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
                 return R.layout.recycler_noviewstub;
             }
         }, goodList);
-
         banner.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -252,7 +259,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     @Override
     public void getVersionInfo(VersionInfoBean versionInfoBean) {
-        if (!versionInfoBean.getVersionName().equals(VersionManagerUtil.getVersion(this))) {
+        if (versionInfoBean!=null&&versionInfoBean.getVersionName()!=null&&!versionInfoBean.getVersionName().equals(VersionManagerUtil.getVersion(this))) {
             DownLoadApk.download(this,URL.APK_LOADDOWN, "茂乐惠机",  "mlhj");
 
         }

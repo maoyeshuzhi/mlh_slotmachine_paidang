@@ -12,7 +12,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
@@ -42,6 +41,7 @@ import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.httputil.ImgGlideUtil;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
 import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
+import com.maoye.mlh_slotmachine.view.imgactivity.ImgActivity;
 import com.maoye.mlh_slotmachine.view.loginactivity.LoginActivity;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
@@ -50,6 +50,7 @@ import com.maoye.mlh_slotmachine.widget.GlideImageLoaderCenter;
 import com.maoye.mlh_slotmachine.widget.MyScrollView;
 import com.maoye.mlh_slotmachine.widget.NoLineSpaceTextView;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -166,10 +167,12 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     private BadgeView badgeView;
     private int cartNum;//购物车商品数量
     private int goodsId;
+    private ArrayList<String> resultList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_goodsdetials);
         goodsId = getIntent().getIntExtra(Constant.GOODS_ID, 0);
         ButterKnife.bind(this);
@@ -263,7 +266,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     public void onSuccess(Object o) {
         bean = (GoodsDetialsBean) o;
         CacheBean cacheBean = new CacheBean();
-        cacheBean.setId(CacheUtil.GOODS_DETIAL_ACTIVITY_ID);
+       // cacheBean.setId(CacheUtil.GOODS_DETIAL_ACTIVITY_ID);
         cacheBean.setJsonUrl(new Gson().toJson(bean));
         cacheBean.setName(CacheUtil.GOODS_DETIALS + goodsId);
         CacheUtil.put(cacheBean);
@@ -308,13 +311,26 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         }
         specList = mPresenter.handleSpecifi(bean.getSpec_name_list(), bean.getSpec_list());
         specAdapter.addDatas(specList);
+        if(bean.getSpec_name_list()!=null) {
+            mPresenter.getStockNum(specList,bean,bean.getStock());
+        }
         image_list = bean.getImage_list();
-        List<String> resultList = new ArrayList<>();
+        resultList = new ArrayList<>();
         for (GoodsDetialsBean.ImageListBean imageListBean : image_list) {
             resultList.add(imageListBean.getImage_url());
         }
         banner.update(resultList);
         goodsPicAdapter.addDatas(image_list);
+/*        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                 Intent intent = new Intent(GoodsdetialsActivity.this, ImgActivity.class);
+                 intent.putExtra(Constant.POSITION,position);
+                 intent.putExtra(Constant.KEY, resultList);
+                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                 startActivity(intent);
+            }
+        });*/
 
         final int heigth = DensityUtil.dip2px(this, 270 + 106);
         scrollview.setScrollViewListener(new MyScrollView.ScrollViewListener() {
@@ -650,7 +666,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         int i = Integer.parseInt(selectGoodsNumTv.getText().toString());
         cartNum = cartNum + i;
         badgeView.setBadgeCount(cartNum);
-        Toast.getInstance().toast(this, "添加成功！购物车等您亲", 2);
+        Toast.getInstance().toast(this, "已成功加入购物车", 2);
     }
 
 }

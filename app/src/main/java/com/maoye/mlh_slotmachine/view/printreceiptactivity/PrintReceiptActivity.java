@@ -47,6 +47,9 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
     Button goshopBt;
     @BindView(R.id.back_bt)
     ImageView backBt;
+
+    @BindView(R.id.print_tep_img)
+    ImageView printTepImg;
     @BindView(R.id.time_tv)
     TextView timeTv;
     @BindView(R.id.succ_tv)
@@ -172,6 +175,7 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
            printerUtils.getPrintTicketData(mUsbDriver, bean, this);
            flow2Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b5), null, null);
            printTitleTv.setVisibility(View.GONE);
+           printTepImg.setVisibility(View.GONE);
            succTv.setVisibility(View.VISIBLE);
            timeBackTv.setVisibility(View.VISIBLE);
            countDownTimer1.start();
@@ -197,6 +201,7 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
         switch (view.getId()) {
             case R.id.pay_bt:
                 //快付买单
+                Toast.getInstance().toast(this,"正在开发中,敬请期待",2);
                 break;
             case R.id.goshop_bt:
             case R.id.back_bt:

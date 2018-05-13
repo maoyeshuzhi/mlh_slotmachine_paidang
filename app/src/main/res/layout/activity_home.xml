@@ -26,9 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen220"
                 app:banner_default_image="@mipmap/default_banner"
-                app:delay_time="1500"
+                app:delay_time="4000"
                 app:image_scale_type="fit_xy"
-                app:indicator_margin="@dimen/dimen8"
+                app:indicator_margin="@dimen/dimen10"
                 app:indicator_drawable_selected="@drawable/shape_selected"
                 app:indicator_drawable_unselected="@drawable/shape_noraml"
                 app:is_auto_play="true" />
@@ -98,7 +98,6 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/print_ll"
                         android:gravity="right"
-
                         android:orientation="vertical">
 
                         <TextView

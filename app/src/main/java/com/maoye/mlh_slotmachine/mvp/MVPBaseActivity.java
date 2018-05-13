@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +26,7 @@ import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.CacheBean;
 import com.maoye.mlh_slotmachine.bean.CacheBean_;
+import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.httputil.cache.ImgCacheUtil;
 import com.maoye.mlh_slotmachine.view.adactivity.AdActivity;
 import com.maoye.mlh_slotmachine.view.homeactivity.HomeActivity;
@@ -62,8 +64,6 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
 
 
     }
-
-
 
 
     /**
@@ -153,23 +153,25 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
 
             @Override
             public void onFinish() {
-                if (MVPBaseActivity.this instanceof HomeActivity) {
-
-                } else {
+                if (!(MVPBaseActivity.this instanceof HomeActivity) && !(MVPBaseActivity.this instanceof AdActivity)) {
                     Intent intent = new Intent(MVPBaseActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                } else {
+                    timer.start();
                 }
 
             }
-        };
+        }.start();
+
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         timer.start();
-        return super.onTouchEvent(event);
+        return super.dispatchTouchEvent(ev);
     }
+
 
     protected void openActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);

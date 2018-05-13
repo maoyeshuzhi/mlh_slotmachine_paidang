@@ -3,6 +3,7 @@ package com.maoye.mlh_slotmachine.view.confirmorderactivity.confirmfragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -30,6 +31,7 @@ import com.maoye.mlh_slotmachine.adapter.AddressAdapter;
 import com.maoye.mlh_slotmachine.adapter.OrderGoodsAdapter;
 import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
+import com.maoye.mlh_slotmachine.bean.DelivetyWayBean;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.bean.OrderIdBean;
@@ -175,13 +177,15 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
     private void initData() {
         initcountDownTimer();
         goodsList = (List<GoodsBean>) getActivity().getIntent().getSerializableExtra(Constant.KEY);
+
+
         deliveryType = mPresenter.getDeliveryType(goodsList);
         if (deliveryType == 1) {
             switchSelivryWay(0);
-             expressRb.setClickable(false);
-             expressRb.setEnabled(false);
-             expressRb.setTextColor(Color.parseColor("#ffffff"));
-             expressRb.setBackgroundColor(getResources().getColor(R.color.color_c8c8c8));
+            expressRb.setClickable(false);
+            expressRb.setEnabled(false);
+            expressRb.setTextColor(Color.parseColor("#ffffff"));
+            expressRb.setBackgroundColor(getResources().getColor(R.color.color_c8c8c8));
         } else if (deliveryType == 2) {
             expressRb.setChecked(true);
             switchSelivryWay(1);
@@ -194,7 +198,7 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
             getAddress();
             switchSelivryWay(0);
         }
-
+        mPresenter.deliveryWay(goodsList.get(0).getProduct_id() + "");
 
         GOODS_PRICE = mPresenter.getGoodsPrice(goodsList);
         ALL_PRICE = GOODS_PRICE;
@@ -243,6 +247,8 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
         deliverwayRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(addressList==null ||addressList.size()==0)
+                    return;
                 switch (i) {
                     case R.id.expresstype_rb://快递
                         String strings = mPresenter.productInfo(goodsList);
@@ -290,9 +296,9 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
         protected void onBaseNext(BaseResult<AddressBean> data) {
             addressList = data.getData().getList();
             add_address_link = data.getData().getAdd_address_link();
-            if(addressList==null ||addressList.size()==0){
+            if (addressList == null || addressList.size() == 0) {
                 addressRecycler.setVisibility(View.GONE);
-            }else {
+            } else {
                 addressRecycler.setVisibility(View.VISIBLE);
                 addressAdapter.addDatas(addressList);
             }
@@ -397,11 +403,6 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                 codeNameTv.setText("微信二维码");
                 paypop_2.setVisibility(View.GONE);
                 paypop_1.setVisibility(View.VISIBLE);
-                try {
-                    codeImg.setImageBitmap(CodeUtils.createQRCode("adsf", DensityUtil.dip2px(getContext(), 300)));
-                } catch (WriterException e) {
-                    e.printStackTrace();
-                }
                 break;
             case R.id.confirm_payed_tv:
                 //确认已付款
@@ -569,10 +570,15 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
         countDownTimer2.start();
         paypop_2.setVisibility(View.VISIBLE);
         paypop_1.setVisibility(View.GONE);
+
         try {
-            codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, DensityUtil.dip2px(getContext(), 300)));
+            if (payType == ConfirmOrderActivity.WECHAT_CODE_PAY) {
+                codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, DensityUtil.dip2px(getContext(), 300), DensityUtil.dip2px(getContext(), 300), BitmapFactory.decodeResource(getResources(), R.mipmap.wxcode_icon)));
+            } else {
+                codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, DensityUtil.dip2px(getContext(), 300), DensityUtil.dip2px(getContext(), 300), BitmapFactory.decodeResource(getResources(), R.mipmap.alicode_icon)));
+            }
             mPresenter.orderDetials(ORDER_ID, false);
-        } catch (WriterException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -615,6 +621,41 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
     public void payFail(Throwable throwable) {
         if (!isInterrupt) {
             mPresenter.orderDetials(ORDER_ID, false);
+        }
+    }
+
+
+    @Override
+    public void getDeliveryType(List<DelivetyWayBean> list) {
+        boolean isExpress = false;
+        boolean isEms = false;
+        boolean isMailRb = false;
+        for (DelivetyWayBean delivetyWayBean : list) {
+            if (delivetyWayBean.getShiptype() == 0) {
+                expresstypeRb.setVisibility(View.VISIBLE);
+                expresstypeRb.setClickable(true);
+                expresstypeRb.setEnabled(true);
+                isExpress = true;
+            }
+            if(delivetyWayBean.getShiptype() ==1){
+                EMSRb.setVisibility(View.VISIBLE);
+                EMSRb.setClickable(true);
+                EMSRb.setEnabled(true);
+                isEms = true;
+            }
+            if(delivetyWayBean.getShiptype() ==2){
+                mailRb.setVisibility(View.VISIBLE);
+                mailRb.setClickable(true);
+                mailRb.setEnabled(true);
+                isMailRb = true;
+            }
+        }
+        if(isExpress){
+            expresstypeRb.setChecked(true);
+        }else if(isEms){
+            EMSRb.setChecked(true);
+        }else if(isMailRb){
+            mailRb.setChecked(true);
         }
     }
 }

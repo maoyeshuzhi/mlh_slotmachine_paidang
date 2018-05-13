@@ -4,6 +4,7 @@ package com.maoye.mlh_slotmachine.webservice;
 import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
+import com.maoye.mlh_slotmachine.bean.DelivetyWayBean;
 import com.maoye.mlh_slotmachine.bean.FeeBean;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.bean.GoodsDetialsBean;
@@ -224,6 +225,14 @@ public interface ApiService {
 
     @GET(URL.QUICK_ORDER_LIST)
     Observable<BaseResult<ArrayList<QuickOrderBean>>> quickOrderList(@Query("phone") String phone );
+
+    /**
+     *  查询商品支持多点配送方式
+     * @param product_ids  购买的商品id，多个逗号分隔
+     * @return
+     */
+    @GET(URL.DELIVERY_WAY)
+    Observable<BaseResult<List<DelivetyWayBean>>> deliveryWay(@Query("product_ids") String product_ids );
 
 
     @GET(URL.QUICK_WXPAY)

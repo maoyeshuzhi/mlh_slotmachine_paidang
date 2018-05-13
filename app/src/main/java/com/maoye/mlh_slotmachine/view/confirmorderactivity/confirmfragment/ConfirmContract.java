@@ -2,6 +2,7 @@ package com.maoye.mlh_slotmachine.view.confirmorderactivity.confirmfragment;
 
 import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
+import com.maoye.mlh_slotmachine.bean.DelivetyWayBean;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.bean.OrderIdBean;
@@ -19,6 +20,7 @@ public class ConfirmContract {
           void getPayCode(String codeUrl);
           void  paySucc(OrderDetialBean orderDetialBean,boolean isfromSubmit);
           void payFail(Throwable throwable);
+        void  getDeliveryType(List<DelivetyWayBean> list);
     }
 
     interface  Presenter extends BasePresenter<View> {
@@ -32,5 +34,6 @@ public class ConfirmContract {
        void  getPayCode(int orderId,int payType);
        void orderDetials(int orderId,boolean isfromSubmi);
         int getDeliveryType(List<GoodsBean>list);
+        void deliveryWay(String goodsIds);
     }
 }

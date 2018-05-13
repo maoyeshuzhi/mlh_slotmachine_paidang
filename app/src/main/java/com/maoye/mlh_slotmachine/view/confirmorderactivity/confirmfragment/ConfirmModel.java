@@ -2,6 +2,7 @@ package com.maoye.mlh_slotmachine.view.confirmorderactivity.confirmfragment;
 
 import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
+import com.maoye.mlh_slotmachine.bean.DelivetyWayBean;
 import com.maoye.mlh_slotmachine.bean.FeeBean;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.bean.OrderIdBean;
@@ -10,6 +11,8 @@ import com.maoye.mlh_slotmachine.bean.SubmitOrderBean;
 import com.maoye.mlh_slotmachine.mvp.BaseModel;
 import com.maoye.mlh_slotmachine.util.httputil.HttpResultFunc;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -41,6 +44,11 @@ public class ConfirmModel extends BaseModel {
 
     public void orderDetials(int orderId, BaseObserver<BaseResult<OrderDetialBean>> baseObserver){
         Observable observable = mServletApi.orderDetials(orderId).map(new HttpResultFunc<OrderDetialBean>());
+        toSubscribe(observable,baseObserver);
+    }
+
+    public void deliveryWay(String goodsIds, BaseObserver<BaseResult<List<DelivetyWayBean>>> baseObserver){
+        Observable observable = mServletApi.deliveryWay(goodsIds);
         toSubscribe(observable,baseObserver);
     }
 

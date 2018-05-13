@@ -9,6 +9,7 @@
     app:image_scale_type="fit_xy"
     app:indicator_drawable_selected="@drawable/shape_selected"
     app:indicator_drawable_unselected="@drawable/shape_noraml"
+    app:indicator_margin="@dimen/dimen10"
     app:is_auto_play="true">
 
 </com.youth.banner.Banner>

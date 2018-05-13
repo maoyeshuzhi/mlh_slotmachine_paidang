@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+    <EditText
+        android:id="@+id/code_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:focusable="true"
+        android:imeOptions="actionSend"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen2" />
+
     <include layout="@layout/layout_head" />
 
     <LinearLayout
@@ -31,8 +42,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen10"
                 android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen10"
                 android:layout_marginLeft="@dimen/dimen51"
                 android:layout_marginRight="@dimen/dimen51"
                 android:src="@mipmap/arrow_icon" />
@@ -50,68 +61,57 @@
         </LinearLayout>
     </LinearLayout>
 
+
     <TextView
         android:id="@+id/print_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dimen76"
+        android:layout_marginTop="@dimen/dimen58"
+        android:drawablePadding="@dimen/dimen26"
+        android:drawableRight="@mipmap/print_scan"
+        android:gravity="center"
         android:includeFontPadding="false"
         android:text="@string/print_bill_title_str"
         android:textColor="@color/color_1e1e1e"
         android:textSize="@dimen/dimen23sp" />
 
+
+    <ImageView
+        android:id="@+id/print_tep_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen33"
+        android:background="@color/color_d4d4d4"
+        android:paddingBottom="@dimen/dimen14"
+        android:paddingTop="@dimen/dimen30"
+        android:src="@mipmap/print_tep" />
+
+
     <TextView
         android:id="@+id/succ_tv"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:visibility="gone"
-        android:drawableTop="@mipmap/succicon"
-        android:layout_marginTop="@dimen/dimen33"
-        android:drawablePadding="@dimen/dimen25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen33"
+        android:drawablePadding="@dimen/dimen25"
+        android:drawableTop="@mipmap/succicon"
+        android:gravity="center"
         android:text="小票打印成功,请取走小票"
         android:textColor="@color/color_1e1e1e"
-        android:textSize="@dimen/dimen23sp" />
+        android:textSize="@dimen/dimen23sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/time_back_tv"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_dd2450"
-        android:textSize="@dimen/dimen14sp"
-        android:text="返回首页10s"
-        android:paddingTop="@dimen/dimen10"
-        android:layout_gravity="center"/>
-
-    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dimen44"
-        android:src="@mipmap/scan_bigicon" />
-
-
-    <EditText
-        android:id="@+id/code_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:focusable="true"
-        android:cursorVisible="false"
-        android:imeOptions="actionSend"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dimen2" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen1"
-        android:layout_marginLeft="@dimen/dimen51"
-        android:layout_marginRight="@dimen/dimen51"
-        android:layout_marginTop="@dimen/dimen42"
-        android:background="@color/color_b4b4b4" />
+        android:paddingTop="@dimen/dimen10"
+        android:text="返回首页10s"
+        android:textColor="@color/color_dd2450"
+        android:textSize="@dimen/dimen14sp"
+        android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"
@@ -135,7 +135,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/dimen6"
             android:layout_marginRight="@dimen/dimen57"
@@ -164,20 +163,11 @@
                 android:textSize="@dimen/dimen9sp" />
         </LinearLayout>
 
-      <!--  <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="206dp"
-            android:layout_marginTop="@dimen/dimen64"
-            android:orientation="vertical">  -->
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/dimen6"
-            android:layout_marginRight="@dimen/dimen57"
+            android:layout_marginRight="206dp"
             android:layout_marginTop="@dimen/dimen64"
             android:orientation="vertical">
 

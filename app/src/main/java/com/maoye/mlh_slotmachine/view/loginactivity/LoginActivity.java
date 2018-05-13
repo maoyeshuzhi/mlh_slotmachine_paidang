@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
+import com.maoye.mlh_slotmachine.bean.LoginBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.TextUtil;
@@ -78,6 +79,16 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initData();
+ /*       findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ConfirmOrderActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(Constant.KEY, getIntent().getSerializableExtra(Constant.KEY));
+                intent.putExtra(Constant.FROM, getIntent().getIntExtra(Constant.FROM, 0));
+                startActivity(intent);
+            }
+        });*/
     }
 
     protected void initData() {

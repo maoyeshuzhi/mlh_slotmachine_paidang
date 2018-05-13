@@ -154,9 +154,18 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
         return list;
     }
 
-
+    /**
+     * 改变点击状态并获取库存
+     *
+     * @param specList
+     * @param type        点击规格类别
+     * @param position    点击位置
+     * @param bean
+     * @param oldStockNum 原本库存数
+     * @return
+     */
     public int getStockNum(List<SpecBean> specList, int type, int position, GoodsDetialsBean bean, int oldStockNum) {
-        int stockNum = 0;
+
         List<SpecBean.SpecItemListBean> pecItemList = specList.get(type).getPecItemList();
         for (int i = 0; i < pecItemList.size(); i++) {
             if (i == position) {
@@ -165,6 +174,13 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
                 pecItemList.get(i).setSelect(false);
             }
         }
+
+        return getStockNum(specList, bean, oldStockNum);
+
+    }
+
+    public int getStockNum(List<SpecBean> specList, GoodsDetialsBean bean, int oldStockNum) {
+        int stockNum = 0;
         StringBuffer buffer = new StringBuffer();
         for (SpecBean specBean : specList) {
             for (SpecBean.SpecItemListBean itemListBean : specBean.getPecItemList()) {
@@ -174,7 +190,9 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
             }
         }
 
-
+        if (TextUtils.isEmpty(buffer)) {
+            return oldStockNum;
+        }
         String substring = buffer.toString().substring(0, buffer.length() - 1);
         boolean isallSelect = true;
         for (GoodsDetialsBean.SpecListBean specListBean : bean.getSpec_list()) {
@@ -194,7 +212,6 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
             stockNum = oldStockNum;
         }
         return stockNum;
-
     }
 
 }

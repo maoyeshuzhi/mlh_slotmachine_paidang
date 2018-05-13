@@ -105,11 +105,11 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
             case PAY_SUCC:
                 flow4Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b4), null, null);
                 //打印小票
-             /*   PrinterUtils printerUtils = PrinterUtils.getInstanse();
+                PrinterUtils printerUtils = PrinterUtils.getInstanse();
                 if(! printerUtils.PrintConnStatus(mUsbDriver,mUsbManager)){
                     return;
                 }
-                printerUtils.getPrintTicketData(mUsbDriver,bean,this);*/
+                printerUtils.getPrintTicketData(mUsbDriver,bean,this);
                 SuccFragment succFragment = new SuccFragment();
                 Bundle succBundle = new Bundle();
                 succBundle.putSerializable(Constant.KEY, bean);
@@ -130,4 +130,5 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
         mUsbDriver.setPermissionIntent(permissionIntent1);
 
     }
+
 }

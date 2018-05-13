@@ -4,6 +4,7 @@ package com.maoye.mlh_slotmachine.view.confirmorderactivity.confirmfragment;
 import com.google.gson.Gson;
 import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
+import com.maoye.mlh_slotmachine.bean.DelivetyWayBean;
 import com.maoye.mlh_slotmachine.bean.FeeBean;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
@@ -161,5 +162,24 @@ public class ConfirmPresenter extends BasePresenterImpl<ConfirmContract.View> im
           }
       }
         return 0;
+    }
+
+    /**
+     * 查询可选择的取货方式
+     * @param goodsIds
+     */
+    @Override
+    public void deliveryWay(String goodsIds) {
+        mModel.deliveryWay(goodsIds, new BaseObserver<BaseResult<List<DelivetyWayBean>>>(mView.getContext(),false) {
+            @Override
+            protected void onBaseNext(BaseResult<List<DelivetyWayBean>> data) {
+                mView.getDeliveryType(data.getData());
+            }
+
+            @Override
+            protected void onBaseError(Throwable t) {
+
+            }
+        });
     }
 }

@@ -32,7 +32,8 @@ public class HomeGoodsVH extends Holder<Object> {
     private HomeAdapter adapter;
     private Activity context;
 
-    public HomeGoodsVH(View itemView,Activity context) {
+    public
+    HomeGoodsVH(View itemView,Activity context) {
         super(itemView);
         this.context = context;
     }

@@ -66,11 +66,11 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
      * @param orderId 原来订单号id
      */
     @Override
-    public void changeOrderNo(int orderId) {
+    public void changeOrderNo(int orderId, final boolean isClickWXCode) {
         model.changeOrderNo(orderId, new BaseObserver<BaseResult<OrderIdBean>>(mView.getContext(),true) {
             @Override
             protected void onBaseNext(BaseResult<OrderIdBean> data) {
-                mView.getOrderInfo(data.getData());
+                mView.getOrderInfo(data.getData(),isClickWXCode);
             }
 
             @Override

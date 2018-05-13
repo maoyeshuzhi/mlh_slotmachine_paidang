@@ -9,6 +9,7 @@ public class Constant {
     public static final int ALPAY = 0;
     public static final int TITLE = 2;//设置标题
 
+    public static final String POSITION = "position";
     public static final String FROM = "from";
     public static final int  FROM_CART = 1;//来自于购物车
     public static final int  FROM_BUY = 0;//来自于直接购买
@@ -30,8 +31,8 @@ public class Constant {
     public static final String PaperExhausted_CN = "  纸尽;";
     public static final String NoConnectedOrNoOnPower_CN = "  打印机未连接或未上电;";
     public static final String Abnormal_CN = "  异常;";
-    public static final String WEIXIN_CODE = "微信二维码;";
-    public static final String WALI_CODE = "支付宝二维码;";
+    public static final String WEIXIN_CODE = "微信二维码";
+    public static final String WALI_CODE = "支付宝二维码";
     public static final int countDownTime = 120*1000;//倒计时时间
     public static final String countDownTimeFormat = "剩%s秒自动关闭";
 

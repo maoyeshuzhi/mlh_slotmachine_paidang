@@ -26,7 +26,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
                 PowerManager.WakeLock wl = pm.newWakeLock(
                         PowerManager.ACQUIRE_CAUSES_WAKEUP |
                                 PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "BootCompletedReceiver");
-                wl.acquire(6000); // 点亮屏幕
+                wl.acquire(5000); // 点亮屏幕
                 wl.release(); // 释放
             }
 

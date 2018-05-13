@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.zxing.WriterException;
@@ -26,6 +28,9 @@ public class DialogAddressCode extends AlertDialog {
     ImageView codeImg;
     @BindView(R.id.cancel_tv)
     TextView cancelTv;
+
+    @BindView(R.id.confirm_bt)
+    Button confirmBt;
     private String linkUrl;
     private OnItemChildClickListener onItemChildClickListener;
     public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener){
@@ -51,10 +56,16 @@ public class DialogAddressCode extends AlertDialog {
         }
     }
 
-    @OnClick(R.id.cancel_tv)
-    public void onClick() {
-        if(onItemChildClickListener!=null){
-            onItemChildClickListener.onChildItemClick(null,0,0,null);
+    @OnClick({R.id.cancel_tv,R.id.confirm_bt})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.cancel_tv:
+                break;
+            case R.id.confirm_bt:
+                if(onItemChildClickListener!=null){
+                    onItemChildClickListener.onChildItemClick(null,0,0,null);
+                }
+                break;
         }
         dismiss();
     }

@@ -78,7 +78,7 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
       homeModel.versionInfo(new BaseObserver<BaseResult<VersionInfoBean>>(mView.getContext(),false) {
           @Override
           protected void onBaseNext(BaseResult<VersionInfoBean> data) {
-               mView.getVersionInfo(data.getData());
+              if(data!=null) mView.getVersionInfo(data.getData());
           }
 
           @Override

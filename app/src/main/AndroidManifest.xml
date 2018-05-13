@@ -39,8 +39,10 @@
         <activity android:name=".view.cartactivity.CartActivity" />
         <activity android:name=".view.h5activity.H5Activity" />
         <activity android:name=".view.adactivity.AdActivity" />
-        <activity android:name=".view.printreceiptactivity.PrintReceiptActivity" />
+        <activity android:name=".view.printreceiptactivity.PrintReceiptActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".view.quickpayactivity.QuickpayActivity" />
+        <activity android:name=".view.imgactivity.ImgActivity" />
 
         <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
             android:resource="@xml/device_filter" />

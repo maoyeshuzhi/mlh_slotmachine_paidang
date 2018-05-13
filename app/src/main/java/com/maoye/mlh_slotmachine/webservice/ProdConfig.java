@@ -7,7 +7,7 @@ package com.maoye.mlh_slotmachine.webservice;
 public class ProdConfig extends EnvConfig{
     @Override
     public String getWebServiceBaseUrl() {
-        return null;
+        return "http://itao.maoye.cn/";
     }
 
     @Override

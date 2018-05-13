@@ -23,6 +23,7 @@ import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.bean.OrderIdBean;
 import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
+import com.maoye.mlh_slotmachine.util.DensityUtil;
 import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.view.confirmorderactivity.ConfirmOrderActivity;
@@ -152,7 +153,7 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
 
         if (bean != null) {
             if (bean.isSelectWechat()) {
-                mPresenter.changeOrderNo(bean.getOrder_id());
+                mPresenter.changeOrderNo(bean.getOrder_id(),false);
             }
             OrderDetialBean.ProductListBean productListBean1 = bean.getProduct_list().get(0);
             payType = bean.getPayType();
@@ -209,9 +210,11 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
     }
 
     @Override
-    public void getOrderInfo(OrderIdBean orderIdBean) {
+    public void getOrderInfo(OrderIdBean orderIdBean,boolean isClickWXCode) {
         bean.setOrder_no(orderIdBean.getOrder_no());
         orderNoTv.setText(orderIdBean.getOrder_no() + "");
+        if(isClickWXCode)
+        mPresenter.getPayCode(bean.getOrder_id(), 1);
     }
 
 
@@ -247,7 +250,7 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
 
     @Override
     public void orderDetial(OrderDetialBean orderDetialBean) {
-        Toast.getInstance().toast(getContext(),"status:"+orderDetialBean.getPaid_status(),2);
+       // Toast.getInstance().toast(getContext(),"status:"+orderDetialBean.getPaid_status(),2);
         if (orderDetialBean.getPaid_status() == 1) {
             callBackPayFragment.onCallBack(ConfirmOrderActivity.PAY_SUCC, orderDetialBean);
         } else {
@@ -286,7 +289,7 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
             case R.id.weichatpay_tv:
                 isInterrupt = true;
                 isConfirmPay = false;
-                mPresenter.changeOrderNo(bean.getOrder_id());
+                mPresenter.changeOrderNo(bean.getOrder_id(),false);
                 payLayout.setVisibility(View.VISIBLE);
                 failLayyout.setVisibility(View.GONE);
                 payingLayout.setVisibility(View.GONE);
@@ -307,12 +310,15 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
             case R.id.wechat_code_ll:
                 isConfirmPay = false;
                 IS_WXPAY_CODE = true;
+                isInterrupt = false;
                 codeNameTv.setText(Constant.WEIXIN_CODE);
                 countDownTimer.start();
-                mPresenter.getPayCode(bean.getOrder_id(), 1);
+                mPresenter.changeOrderNo(bean.getOrder_id(),true);
+
                 break;
             case R.id.ali_code_ll:
                 isConfirmPay = false;
+                isInterrupt = false;
                 codeNameTv.setText(Constant.WALI_CODE);
                 countDownTimer.start();
                 mPresenter.getPayCode(bean.getOrder_id(), 2);
@@ -322,6 +328,7 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
                 isConfirmPay = true;
                 countDownTimer.start();
                 mPresenter.orderDetials(bean.getOrder_id());
+                popupWindow.dismiss();
                 break;
             case R.id.select_other_pay_tv:
                 isConfirmPay = false;
@@ -359,10 +366,15 @@ public class PayFragment extends MVPBaseFragment<PayContract.View, PayPresenter>
     @Override
     public void getPayCode(String codeUrl) {
         popupWindow = Poputils.getPop(payView, R.layout.layout_submitorder, getActivity());
+
         try {
-            codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, 300));
+            if (payType == ConfirmOrderActivity.WECHAT_CODE_PAY) {
+                codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, DensityUtil.dip2px(getContext(), 300), DensityUtil.dip2px(getContext(), 300), BitmapFactory.decodeResource(getResources(), R.mipmap.wxcode_icon)));
+            } else {
+                codeImg.setImageBitmap(CodeUtils.createQRCode(codeUrl, DensityUtil.dip2px(getContext(), 300), DensityUtil.dip2px(getContext(), 300), BitmapFactory.decodeResource(getResources(), R.mipmap.alicode_icon)));
+            }
             mPresenter.orderDetials(bean.getOrder_id());
-        } catch (WriterException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

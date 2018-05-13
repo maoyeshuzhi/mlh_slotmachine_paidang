@@ -30,6 +30,7 @@ public interface URL {
     String VIP_CN = "http://weixin.qq.com/r/WzilvZrE2selrd7e921J";
     String SCAN_PAY = "home/machine/goto-micro-pay";
     String REFRESH_ORDER = "home/machine/refresh-orderno";//刷新订单
+    String DELIVERY_WAY = "home/m/getEnabledShip";
 
     String QUICK_ORDER_LIST = "newposService/presaleQuery";
     String QUICK_WXPAY = "newposService/wxPay";
