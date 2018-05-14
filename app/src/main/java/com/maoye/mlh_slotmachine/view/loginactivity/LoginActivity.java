@@ -27,8 +27,8 @@ import com.maoye.mlh_slotmachine.view.confirmorderactivity.ConfirmOrderActivity;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
 import com.maoye.mlh_slotmachine.view.homeactivity.GlideImageLoader;
-import com.youth.banner.Banner;
-import com.youth.banner.listener.OnBannerListener;
+import com.maoye.mlh_slotmachine.widget.banner.Banner;
+import com.maoye.mlh_slotmachine.widget.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;

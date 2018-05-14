@@ -14,7 +14,7 @@ import com.maoye.mlh_slotmachine.util.NetworkUtil;
 import com.maoye.mlh_slotmachine.view.homeactivity.GlideImageLoader;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
-import com.youth.banner.Banner;
+import com.maoye.mlh_slotmachine.widget.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;

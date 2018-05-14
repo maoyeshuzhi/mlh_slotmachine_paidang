@@ -11,6 +11,21 @@ public class BaseResult<T> {
    private boolean state;
    private int status;//0表示成功快付）
     private String errorMsg;//（快付）
+    /**
+     * 扩展字段
+     * 0:data为对象
+     * 1:data为集合
+     * 2:date为空或者null字段
+     */
+    private int dataType;
+
+    public int getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(int dataType) {
+        this.dataType = dataType;
+    }
 
     public String getErrorMsg() {
         return errorMsg;

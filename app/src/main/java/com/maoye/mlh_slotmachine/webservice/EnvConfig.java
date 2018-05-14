@@ -19,7 +19,6 @@ public abstract class EnvConfig {
                 return null;
         }
     }
-
     public abstract String getWebServiceBaseUrl();
     public abstract String getQuickPayWebServiceBaseUrl();
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.maoye.mlh_slotmachine.util.httputil.ImgGlideUtil;
-import com.youth.banner.loader.ImageLoader;
+import com.maoye.mlh_slotmachine.widget.banner.loader.ImageLoader;
 
 /**
  * Created by Rs on 2018/5/9.
@@ -12,12 +12,12 @@ import com.youth.banner.loader.ImageLoader;
 
 public class GlideImageLoaderCenter extends ImageLoader {
     @Override
-    public void displayImage(Context context, Object path, ImageView imageView) {
+    public void displayData(Context context, Object path, ImageView imageView) {
         ImgGlideUtil.displayImage((String) path, imageView, true);
     }
 
     @Override
-    public ImageView createImageView(Context context) {
+    public ImageView createView(Context context) {
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return imageView;

@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
     <application
         android:name="com.maoye.mlh_slotmachine.MlhApplication"
         android:allowBackup="true"
@@ -19,6 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+       <!-- .view.homeactivity.HomeActivity-->
+<!--        <activity android:name=".view.demo.DemoActivity" />-->
         <activity android:name=".view.homeactivity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
@@ -43,6 +46,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".view.quickpayactivity.QuickpayActivity" />
         <activity android:name=".view.imgactivity.ImgActivity" />
+
 
         <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
             android:resource="@xml/device_filter" />

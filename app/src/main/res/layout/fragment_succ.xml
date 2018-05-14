@@ -207,7 +207,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <com.youth.banner.Banner
+    <com.maoye.mlh_slotmachine.widget.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen220"

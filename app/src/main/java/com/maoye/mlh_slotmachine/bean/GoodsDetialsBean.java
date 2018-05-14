@@ -8,64 +8,6 @@ import java.util.List;
 
 public class GoodsDetialsBean {
 
-    /**
-     * id : 203
-     * shop_id : 227
-     * comp_id : 212
-     * name : 巧克力糖
-     * introduction :
-     * old_price : 20.00
-     * price : 1000.00
-     * category_id : 55
-     * category_name :
-     * notice : <p>真诚服务每一天</p><p><img src="http://image1.maoye.cn/Uploads/ueditor/php/upload/image/20171225/1514170612244282.jpg" title="1514170612244282.jpg" alt="1 (2).jpg"/></p>
-     * description : <p>辗转须臾无定数</p><p>半生荣华一朝散</p><p><img src="http://image1.maoye.cn/Uploads/ueditor/php/upload/image/20171225/1514170855548572.jpg" title="1514170855548572.jpg"/></p><p><img src="http://image1.maoye.cn/Uploads/ueditor/php/upload/image/20171225/1514170855676148.jpg" title="1514170855676148.jpg"/></p><p><br/></p>
-     * brand_id : 3880
-     * brand_name : 卡帕
-     * brand_no : 100581
-     * brand_source : 1
-     * is_show : 1
-     * enabled : 1
-     * is_refund : 1
-     * is_activity : 1
-     * activity_type : 1
-     * activity_title : 巧克力
-     * activity_id : 78
-     * goods_type : 1
-     * is_limit : 0
-     * limit_num : 0
-     * limit_start_time : 0
-     * limit_end_time : 0
-     * start_time : 2018-03-27 00:00:00
-     * end_time : 2018-04-30 00:00:00
-     * is_pinkage : 0
-     * default_image : http://image1.maoye.cn/Uploads/product/281/2017-12-25/201712-2515141705303709.jpg
-     * spu_code :
-     * spec_name_list : ["尺码","颜色"]
-     * buy_number : 0
-     * service_address : 世界金融中心
-     * service_phone : 13512345678
-     * product_type : 0
-     * delivery_type : 0
-     * sap_BrandCname : 卡帕
-     * sap_BrandNo : 100581
-     * sap_NameL : 深圳市克瑞斯特体育用品有限公司
-     * sap_Lifnr : 0010003332
-     * weight : 0
-     * freight_id : 17
-     * points_ratio : 0
-     * points_pay_ratio : 10
-     * min_points : 0
-     * max_points : 0
-     * image_list : [{"image_url":"http://image1.maoye.cn/Uploads/product/281/2017-12-25/201712-2515141705303709.jpg","is_default":1},{"image_url":"http://image1.maoye.cn/Uploads/product/281/2018-03-28/201803-2815222240923826.jpg","is_default":0},{"image_url":"http://image1.maoye.cn/Uploads/product/281/2018-03-28/201803-2815222240964426.jpg","is_default":0},{"image_url":"http://image1.maoye.cn/Uploads/product/281/2018-03-28/201803-2815222241012450.jpg","is_default":0},{"image_url":"http://image1.maoye.cn/Uploads/product/281/2018-03-28/201803-2815222241061512.jpg","is_default":0}]
-     * spec_list : [{"activity_spec_id":181,"id":976,"old_price":"100.00","price":"1000.00","stock":72,"sku_code":"","spec_val_list":["XXS","黑色"],"spec_vals":"XXS,黑色","is_default":1,"sap_Ean11":"0100866401","sap_Akpos":"000000","sap_Aktnr":"","sap_Akart":"","sap_Ztacname":"","sap_Vkdab":"0000-00-00","sap_Vktim":"00:00:00","sap_Vedab":"0000-00-00","sap_Vetim":"00:00:00","sap_Ztacid":"00000000","sap_ZpDiscount":"0.0","sap_ZcashRate":"0.0","sap_BrandCname":"卡帕","sap_BrandNo":"100581","sap_NameL":"深圳市克瑞斯特体育用品有限公司","sap_Lifnr":"0010003332"},{"activity_spec_id":182,"id":977,"old_price":"100.00","price":"1000.00","stock":95,"sku_code":"","spec_val_list":["165","黑色"],"spec_vals":"165,黑色","is_default":0,"sap_Ean11":"0100866401","sap_Akpos":"000000","sap_Aktnr":"","sap_Akart":"","sap_Ztacname":"","sap_Vkdab":"0000-00-00","sap_Vktim":"00:00:00","sap_Vedab":"0000-00-00","sap_Vetim":"00:00:00","sap_Ztacid":"00000000","sap_ZpDiscount":"0.0","sap_ZcashRate":"0.0","sap_BrandCname":"卡帕","sap_BrandNo":"100581","sap_NameL":"深圳市克瑞斯特体育用品有限公司","sap_Lifnr":"0010003332"}]
-     * stock : 167
-     * activity_price_int : 1000
-     * activity_price_dec : 00
-     * activity_start_time : 03月27日00点
-     * activity_end_time : 04月30日00点
-     * is_index : 1
-     */
     private int sales;
     private int cartNum;
     private int id;

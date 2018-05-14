@@ -21,7 +21,7 @@
 
             <include layout="@layout/layout_head" />
 
-            <com.youth.banner.Banner
+            <com.maoye.mlh_slotmachine.widget.banner.Banner
                 android:id="@+id/head_banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen220"
@@ -38,13 +38,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="438dp">
 
-                <com.bigkoo.convenientbanner.ConvenientBanner
+                <com.maoye.mlh_slotmachine.widget.banner.ViewBanner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen438"
+                    android:layout_height="@dimen/dimen480"
+                    app:delay_time="5000"
                     android:layout_marginTop="@dimen/dimen8"
-                    app:autoTurningTime="5000"
-                    app:canLoop="true"/>
+                    app:indicator_margin="@dimen/dimen10"
+                    app:indicator_drawable_selected="@drawable/shape_selected"
+                    app:indicator_drawable_unselected="@drawable/shape_noraml"
+                    app:is_auto_play="true"/>
+
                 <ImageView
                     android:id="@+id/leftpage_img"
                     android:layout_width="wrap_content"
