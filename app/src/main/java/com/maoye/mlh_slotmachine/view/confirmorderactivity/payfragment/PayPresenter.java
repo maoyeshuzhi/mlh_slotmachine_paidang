@@ -35,7 +35,7 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
         model.orderDetials(orderId, new BaseObserver<BaseResult<OrderDetialBean>>(mView.getContext(), false) {
             @Override
             protected void onBaseNext(BaseResult<OrderDetialBean> data) {
-                mView.orderDetial(data.getData());
+                if(data!=null) mView.orderDetial(data.getData());
             }
 
             @Override

@@ -177,8 +177,6 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
     private void initData() {
         initcountDownTimer();
         goodsList = (List<GoodsBean>) getActivity().getIntent().getSerializableExtra(Constant.KEY);
-
-
         deliveryType = mPresenter.getDeliveryType(goodsList);
         if (deliveryType == 1) {
             switchSelivryWay(0);

@@ -53,8 +53,8 @@ public class GoodsDetialsBean {
     private String sap_Lifnr;
     private int weight;
     private int freight_id;
-    private int points_ratio;
-    private int points_pay_ratio;
+    private double points_ratio;
+    private String points_pay_ratio;
     private int min_points;
     private int max_points;
     private int stock;
@@ -427,19 +427,19 @@ public class GoodsDetialsBean {
         this.freight_id = freight_id;
     }
 
-    public int getPoints_ratio() {
+    public double getPoints_ratio() {
         return points_ratio;
     }
 
-    public void setPoints_ratio(int points_ratio) {
+    public void setPoints_ratio(double points_ratio) {
         this.points_ratio = points_ratio;
     }
 
-    public int getPoints_pay_ratio() {
+    public String getPoints_pay_ratio() {
         return points_pay_ratio;
     }
 
-    public void setPoints_pay_ratio(int points_pay_ratio) {
+    public void setPoints_pay_ratio(String points_pay_ratio) {
         this.points_pay_ratio = points_pay_ratio;
     }
 

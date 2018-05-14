@@ -3,9 +3,13 @@ package com.maoye.mlh_slotmachine.view.goodsdetialsactivity;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -145,8 +149,8 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     MyScrollView scrollview;
     @BindView(R.id.left_center_rl)
     RelativeLayout leftCenterRl;
-    @BindView(R.id.parent_ll)
-    LinearLayout parentLl;
+    @BindView(R.id.parent_rl)
+    RelativeLayout parentRl;
     private CountDownTimer timer;
     private int timeState;//时间状态
     public static final int UN_START = 0;//未开始
@@ -168,10 +172,13 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     public static final String STOCK_NUM = "(库存还剩%s件)";
     public static final String INTEGRAL = "本商品购买预计可积%s~%s分";
     public static final String INTEGRAL_2 = "本商品购买预计可积%s分";
-    private BadgeView badgeView;
+    private BadgeView badgeView,animBadgeView;
     private int cartNum;//购物车商品数量
     private int goodsId;
     private ArrayList<String> resultList;
+    private boolean isAddCartBottom;
+    private PathMeasure mPathMeasure;
+    private float[] mCurrentPosition = new float[2];//塞尔曲线中间过程的点的坐标
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -186,6 +193,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     protected void initData() {
         banner.setImageLoader(new GlideImageLoaderCenter());
         banner.start();
+        animBadgeView = new BadgeView(this);
         badgeView = new BadgeView(this);
         badgeView.setStyle(1);
         badgeView.setTargetView(cartImg);
@@ -265,46 +273,46 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     }
 
 
+    public static Bitmap createPic(Context mContext, View view) {
+        Bitmap screenshot = null;
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        int w = view.getWidth();
+        int h = view.getHeight();
+        view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        screenshot = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(screenshot);
+        view.draw(c);
+        return screenshot;
+    }
+
+
     /**
      * ★★★★★把商品添加到购物车的动画效果★★★★★
-     *
-     * @param iv
+     * @param view  移动的起始view
+     * @param bitmap   移动的图片
      */
-    private PathMeasure mPathMeasure;
-    private float[] mCurrentPosition = new float[2];//塞尔曲线中间过程的点的坐标
-    private int i = 0;
-
-    private void addCart(ImageView iv) {
-//   一、创造出执行动画的主题---imageview
-        //代码new一个imageview，图片资源是上面的imageview的图片
-        // (这个图片就是执行动画的图片，从开始位置出发，经过一个抛物线（贝塞尔曲线），移动到购物车里)
+    private void addCart(View view,Bitmap bitmap) {
         final ImageView goods = new ImageView(GoodsdetialsActivity.this);
-        goods.setImageDrawable(iv.getDrawable());
-      //  RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
-       // parentLl.addView(goods, params);
-
-//    二、计算动画开始/结束点的坐标的准备工作
+        goods.setImageBitmap(bitmap);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(40, 40);
+        parentRl.addView(goods, params);
         //得到父布局的起始点坐标（用于辅助计算动画开始/结束时的点的坐标）
         int[] parentLocation = new int[2];
-        parentLl.getLocationInWindow(parentLocation);
+        parentRl.getLocationInWindow(parentLocation);
 
-        //得到商品图片的坐标（用于计算动画开始的坐标）
         int startLoc[] = new int[2];
-        iv.getLocationInWindow(startLoc);
-
-        //得到购物车图片的坐标(用于计算动画结束后的坐标)
+        view.getLocationInWindow(startLoc);
         int endLoc[] = new int[2];
         cartImg.getLocationInWindow(endLoc);
-
-
-//    三、正式开始计算动画开始/结束的坐标
         //开始掉落的商品的起始点：商品起始点-父布局起始点+该商品图片的一半
-        float startX = startLoc[0] - parentLocation[0] + iv.getWidth() / 2;
-        float startY = startLoc[1] - parentLocation[1] + iv.getHeight() / 2;
+        float startX = startLoc[0] - parentLocation[0] + view.getWidth() / 2;
+        float startY = startLoc[1] - parentLocation[1] + view.getHeight() / 2;
 
-        //商品掉落后的终点坐标：购物车起始点-父布局起始点+购物车图片的1/5
-        float toX = endLoc[0] - parentLocation[0] + cartImg.getWidth() / 5;
-        float toY = endLoc[1] - parentLocation[1];
+        //商品掉落后的终点坐标：购物车起始点-父布局起始点+购物车图片
+        float toX = endLoc[0] - parentLocation[0] + cartImg.getWidth()-20 ;
+        float toY = endLoc[1] - parentLocation[1]-10;
 
 //    四、计算中间动画的插值坐标（贝塞尔曲线）（其实就是用贝塞尔曲线来完成起终点的过程）
         //开始绘制贝塞尔曲线
@@ -348,11 +356,9 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                // 购物车的数量加1
-                i++;
-                badgeView.setBadgeCount(cartNum + i);
+                badgeView.setBadgeCount(cartNum);
                 // 把移动的图片imageview从父布局里移除
-                parentLl.removeView(goods);
+                parentRl.removeView(goods);
             }
 
             @Override
@@ -598,6 +604,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 break;
             case R.id.add_tv:
                 //加
+                isAddCartBottom = false;
                 int goodsnum = Integer.parseInt(selectGoodsNumTv.getText().toString());
                 if (goodsnum >= stockNum) {
                     Toast.getInstance().toast(this, Constant.NOOVER_STOCK, 2);
@@ -607,6 +614,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
                 break;
             case R.id.addcart_bottom_tv:
+                isAddCartBottom = true;
                 if (bean.getSpec_name_list().size() == 0) {
                     addCart();
                 } else if (bean.getSpec_name_list().size() > 0 && mPresenter.specId != 0) {
@@ -769,10 +777,11 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
     @Override
     public void addCardSucc(BaseResult baseResult) {
-        int i = Integer.parseInt(selectGoodsNumTv.getText().toString());
-        cartNum = cartNum + i;
-       // addCart(rightScrollImg);
-        badgeView.setBadgeCount(cartNum);
+        int num = Integer.parseInt(selectGoodsNumTv.getText().toString());
+        animBadgeView.setBadgeCount(num);
+        cartNum = cartNum + num;
+        addCart(isAddCartBottom ? addcartBottomTv : addTv,createPic(this, animBadgeView));
+        // badgeView.setBadgeCount(cartNum);
         Toast.getInstance().toast(this, "已成功加入购物车", 2);
     }
 

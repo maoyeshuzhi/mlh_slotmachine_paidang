@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parent_ll"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -17,6 +17,7 @@
         android:background="@color/color_b4b4b4" />
 
     <RelativeLayout
+        android:id="@+id/parent_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -51,9 +52,11 @@
                             android:layout_height="@dimen/dimen270"
                             app:banner_default_image="@mipmap/default_image"
                             app:delay_time="1500"
+
                             app:image_scale_type="center_crop"
                             app:indicator_drawable_selected="@drawable/shape_selected"
                             app:indicator_drawable_unselected="@drawable/shape_noraml"
+                            app:indicator_margin="@dimen/dimen8"
                             app:is_auto_play="true" />
 
                         <RelativeLayout
@@ -109,6 +112,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/dimen10"
                             android:ellipsize="end"
+                            android:layout_marginRight="@dimen/dimen14"
                             android:includeFontPadding="false"
                             android:lineSpacingMultiplier="0.9"
                             android:maxLines="2"

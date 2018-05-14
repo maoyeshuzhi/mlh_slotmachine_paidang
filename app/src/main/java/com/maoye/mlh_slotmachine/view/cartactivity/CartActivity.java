@@ -101,6 +101,8 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
         goodsnumTv.setText(String.format(ALL_GOODS_NUM_FORMAT, list.size()));
         cartGoodsAdapter.addDatas(list);
 
+        selectnumTv.setText("0");
+        priceTv.setText(String.format("合计：￥%s",0+""));
     }
 
     @Override
@@ -198,7 +200,7 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
         list = new ArrayList<>();
         goodsnumTv.setText(String.format(ALL_GOODS_NUM_FORMAT, list.size()));
         selectnumTv.setText("0");
-        priceTv.setText(String.format("合计：￥%s",0+""));
+        mPresenter.getPrice(list);
         cartGoodsAdapter.addDatas(list);
     }
 
