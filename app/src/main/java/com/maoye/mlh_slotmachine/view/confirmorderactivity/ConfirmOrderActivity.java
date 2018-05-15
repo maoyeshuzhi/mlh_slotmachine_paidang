@@ -14,12 +14,15 @@ import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
+import com.maoye.mlh_slotmachine.util.LogUtils;
+import com.maoye.mlh_slotmachine.util.MD5;
 import com.maoye.mlh_slotmachine.view.confirmorderactivity.confirmfragment.ConfirmFragment;
 import com.maoye.mlh_slotmachine.view.confirmorderactivity.payfragment.PayFragment;
 import com.maoye.mlh_slotmachine.view.confirmorderactivity.succfragment.SuccFragment;
 import com.maoye.mlh_slotmachine.util.device.printers.PrinterUtils;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
+import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 import com.printsdk.usbsdk.UsbDriver;
 
 
@@ -67,10 +70,15 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
     }
 
 
+
     private void initData() {
         if (getIntent().getIntExtra(Constant.FROM, 0) == 0) {
             cartArrowlineImg.setVisibility(View.GONE);
             flow1Tv.setVisibility(View.GONE);
+            flow2Tv.setText("①拍下商品");
+            flow3Tv.setText("②快递/门店自提配送");
+            flow4Tv.setText("③选择支付方式");
+            flow5Tv.setText("④完成打小票");
         }
         fragmentManager(R.id.fragment_container, new ConfirmFragment(), "MeFragment");
     }
@@ -103,19 +111,23 @@ public class ConfirmOrderActivity extends MVPBaseActivity<ConfirmorderContract.V
                 fragmentManager(R.id.fragment_container,payFragment, "payfragment");
                 break;
             case PAY_SUCC:
+                String url = EnvConfig.instance().getBaseUkfUrl() + "h5/index.html#/invoice?orderAmount=" + bean.getOrder_amount() +
+                        "&orderId=" + bean.getOrder_id() + "&orderNo=" + bean.getOrder_no() +
+                        "&key="+ MD5.MD5(bean.getOrder_no() + bean.getOrder_amount() + "maoye_mlhj" + bean.getOrder_id());
+                LogUtils.e("url :"+url);
                 flow4Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b4), null, null);
-                //打印小票
-                PrinterUtils printerUtils = PrinterUtils.getInstanse();
-                if(! printerUtils.PrintConnStatus(mUsbDriver,mUsbManager)){
-                    return;
-                }
-                printerUtils.getPrintTicketData(mUsbDriver,bean,this);
                 SuccFragment succFragment = new SuccFragment();
                 Bundle succBundle = new Bundle();
                 succBundle.putSerializable(Constant.KEY, bean);
                 succFragment.setArguments(succBundle);
                 flow5Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b5), null, null);
                 fragmentManager(R.id.fragment_container,succFragment, "succFragment");
+                //打印小票
+                PrinterUtils printerUtils = PrinterUtils.getInstanse();
+                if(! printerUtils.PrintConnStatus(mUsbDriver,mUsbManager)){
+                    return;
+                }
+                printerUtils.getPrintTicketData(mUsbDriver,bean,this,0);
               break;
 
         }

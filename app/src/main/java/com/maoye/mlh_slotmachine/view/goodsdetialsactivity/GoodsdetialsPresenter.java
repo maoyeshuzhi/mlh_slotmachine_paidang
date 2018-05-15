@@ -27,7 +27,7 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
         goodsDetialsModel.questGoodsDetialsData(id, new BaseObserver<BaseResult<GoodsDetialsBean>>(mView.getContext()) {
             @Override
             protected void onBaseNext(BaseResult<GoodsDetialsBean> data) {
-                mView.onSuccess(data.getData());
+                if(data!=null) mView.onSuccess(data.getData());
             }
 
             @Override

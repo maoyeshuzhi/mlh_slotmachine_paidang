@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false">
 
-    <com.maoye.mlh_slotmachine.widget.banner.view.BannerViewPager
+    <com.maoye.mlh_slotmachine.widget.banner.view.BannerPager
         android:id="@id/bannerViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

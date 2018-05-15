@@ -16,6 +16,11 @@ public class DevConfig extends EnvConfig {
         return "http://172.31.10.229:8081/";
     }
 
+    @Override
+    public String getBaseUkfUrl() {
+        return "http://172.29.9.52:8888/";
+    }
+
     /* http://172.31.10.3:8899/*/
     @Override
     public String getH5BaseUrl() {

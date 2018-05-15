@@ -91,22 +91,6 @@ public class GoodsDetialsBean {
         this.id = id;
     }
 
-    public int getShop_id() {
-        return shop_id;
-    }
-
-    public void setShop_id(int shop_id) {
-        this.shop_id = shop_id;
-    }
-
-    public int getComp_id() {
-        return comp_id;
-    }
-
-    public void setComp_id(int comp_id) {
-        this.comp_id = comp_id;
-    }
-
     public String getName() {
         return name;
     }
@@ -115,13 +99,6 @@ public class GoodsDetialsBean {
         this.name = name;
     }
 
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
 
     public String getOld_price() {
         return old_price;
@@ -137,22 +114,6 @@ public class GoodsDetialsBean {
 
     public void setPrice(String price) {
         this.price = price;
-    }
-
-    public int getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
-    }
-
-    public String getCategory_name() {
-        return category_name;
-    }
-
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
     }
 
     public String getNotice() {
@@ -273,14 +234,6 @@ public class GoodsDetialsBean {
 
     public void setIs_limit(int is_limit) {
         this.is_limit = is_limit;
-    }
-
-    public int getLimit_num() {
-        return limit_num;
-    }
-
-    public void setLimit_num(int limit_num) {
-        this.limit_num = limit_num;
     }
 
     public String getLimit_start_time() {

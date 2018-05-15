@@ -7,15 +7,19 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.media.ThumbnailUtils;
 import android.widget.Toast;
+
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.util.CodeUtils;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.DateUtils;
+import com.maoye.mlh_slotmachine.util.LogUtils;
+import com.maoye.mlh_slotmachine.util.MD5;
 import com.maoye.mlh_slotmachine.util.MyContext;
 import com.maoye.mlh_slotmachine.util.httputil.BaseRetrofit;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
+import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 import com.maoye.mlh_slotmachine.webservice.URL;
 import com.printsdk.cmd.PrintCmd;
 import com.printsdk.usbsdk.UsbDriver;
@@ -110,21 +114,21 @@ public class PrinterUtils {
         buffer.append(Constant.DOT_LINE);
         for (OrderDetialBean.ProductListBean productListBean : bean.getProduct_list()) {
             buffer.append(productListBean.getProduct_name() + "\n");
-            buffer.append("x" + productListBean.getNum() + "                      "+Double.valueOf(productListBean.getPrice())*productListBean.getNum()+"元" + "\n");
+            buffer.append("x" + productListBean.getNum() + "                      " + Double.valueOf(productListBean.getPrice()) * productListBean.getNum() + "元" + "\n");
         }
         //商品信息
         double goodsPrice = Double.valueOf(bean.getPaid_amount()) - Double.valueOf(bean.getFreight_amount());
         buffer.append(Constant.DOT_LINE);
-        buffer.append("商品合计：              " +String.format("%.2f",goodsPrice)+"元" + "\n");
-        buffer.append("邮费：                  "+bean.getFreight_amount()+"元"+"\n\n");
-        buffer.append("折扣金额：              " +"0.00元"+ "\n");
-        buffer.append("优惠券：                " +"0.00元"+ "\n");
-        buffer.append("积分抵扣：              " +"0.00元" + "\n\n");
-        buffer.append("应付金额：              " + bean.getPaid_amount()+"元" + "\n");
-        if(bean.getPayment_type() ==1){
-            buffer.append("微信支付：              " + bean.getPaid_amount() +"元"+ "\n");
-        }else {
-            buffer.append("支付宝支付：           " + bean.getPaid_amount() +"元"+ "\n");
+        buffer.append("商品合计：              " + String.format("%.2f", goodsPrice) + "元" + "\n");
+        buffer.append("邮费：                  " + bean.getFreight_amount() + "元" + "\n\n");
+        buffer.append("折扣金额：              " + "0.00元" + "\n");
+        buffer.append("优惠券：                " + "0.00元" + "\n");
+        buffer.append("积分抵扣：              " + "0.00元" + "\n\n");
+        buffer.append("应付金额：              " + bean.getPaid_amount() + "元" + "\n");
+        if (bean.getPayment_type() == 1) {
+            buffer.append("微信支付：              " + bean.getPaid_amount() + "元" + "\n");
+        } else {
+            buffer.append("支付宝支付：           " + bean.getPaid_amount() + "元" + "\n");
         }
         buffer.append(Constant.DOT_LINE);
         return buffer.toString();
@@ -132,9 +136,12 @@ public class PrinterUtils {
     }
 
     /**
-     * 2.小票打印
+     * @param mUsbDriver
+     * @param bean
+     * @param context
+     * @param from       来源 :0本机支付  1：快付
      */
-    public void getPrintTicketData(UsbDriver mUsbDriver, OrderDetialBean bean, Context context) {
+    public void getPrintTicketData(UsbDriver mUsbDriver, OrderDetialBean bean, Context context, int from) {
         int iStatus = getPrinterStatus(mUsbDev1, mUsbDriver);
         if (checkStatus(iStatus) != 0)
             return;
@@ -154,19 +161,22 @@ public class PrinterUtils {
             // 小票主要内容
             mUsbDriver.write(PrintCmd.SetBold(0), mUsbDev1);
             mUsbDriver.write(PrintCmd.PrintString(printData(bean), 0), mUsbDev1);
-          //  mUsbDriver.write(PrintCmd.PrintFeedline(0), mUsbDev1); // 打印走纸0行
+            //  mUsbDriver.write(PrintCmd.PrintFeedline(0), mUsbDev1); // 打印走纸0行
             mUsbDriver.write(PrintCmd.SetLinespace(6), mUsbDev1);
             mUsbDriver.write(PrintCmd.SetAlignment(1), mUsbDev1);
-           //打印发票二维码
-         /*   String timeFormat = DateUtils.format(System.currentTimeMillis(), DateUtils.Pattern.YYYYMMDD);
-            String url = EnvConfig.instance().getH5BaseUrl()+URL.BILL+bean.getOrder_no()+","+bean.getPaid_amount()+","+timeFormat+"&shopId="+bean.getSap_id();
-            mUsbDriver.write(PrintCmd.PrintQrcode(url, 13, 4, 1),mUsbDev1);         // 左边距、size、环绕模式0
-            mUsbDriver.write(PrintCmd.SetAlignment(1), mUsbDev1);
-            mUsbDriver.write(PrintCmd.SetLinespace(6), mUsbDev1);
+            //打印发票二维码
+            if (from == 0) {
+                String url = EnvConfig.instance().getBaseUkfUrl() + "h5/index.html#/invoice?orderAmount=" + bean.getOrder_amount() +
+                        "&orderId=" + bean.getOrder_id() + "&orderNo=" + bean.getOrder_no() +
+                        "&key=" + MD5.MD5(bean.getOrder_no() + bean.getOrder_amount() + "maoye_mlhj" + bean.getOrder_id());
+                mUsbDriver.write(PrintCmd.PrintQrcode(url, 13, 4, 1), mUsbDev1);         // 左边距、size、环绕模式0
+                mUsbDriver.write(PrintCmd.SetAlignment(1), mUsbDev1);
+                mUsbDriver.write(PrintCmd.SetLinespace(6), mUsbDev1);
+                mUsbDriver.write(PrintCmd.PrintString("\n扫码打印发票\n", 1), mUsbDev1);
+                mUsbDriver.write(PrintCmd.SetLinespace(linespace), mUsbDev1);
+                mUsbDriver.write(PrintCmd.PrintString(Constant.DOT_LINE, 0), mUsbDev1);
+            }
 
-            mUsbDriver.write(PrintCmd.PrintString("\n扫码打印发票\n", 1), mUsbDev1);
-            mUsbDriver.write(PrintCmd.SetLinespace(linespace), mUsbDev1);
-            mUsbDriver.write(PrintCmd.PrintString(Constant.DOT_LINE,0),mUsbDev1);*/
             // 公众号二维码
             mUsbDriver.write(PrintCmd.SetLeftmargin(40));
             PrintDiskImgFile(mUsbDriver, context, URL.VIP_CN);
@@ -263,7 +273,7 @@ public class PrinterUtils {
         switch (iStatus) {
             case 0:
                 questStatus(0);
-               // sMsg.append(Constant.Normal_CN);       // 正常
+                // sMsg.append(Constant.Normal_CN);       // 正常
                 iRet = 0;
                 break;
             case 8:
@@ -299,8 +309,8 @@ public class PrinterUtils {
                 sMsg.append(Constant.Abnormal_CN);     // 异常
                 break;
         }
-        if(iStatus!=0)
-        com.maoye.mlh_slotmachine.util.Toast.getInstance().toast(MyContext.appContext,sMsg+"",2);
+        if (iStatus != 0)
+            com.maoye.mlh_slotmachine.util.Toast.getInstance().toast(MyContext.appContext, sMsg + "", 2);
 
         return iRet;
 

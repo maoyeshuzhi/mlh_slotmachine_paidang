@@ -31,8 +31,12 @@ public interface URL {
     String SCAN_PAY = "home/machine/goto-micro-pay";
     String REFRESH_ORDER = "home/machine/refresh-orderno";//刷新订单
     String DELIVERY_WAY = "home/m/getEnabledShip";
+    String getCaptcha = "home/machine/getCaptcha";
 
     String QUICK_ORDER_LIST = "newposService/presaleQuery";
     String QUICK_WXPAY = "newposService/wxPay";
+    String ALI_PAYCODE = "newposService/aliPayTradePrecreate";
+    String BILL_QUERY = "newposService/billQuery";
+    String UPDATE_BILL = "newposService/updateBill";
     String APK_LOADDOWN = "http://47.92.91.12/mlhj.apk";
 }

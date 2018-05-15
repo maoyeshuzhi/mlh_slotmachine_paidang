@@ -14,6 +14,7 @@ import com.maoye.mlh_slotmachine.bean.OrderIdBean;
 import com.maoye.mlh_slotmachine.bean.PayCodeBean;
 import com.maoye.mlh_slotmachine.bean.ProvinceBean;
 import com.maoye.mlh_slotmachine.bean.QuickOrderBean;
+import com.maoye.mlh_slotmachine.bean.QuickPayWXBean;
 import com.maoye.mlh_slotmachine.bean.SubmitOrderBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
@@ -58,7 +59,7 @@ public interface ApiService {
      * @return
      */
     @GET(URL.MOBILE_LOGIN)
-    Observable<BaseResult> mobileLogin(@Query("mobile") String mobile, @Query("type") int type);
+    Observable<BaseResult> mobileLogin(@Query("mobile") String mobile, @Query("type") int type,@Query("code") String code);
 
     /**
      * @param id      商品id
@@ -129,7 +130,8 @@ public interface ApiService {
 
     /**
      * 删除购物车
-     *  type 2
+     * type 2
+     *
      * @return
      */
     @GET(URL.DELETE_CART_ALL)
@@ -155,6 +157,7 @@ public interface ApiService {
 
     /**
      * 提交订单
+     *
      * @param submitOrderBean
      * @return
      */
@@ -163,6 +166,7 @@ public interface ApiService {
 
     /**
      * 订单详情
+     *
      * @param order_id
      * @return
      */
@@ -171,6 +175,7 @@ public interface ApiService {
 
     /**
      * 广告轮播
+     *
      * @param type 1:登录界面  2：支付成功界面 3.屏保
      * @return
      */
@@ -180,6 +185,7 @@ public interface ApiService {
 
     /**
      * 打印机状态
+     *
      * @param paper_status 0 打印机正常 1:无纸 2：打印机异常
      * @return
      */
@@ -188,6 +194,7 @@ public interface ApiService {
 
     /**
      * 设备是否关机
+     *
      * @param machine_status 0-关机1开机
      * @return
      */
@@ -196,46 +203,77 @@ public interface ApiService {
 
     /**
      * 获取支付二维码
-     * @param pay_type  支付类型 1-微信|2-支付宝
+     *
+     * @param pay_type 支付类型 1-微信|2-支付宝
      * @param order_id 订单ID
      * @return
      */
     @GET(URL.PAY_CODE)
-    Observable<BaseResult<PayCodeBean>> pay_code(@Query("pay_type") int pay_type , @Query("order_id") int order_id);
+    Observable<BaseResult<PayCodeBean>> pay_code(@Query("pay_type") int pay_type, @Query("order_id") int order_id);
 
     /**
      * 扫码支付
+     *
      * @param pay_type  授权码以1开头为微信，否则为支付宝
-     * @param order_id   订单id
-     * @param auth_code  授权码
+     * @param order_id  订单id
+     * @param auth_code 授权码
      * @return
      */
     @GET(URL.SCAN_PAY)
-    Observable<BaseResult> scanPay(@Query("pay_type") int pay_type , @Query("order_id") int order_id,@Query("auth_code") String auth_code);
+    Observable<BaseResult> scanPay(@Query("pay_type") int pay_type, @Query("order_id") int order_id, @Query("auth_code") String auth_code);
 
 
     /**
      * 刷新订单
+     *
      * @param order_id
      * @return
      */
     @GET(URL.REFRESH_ORDER)
-    Observable<BaseResult<OrderIdBean>> changeOrderNo(@Query("order_id") int order_id );
+    Observable<BaseResult<OrderIdBean>> changeOrderNo(@Query("order_id") int order_id);
 
 
     @GET(URL.QUICK_ORDER_LIST)
-    Observable<BaseResult<ArrayList<QuickOrderBean>>> quickOrderList(@Query("phone") String phone );
+    Observable<BaseResult<ArrayList<QuickOrderBean>>> quickOrderList(@Query("phone") String phone);
 
     /**
-     *  查询商品支持多点配送方式
-     * @param product_ids  购买的商品id，多个逗号分隔
+     * 查询商品支持多点配送方式
+     *
+     * @param product_ids 购买的商品id，多个逗号分隔
      * @return
      */
     @GET(URL.DELIVERY_WAY)
-    Observable<BaseResult<List<DelivetyWayBean>>> deliveryWay(@Query("product_ids") String product_ids );
+    Observable<BaseResult<List<DelivetyWayBean>>> deliveryWay(@Query("product_ids") String product_ids);
 
 
     @GET(URL.QUICK_WXPAY)
-    Observable<BaseResult> quickWxPay(@Query("saleNo") String saleNo ,@Query("money")String money);
+    Observable<BaseResult<QuickPayWXBean>> quickWxPay(@Query("saleNo") String saleNo, @Query("money") String money);
+
+    @GET(URL.ALI_PAYCODE)
+    Observable<BaseResult<QuickPayWXBean>> quickAliPayCode(@Query("saleNo") String saleNo, @Query("money") String money);
+
+    /**
+     * 更新订单状态
+     * @param saleNo 流水号
+     * @return
+     */
+    @GET(URL.UPDATE_BILL)
+    Observable<BaseResult> updateBill(@Query("saleNo") String saleNo);
+
+    /**
+     * 查询是否支付
+     * @param payJson  payJson:[{"saleNo":"10012018050299990023","paymodeId":"1091","payAmount":5,"paymodeName":"微商城（支付宝）","billNo":null}    1088是微信
+     * @return
+     */
+    @GET(URL.BILL_QUERY)
+    Observable<BaseResult<String>> billQuery(@Query("payJson") String payJson);
+
+    /**
+     * 获取验证码
+     * @param mobile
+     * @return
+     */
+   @GET(URL.getCaptcha)
+    Observable<BaseResult> getCaptcha(@Query("mobile") String mobile);
 
 }

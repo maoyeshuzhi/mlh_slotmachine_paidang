@@ -37,7 +37,6 @@ public class Poputils {
         view.setFocusableInTouchMode(true);
         View rootview = LayoutInflater.from(activity).inflate(parent, null);
         pop.setBackgroundDrawable(new BitmapDrawable());
-  
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

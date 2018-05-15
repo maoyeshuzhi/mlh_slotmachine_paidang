@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.apkmanager.DownLoadApk;
 import com.maoye.mlh_slotmachine.bean.CacheBean;
@@ -20,14 +19,17 @@ import com.maoye.mlh_slotmachine.bean.HomeBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
+import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
+import com.maoye.mlh_slotmachine.util.LogUtils;
+import com.maoye.mlh_slotmachine.util.MD5;
 import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.VersionManagerUtil;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
 import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
-import com.maoye.mlh_slotmachine.view.imgactivity.HomeGoodsVH;
 import com.maoye.mlh_slotmachine.view.printreceiptactivity.PrintReceiptActivity;
+import com.maoye.mlh_slotmachine.view.quickpayactivity.QuickpayActivity;
 import com.maoye.mlh_slotmachine.webservice.URL;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
 import com.maoye.mlh_slotmachine.widget.banner.Banner;
@@ -35,9 +37,6 @@ import com.maoye.mlh_slotmachine.widget.banner.BannerConfig;
 import com.maoye.mlh_slotmachine.widget.banner.ViewBanner;
 import com.maoye.mlh_slotmachine.widget.banner.listener.OnBannerListener;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +73,10 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         ButterKnife.bind(this);
+
+        String s = MD5.MD5("M100118051115198227600.01maoye_mlhj4745");
+        LogUtils.e("当前设备设备号："+ DeviceInfoUtil.getDeviceId());
         goodsNumView = new BadgeView(HomeActivity.this);
         goodsNumView.setStyle(1);
         goodsNumView.setTargetView(cartImg);
@@ -147,8 +148,8 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         switch (view.getId()) {
             case R.id.quick_pay_bt:
                 //快付买单
-                Toast.getInstance().toast(this, "正在开发中,敬请期待", 2);
-                //openActivity(QuickpayActivity.class);
+               // Toast.getInstance().toast(this, "正在开发中,敬请期待", 2);
+               openActivity(QuickpayActivity.class);
                 break;
             case R.id.print_bill_bt:
                 //补打小票

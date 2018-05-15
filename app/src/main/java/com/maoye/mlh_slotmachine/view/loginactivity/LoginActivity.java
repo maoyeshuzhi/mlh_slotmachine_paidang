@@ -3,6 +3,7 @@ package com.maoye.mlh_slotmachine.view.loginactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,13 +13,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
-import com.maoye.mlh_slotmachine.bean.LoginBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.TextUtil;
@@ -66,6 +67,13 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     TextView loginTv;
     @BindView(R.id.banner)
     Banner banner;
+    @BindView(R.id.verifi_code_tv)
+    TextView verifiCodeTv;
+    @BindView(R.id.phone_ll)
+    LinearLayout phoneLl;
+    @BindView(R.id.verrifi_code_et)
+    EditText verrifiCodeEt;
+    private CountDownTimer timer;
 
     private int loginType;
     public static final int ACCOUNT_LOIGN = 0;
@@ -79,6 +87,19 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initData();
+        timer = new CountDownTimer(Constant.countDownTime,1000) {
+            @Override
+            public void onTick(long l) {
+                verifiCodeTv.setText(String.format("%ss",l/1000+""));
+            }
+
+            @Override
+            public void onFinish() {
+                verifiCodeTv.setEnabled(true);
+                verifiCodeTv.setClickable(true);
+
+            }
+        };
  /*       findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +120,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         accountEt.addTextChangedListener(accountTextWatcher);
         pswEt.addTextChangedListener(pswTextWatcher);
         phoneEt.addTextChangedListener(phoneTw);
+        verrifiCodeEt.addTextChangedListener(verifiCodeTw);
 
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
@@ -123,12 +145,36 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         pswEt.setText("");
         accountEt.setText("");
         phoneEt.setText("");
     }
+
+    TextWatcher verifiCodeTw = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            isCanLogin(loginType == MOBILE_LOIGN && editable.length() > 0&&!TextUtils.isEmpty(phoneEt.getText()));
+
+        }
+    };
 
     TextWatcher phoneTw = new TextWatcher() {
         @Override
@@ -143,9 +189,11 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
         @Override
         public void afterTextChanged(Editable editable) {
-            isCanLogin(loginType == MOBILE_LOIGN && editable.length() > 0);
+            isCanLogin(loginType == MOBILE_LOIGN && editable.length() > 0&&!TextUtils.isEmpty(verifiCodeTv.getText()));
         }
     };
+
+
     TextWatcher accountTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -208,7 +256,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     }
 
-    @OnClick({R.id.login_bt, R.id.back_imgbt})
+    @OnClick({R.id.login_bt, R.id.back_imgbt,R.id.verifi_code_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_bt:
@@ -216,11 +264,22 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                     if (loginType == ACCOUNT_LOIGN)
                         mPresenter.accountLogin(accountEt.getText().toString(), pswEt.getText().toString());
                     if (loginType == MOBILE_LOIGN)
-                        mPresenter.mobileLogin(phoneEt.getText().toString(), 2);
+                        mPresenter.mobileLogin(phoneEt.getText().toString(), 2,verrifiCodeEt.getText()+"");
                 }
                 break;
             case R.id.back_imgbt:
                 finish();
+                break;
+            case R.id.verifi_code_tv:
+                if(TextUtils.isEmpty(phoneEt.getText())){
+                    Toast.getInstance().toast(getApplicationContext(),"请输入手机号码",2);
+                    break;
+                }
+                if(!TextUtil.isMobile(phoneEt.getText()+"")){
+                    Toast.getInstance().toast(getApplicationContext(),"请输入正确的手机号码",2);
+                    break;
+                }
+                mPresenter.getVerrifiCode(phoneEt.getText().toString());
                 break;
         }
     }
@@ -256,7 +315,8 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         if (isAccount) {
             accountloginRb.setTextColor(getResources().getColor(R.color.white));
             phoneloginRb.setTextColor(getResources().getColor(R.color.color_1e1e1e));
-            phoneEt.setVisibility(View.GONE);
+            phoneLl.setVisibility(View.GONE);
+            verrifiCodeEt.setVisibility(View.GONE);
             phoneView.setVisibility(View.GONE);
             accountEt.setVisibility(View.VISIBLE);
             accountView.setVisibility(View.VISIBLE);
@@ -265,12 +325,13 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         } else {
             accountloginRb.setTextColor(getResources().getColor(R.color.color_1e1e1e));
             phoneloginRb.setTextColor(getResources().getColor(R.color.white));
-            phoneEt.setVisibility(View.VISIBLE);
+            verrifiCodeEt.setVisibility(View.VISIBLE);
+            phoneLl.setVisibility(View.VISIBLE);
             phoneView.setVisibility(View.VISIBLE);
             accountEt.setVisibility(View.GONE);
             accountView.setVisibility(View.GONE);
-            pswEt.setVisibility(View.INVISIBLE);
-            pswView.setVisibility(View.INVISIBLE);
+            pswEt.setVisibility(View.GONE);
+            pswView.setVisibility(View.GONE);
         }
     }
 
@@ -284,4 +345,13 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         }
         banner.update(stringList);
     }
+
+    @Override
+    public void getVerifiCode() {
+        timer.start();
+        verifiCodeTv.setClickable(false);
+        verifiCodeTv.setEnabled(false);
+    }
+
+
 }

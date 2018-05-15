@@ -43,6 +43,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen480"
                     app:delay_time="5000"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
                     android:layout_marginTop="@dimen/dimen8"
                     app:indicator_margin="@dimen/dimen10"
                     app:indicator_drawable_selected="@drawable/shape_selected"
@@ -102,6 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/print_ll"
                         android:gravity="right"
+
                         android:orientation="vertical">
 
                         <TextView

@@ -104,7 +104,8 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
             mobileTv.setText(bean.getMobile() + "");
             priceTv.setText(bean.getPaid_amount() + "元");
             timeTv.setText(bean.getPaid_time() + "");
-            codeImg.setImageBitmap(CodeUtils.createQRCode(EnvConfig.instance().getWebServiceBaseUrl() + URL.ORDER_DETIAL_H5 + bean.getOrder_id(), 300, 300, BitmapFactory.decodeResource(getResources(), R.mipmap.code_logo))
+            //codeImg.setImageBitmap(CodeUtils.createQRCode(EnvConfig.instance().getWebServiceBaseUrl() + URL.ORDER_DETIAL_H5 + bean.getOrder_id(), 300, 300, BitmapFactory.decodeResource(getResources(), R.mipmap.code_logo))
+            codeImg.setImageBitmap(CodeUtils.createQRCode(EnvConfig.instance().getWebServiceBaseUrl() + URL.VIP_CN + bean.getOrder_id(), 300, 300, BitmapFactory.decodeResource(getResources(), R.mipmap.code_logo))
             );
         }
 

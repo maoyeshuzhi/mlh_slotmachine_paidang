@@ -34,6 +34,7 @@ public class Constant {
     public static final String WEIXIN_CODE = "微信二维码";
     public static final String WALI_CODE = "支付宝二维码";
     public static final int countDownTime = 120*1000;//倒计时时间
+    public static final int quickPaycountDownTime = 360*1000;//倒计时时间
     public static final String countDownTimeFormat = "剩%s秒自动关闭";
 
 }

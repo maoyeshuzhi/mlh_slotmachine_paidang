@@ -16,6 +16,11 @@ public class LuoChao extends EnvConfig {
     }
 
     @Override
+    public String getBaseUkfUrl() {
+        return "http://172.29.9.52:8888/";
+    }
+
+    @Override
     public String getH5BaseUrl() {
         return "http://172.31.10.229:9999/";
     }

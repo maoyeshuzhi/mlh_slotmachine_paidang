@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.widget.banner.listener.OnBannerListener;
 import com.maoye.mlh_slotmachine.widget.banner.loader.ImageLoaderInterface;
+import com.maoye.mlh_slotmachine.widget.banner.view.BannerPager;
 import com.maoye.mlh_slotmachine.widget.banner.view.BannerViewPager;
 
 import java.lang.reflect.Field;
@@ -129,7 +130,6 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         titleTextColor = typedArray.getColor(R.styleable.Banner_title_textcolor, BannerConfig.TITLE_TEXT_COLOR);
         titleTextSize = typedArray.getDimensionPixelSize(R.styleable.Banner_title_textsize, BannerConfig.TITLE_TEXT_SIZE);
         mLayoutResId = typedArray.getResourceId(R.styleable.Banner_banner_layout, mLayoutResId);
-        // defaultRedsId = typedArray.getResourceId(R.styleable.Banner_banner_default_layout, R.layout.layout_banner_nodata);
         typedArray.recycle();
     }
 
@@ -541,7 +541,7 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
+           container.removeView((View) object);
         }
 
     }

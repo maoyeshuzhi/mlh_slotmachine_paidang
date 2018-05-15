@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <View
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -12,6 +11,7 @@
         android:background="@color/color_b4b4b4" />
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dimen12"
-            android:text="选择支付方式"
+            android:text="扫码支付"
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen23sp" />
 
@@ -83,24 +83,34 @@
             android:layout_marginBottom="@dimen/dimen27"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/pop_back_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen28"
-                android:clickable="true"
-                android:src="@mipmap/back_login" />
 
-            <Button
-                android:id="@+id/pop_giveup_bt"
-                android:layout_width="@dimen/dimen170"
-                android:layout_height="@dimen/dimen40"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:background="@color/black"
-                android:gravity="center"
-                android:text="放弃支付"
-                android:textColor="@color/white" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/pop_giveup_bt"
+                    android:layout_width="@dimen/dimen138"
+                    android:layout_height="@dimen/dimen40"
+                    android:layout_gravity="center"
+                    android:background="@drawable/color1e1e1e_stroke"
+                    android:gravity="center"
+                    android:text="放弃支付"
+                    android:textColor="@color/color_1e1e1e" />
+                <Button
+                    android:id="@+id/confirm_bt"
+                    android:layout_marginLeft="@dimen/dimen8"
+                    android:layout_width="@dimen/dimen138"
+                    android:layout_height="@dimen/dimen40"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:text="已支付，打印小票"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/pop_time_tv"
@@ -108,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen60"
+                android:layout_marginRight="@dimen/dimen30"
                 android:text="@string/time_hint_str"
                 android:textColor="@color/color_1e1e1e"
                 android:textSize="@dimen/dimen14sp" />

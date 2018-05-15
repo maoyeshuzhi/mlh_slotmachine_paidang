@@ -48,6 +48,7 @@ import com.maoye.mlh_slotmachine.util.DensityUtil;
 import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
 import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
+import com.maoye.mlh_slotmachine.view.imgactivity.ImgActivity;
 import com.maoye.mlh_slotmachine.view.loginactivity.LoginActivity;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
@@ -56,6 +57,7 @@ import com.maoye.mlh_slotmachine.widget.GlideImageLoaderCenter;
 import com.maoye.mlh_slotmachine.widget.MyScrollView;
 import com.maoye.mlh_slotmachine.widget.NoLineSpaceTextView;
 import com.maoye.mlh_slotmachine.widget.banner.Banner;
+import com.maoye.mlh_slotmachine.widget.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,7 +174,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     public static final String STOCK_NUM = "(库存还剩%s件)";
     public static final String INTEGRAL = "本商品购买预计可积%s~%s分";
     public static final String INTEGRAL_2 = "本商品购买预计可积%s分";
-    private BadgeView badgeView,animBadgeView;
+    private BadgeView badgeView, animBadgeView;
     private int cartNum;//购物车商品数量
     private int goodsId;
     private ArrayList<String> resultList;
@@ -218,6 +220,20 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 upDataBanner(position);
             }
         });
+
+/*        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                for (GoodsDetialsBean.ImageListBean imageListBean : image_list) {
+                    arrayList.add(imageListBean.getImage_url());
+                }
+                Intent intent = new Intent(GoodsdetialsActivity.this, ImgActivity.class);
+                intent.putExtra(Constant.KEY, arrayList);
+                intent.putExtra(Constant.POSITION, position);
+                startActivity(intent);
+            }
+        });*/
 
     }
 
@@ -290,10 +306,11 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
 
     /**
      * ★★★★★把商品添加到购物车的动画效果★★★★★
-     * @param view  移动的起始view
-     * @param bitmap   移动的图片
+     *
+     * @param view   移动的起始view
+     * @param bitmap 移动的图片
      */
-    private void addCart(View view,Bitmap bitmap) {
+    private void addCart(View view, Bitmap bitmap) {
         final ImageView goods = new ImageView(GoodsdetialsActivity.this);
         goods.setImageBitmap(bitmap);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(40, 40);
@@ -311,8 +328,8 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         float startY = startLoc[1] - parentLocation[1] + view.getHeight() / 2;
 
         //商品掉落后的终点坐标：购物车起始点-父布局起始点+购物车图片
-        float toX = endLoc[0] - parentLocation[0] + cartImg.getWidth()-20 ;
-        float toY = endLoc[1] - parentLocation[1]-10;
+        float toX = endLoc[0] - parentLocation[0] + cartImg.getWidth() - 20;
+        float toY = endLoc[1] - parentLocation[1] - 10;
 
 //    四、计算中间动画的插值坐标（贝塞尔曲线）（其实就是用贝塞尔曲线来完成起终点的过程）
         //开始绘制贝塞尔曲线
@@ -780,7 +797,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         int num = Integer.parseInt(selectGoodsNumTv.getText().toString());
         animBadgeView.setBadgeCount(num);
         cartNum = cartNum + num;
-        addCart(isAddCartBottom ? addcartBottomTv : addTv,createPic(this, animBadgeView));
+        addCart(isAddCartBottom ? addcartBottomTv : addTv, createPic(this, animBadgeView));
         // badgeView.setBadgeCount(cartNum);
         Toast.getInstance().toast(this, "已成功加入购物车", 2);
     }

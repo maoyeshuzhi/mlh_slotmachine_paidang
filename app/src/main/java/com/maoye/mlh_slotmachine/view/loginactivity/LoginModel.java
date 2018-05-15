@@ -21,8 +21,8 @@ public class LoginModel extends BaseModel{
         toSubscribe(observable, observer);
     }
 
-    public void mobileLogin(String mobile,int type ,BaseObserver<BaseResult> observer) {
-         Observable observable =  mServletApi.mobileLogin(mobile,type).map(new HttpResultFunc());
+    public void mobileLogin(String mobile,int type ,String code,BaseObserver<BaseResult> observer) {
+         Observable observable =  mServletApi.mobileLogin(mobile,type,code).map(new HttpResultFunc());
          toSubscribe(observable, observer);
     }
 
@@ -33,6 +33,10 @@ public class LoginModel extends BaseModel{
 
     public  void bannarData(int type, BaseObserver<BaseResult<List<AdvertBean>>>observer){
         Observable observable = mServletApi.advert(type);
+        toSubscribe(observable, observer);
+    }
+    public  void getVerifiCode(String phone,BaseObserver<BaseResult>observer){
+        Observable observable = mServletApi.getCaptcha(phone);
         toSubscribe(observable, observer);
     }
 }

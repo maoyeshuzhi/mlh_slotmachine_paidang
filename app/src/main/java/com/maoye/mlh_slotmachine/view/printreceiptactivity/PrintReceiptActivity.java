@@ -172,7 +172,7 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
                return;
            }
            isPrintSucc = true;
-           printerUtils.getPrintTicketData(mUsbDriver, bean, this);
+           printerUtils.getPrintTicketData(mUsbDriver, bean, this,0);
            flow2Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b5), null, null);
            printTitleTv.setVisibility(View.GONE);
            printTepImg.setVisibility(View.GONE);

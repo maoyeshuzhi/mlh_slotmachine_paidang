@@ -1,8 +1,10 @@
-package com.maoye.mlh_slotmachine.view.imgactivity;
+package com.maoye.mlh_slotmachine.view.homeactivity;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.maoye.mlh_slotmachine.R;
@@ -10,6 +12,7 @@ import com.maoye.mlh_slotmachine.adapter.HomeAdapter;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
 import com.maoye.mlh_slotmachine.util.DensityUtil;
 import com.maoye.mlh_slotmachine.widget.DividerLine;
+import com.maoye.mlh_slotmachine.widget.NotScrollRecyclerView;
 import com.maoye.mlh_slotmachine.widget.banner.loader.RecyclerViewLoader;
 
 import java.util.List;
@@ -22,7 +25,8 @@ public class HomeGoodsVH extends RecyclerViewLoader {
 
     @Override
     public RecyclerView createView(Context context) {
-        RecyclerView recyclerView = new RecyclerView(context);
+        NotScrollRecyclerView recyclerView = new NotScrollRecyclerView(context);
+
         return recyclerView;
     }
 

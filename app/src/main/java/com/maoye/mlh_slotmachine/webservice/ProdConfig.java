@@ -16,6 +16,11 @@ public class ProdConfig extends EnvConfig{
     }
 
     @Override
+    public String getBaseUkfUrl() {
+        return "https://uke.maoye.cn/";
+    }
+
+    @Override
     public String getH5BaseUrl() {
         return "http://172.31.10.3:8899/";
     }

@@ -11,12 +11,14 @@ import java.util.List;
 public class LoginContract {
     interface View extends BaseView {
         void getBannerData(List<AdvertBean>list);
+        void getVerifiCode();
     }
 
     interface  Presenter extends BasePresenter<View> {
            void accountLogin(String mobile,String psw);
-           void  mobileLogin(String mobile,int type);
+           void  mobileLogin(String mobile,int type,String code);
            void statisticClickNum(int adId);
            void  getBannerData(int type);
+           void getVerrifiCode(String phone);
     }
 }

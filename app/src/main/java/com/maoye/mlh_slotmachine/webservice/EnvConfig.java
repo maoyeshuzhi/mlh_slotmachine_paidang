@@ -5,7 +5,7 @@ package com.maoye.mlh_slotmachine.webservice;
  */
 
 public abstract class EnvConfig {
-    private static Stage stage = Stage.PROD;
+    private static Stage stage = Stage.DEV;
 
     public static EnvConfig instance() {
         switch (stage) {
@@ -21,6 +21,7 @@ public abstract class EnvConfig {
     }
     public abstract String getWebServiceBaseUrl();
     public abstract String getQuickPayWebServiceBaseUrl();
+    public abstract String getBaseUkfUrl();
 
     public  abstract String getH5BaseUrl();
 

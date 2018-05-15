@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.widget.banner.listener.OnBannerListener;
 import com.maoye.mlh_slotmachine.widget.banner.loader.ImageLoaderInterface;
-import com.maoye.mlh_slotmachine.widget.banner.view.BannerViewPager;
+import com.maoye.mlh_slotmachine.widget.banner.view.BannerPager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
     private List<View> imageViews;
     private List<ImageView> indicatorImages;
     private Context context;
-    private BannerViewPager viewPager;
+    private BannerPager viewPager;
     private TextView bannerTitle, numIndicatorInside, numIndicator;
     private LinearLayout indicator, indicatorInside, titleView;
     private ImageView bannerDefaultImage;
@@ -99,7 +99,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         handleTypedArray(context, attrs);
         View view = LayoutInflater.from(context).inflate(mLayoutResId, this, true);
         bannerDefaultImage = (ImageView) view.findViewById(R.id.bannerDefaultImage);
-        viewPager = (BannerViewPager) view.findViewById(R.id.bannerViewPager);
+        viewPager = (BannerPager) view.findViewById(R.id.bannerViewPager);
         titleView = (LinearLayout) view.findViewById(R.id.titleView);
         indicator = (LinearLayout) view.findViewById(R.id.circleIndicator);
         indicatorInside = (LinearLayout) view.findViewById(R.id.indicatorInside);

@@ -249,13 +249,18 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
                     return;
                 switch (i) {
                     case R.id.expresstype_rb://快递
-                        String strings = mPresenter.productInfo(goodsList);
-                        mPresenter.getFeight(mPresenter.getArea_id(addressList), 0, strings);
+                        if(expressRb.isChecked()) {
+                            String strings = mPresenter.productInfo(goodsList);
+                            mPresenter.getFeight(mPresenter.getArea_id(addressList), 0, strings);
+                        }
                         break;
                     case R.id.EMS_rb://ems
-                        mPresenter.getFeight(mPresenter.getArea_id(addressList), 1, mPresenter.productInfo(goodsList));
+                        if(expressRb.isChecked()) {
+                            mPresenter.getFeight(mPresenter.getArea_id(addressList), 1, mPresenter.productInfo(goodsList));
+                        }
                         break;
                     case R.id.mail_rb://邮寄
+                        if(expressRb.isChecked())
                         mPresenter.getFeight(mPresenter.getArea_id(addressList), 2, mPresenter.productInfo(goodsList));
                         break;
                 }
