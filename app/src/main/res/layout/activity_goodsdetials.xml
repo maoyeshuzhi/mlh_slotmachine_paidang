@@ -51,12 +51,11 @@
                             android:layout_width="@dimen/dimen270"
                             android:layout_height="@dimen/dimen270"
                             app:banner_default_image="@mipmap/default_image"
-                            app:delay_time="1500"
-
+                            app:delay_time="3000"
                             app:image_scale_type="center_crop"
                             app:indicator_drawable_selected="@drawable/shape_selected"
                             app:indicator_drawable_unselected="@drawable/shape_noraml"
-                            app:indicator_margin="@dimen/dimen8"
+                            app:indicator_margin="@dimen/dimen4"
                             app:is_auto_play="true" />
 
                         <RelativeLayout

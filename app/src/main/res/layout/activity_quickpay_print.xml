@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <com.maoye.mlh_slotmachine.widget.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen220"
+        app:banner_default_image="@mipmap/default_banner"
+        app:delay_time="3000"
+        app:image_scale_type="fit_xy"
+        app:indicator_drawable_selected="@drawable/shape_selected"
+        app:indicator_drawable_unselected="@drawable/shape_noraml"
+        app:indicator_margin="@dimen/dimen10"
+        app:is_auto_play="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen54"
+        android:layout_marginTop="@dimen/dimen40"
+        android:includeFontPadding="false"
+        android:text="输入订单码补打茂乐惠快付订单小票"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen54"
+        android:layout_marginRight="@dimen/dimen54"
+        android:layout_marginTop="@dimen/dimen27"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/time_tv"
+            android:layout_width="@dimen/dimen120"
+            android:layout_height="@dimen/dimen46"
+            android:layout_marginRight="@dimen/dimen3"
+            android:background="@drawable/color969696_stroke"
+            android:gravity="center"
+            android:text="20180516"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen18sp" />
+
+        <EditText
+            android:id="@+id/code_et"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen46"
+            android:layout_weight="1"
+            android:background="@drawable/color969696_stroke"
+            android:digits="@string/number"
+            android:hint="请输入10位数订单码"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/dimen12"
+            android:textCursorDrawable="@drawable/shap_cursor"
+            android:textSize="@dimen/dimen18sp" />
+
+        <Button
+            android:id="@+id/query_bt"
+            android:layout_width="@dimen/dimen126"
+            android:layout_height="@dimen/dimen46"
+            android:layout_marginLeft="@dimen/dimen3"
+            android:background="@color/color_b4b4b4"
+            android:clickable="false"
+            android:enabled="false"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen18sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_quick_order" />
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dimen54"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/dimen27"
+            android:layout_marginLeft="@dimen/dimen27"
+            android:background="@null"
+            android:src="@mipmap/back_login" />
+
+
+        <TextView
+            android:id="@+id/countdowntimer_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="@dimen/dimen12"
+            android:layout_toRightOf="@+id/back"
+            android:text="@string/countDownTimer_str"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen13sp" />
+
+        <Button
+            android:id="@+id/confirm_bt"
+            android:layout_width="@dimen/dimen126"
+            android:layout_height="@dimen/dimen40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="@dimen/dimen3"
+            android:background="@color/color_b4b4b4"
+            android:clickable="false"
+            android:enabled="false"
+            android:text="打印小票"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen18sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

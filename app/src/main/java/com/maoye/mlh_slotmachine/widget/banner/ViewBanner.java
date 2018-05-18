@@ -71,7 +71,8 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
     private BannerScroller mScroller;
     private OnBannerListener listener;
     private DisplayMetrics dm;
-
+    private static final double MOVE_LIMITATION = 1;// 触发移动的像素距离
+    private float mLastMotionX; // 手指触碰屏幕的最后一次x坐标
     private WeakHandler handler = new WeakHandler();
 
     public ViewBanner(Context context) {
@@ -107,6 +108,7 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         numIndicator = (TextView) view.findViewById(R.id.numIndicator);
         numIndicatorInside = (TextView) view.findViewById(R.id.numIndicatorInside);
         View defaultView = LayoutInflater.from(context).inflate(defaultRedsId, this, false);
+
         default_layout.addView(defaultView);
         initViewPagerScroll();
     }
@@ -394,42 +396,41 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
     }
 
 
-    public int getCurrrentItem() {
-        return currentItem;
-    }
-
     public void scrollLeft() {
+        Log.i(tag, "currentItem前" + currentItem);
         stopAutoPlay();
         if (count > 1 && isAutoPlay) {
-            currentItem = currentItem % (count + 1) - 1;
-//                Log.i(tag, "curr:" + currentItem + " count:" + count);
-            if (currentItem < 1) {
-                currentItem = count + 1;
+            if (currentItem == 0) {
+                currentItem = count-1;
                 viewPager.setCurrentItem(currentItem);
-                handler.post(task);
-            } else if (currentItem == 1) {
-                viewPager.setCurrentItem(currentItem, false);
-                handler.post(task);
+                // currentItem = count;
             } else {
-                viewPager.setCurrentItem(currentItem);
-                handler.postDelayed(task, delayTime);
+                currentItem = currentItem % (count + 1) - 1;
+
+                if (currentItem == count) {
+                    viewPager.setCurrentItem(currentItem - 1);
+                } else {
+                    viewPager.setCurrentItem(currentItem);
+                }
             }
+
         }
         startAutoPlay();
     }
 
+
     public void scrollRight() {
         stopAutoPlay();
         if (count > 1 && isAutoPlay) {
+            int oldCurrentItem = currentItem;
             currentItem = currentItem % (count + 1) + 1;
-//                Log.i(tag, "curr:" + currentItem + " count:" + count);
-            if (currentItem == 1) {
+            if (oldCurrentItem == count + 1) {
+                currentItem = 2;
                 viewPager.setCurrentItem(currentItem, false);
-                handler.post(task);
+            } else if (currentItem == 1) {
+                viewPager.setCurrentItem(currentItem, false);
             } else {
-                viewPager.setCurrentItem(currentItem);
-                handler.post(task);
-                // handler.postDelayed(task, delayTime);
+                viewPager.setCurrentItem(currentItem, false);
             }
         }
         startAutoPlay();
@@ -465,12 +466,12 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         handler.removeCallbacks(task);
     }
 
+
     private final Runnable task = new Runnable() {
         @Override
         public void run() {
             if (count > 1 && isAutoPlay) {
                 currentItem = currentItem % (count + 1) + 1;
-//                Log.i(tag, "curr:" + currentItem + " count:" + count);
                 if (currentItem == 1) {
                     viewPager.setCurrentItem(currentItem, false);
                     handler.post(task);
@@ -484,7 +485,6 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-//        Log.i(tag, ev.getAction() + "--" + isAutoPlay);
         if (isAutoPlay) {
             int action = ev.getAction();
             if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL
@@ -541,23 +541,26 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-           container.removeView((View) object);
+            container.removeView((View) object);
         }
 
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        stopAutoPlay();
         if (mOnPageChangeListener != null) {
             mOnPageChangeListener.onPageScrollStateChanged(state);
         }
-//        Log.i(tag,"currentItem: "+currentItem);
+
         switch (state) {
             case 0://No operation
                 if (currentItem == 0) {
                     viewPager.setCurrentItem(count, false);
                 } else if (currentItem == count + 1) {
                     viewPager.setCurrentItem(1, false);
+                } else {
+                    //viewPager.setCurrentItem(currentItem);
                 }
                 break;
             case 1://start Sliding
@@ -565,11 +568,15 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
                     viewPager.setCurrentItem(1, false);
                 } else if (currentItem == 0) {
                     viewPager.setCurrentItem(count, false);
+                } else {
+                    viewPager.setCurrentItem(currentItem);
                 }
                 break;
             case 2://end Sliding
+
                 break;
         }
+        startAutoPlay();
     }
 
     @Override
@@ -581,6 +588,7 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
 
     @Override
     public void onPageSelected(int position) {
+        //  Log.i(tag, "currentItemposition: " +position);
         currentItem = position;
         if (mOnPageChangeListener != null) {
             mOnPageChangeListener.onPageSelected(toRealPosition(position));
@@ -613,7 +621,6 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         }
 
     }
-
 
 
     /**

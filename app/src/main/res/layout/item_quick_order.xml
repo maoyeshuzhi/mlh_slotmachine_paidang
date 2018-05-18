@@ -30,7 +30,7 @@
             android:id="@+id/brand_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dior/迪奥专柜"
+            android:text=""
             android:textColor="@color/color_646464"
             android:textSize="@dimen/dimen14sp" />
     </LinearLayout>

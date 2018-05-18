@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
@@ -26,14 +27,22 @@ public class AddressAdapter extends BaseRecyclerAdapter<AddressBean.ListBean> {
     @Override
     public void onBind(RecyclerView.ViewHolder viewHolder, int RealPosition, AddressBean.ListBean data, int size) {
         if (viewHolder instanceof AddressVH) {
-            if (data.getDefaultX() == 1) {
-                ((AddressVH) viewHolder).itemLl.setBackgroundResource(R.mipmap.address_select);
-            }else {
+            if (data.isAddAddress()) {
                 ((AddressVH) viewHolder).itemLl.setBackgroundResource(R.mipmap.address_unseoect);
+                ((AddressVH) viewHolder).addressLl.setVisibility(View.GONE);
+                ((AddressVH) viewHolder).addAddressTv.setVisibility(View.VISIBLE);
+            } else {
+                ((AddressVH) viewHolder).addressLl.setVisibility(View.VISIBLE);
+                ((AddressVH) viewHolder).addAddressTv.setVisibility(View.GONE);
+                if (data.getDefaultX() == 1) {
+                    ((AddressVH) viewHolder).itemLl.setBackgroundResource(R.mipmap.address_select);
+                } else {
+                    ((AddressVH) viewHolder).itemLl.setBackgroundResource(R.mipmap.address_unseoect);
+                }
+                ((AddressVH) viewHolder).addressTv.setText(data.getProvince_name() + data.getCity_name() + "");
+                ((AddressVH) viewHolder).nameTv.setText(String.format("(%s收)", data.getName() + ""));
+                ((AddressVH) viewHolder).addressAddressTv.setText(data.getArea_name() + data.getStreet() + data.getPhone() + "");
             }
-            ((AddressVH) viewHolder).addressTv.setText(data.getProvince_name()+data.getCity_name()+"");
-            ((AddressVH) viewHolder).nameTv.setText(String.format("(%s收)",data.getName()+""));
-            ((AddressVH) viewHolder).addressAddressTv.setText(data.getArea_name()+data.getStreet()+data.getPhone()+"");
         }
     }
 
@@ -45,11 +54,15 @@ public class AddressAdapter extends BaseRecyclerAdapter<AddressBean.ListBean> {
         @BindView(R.id.detial_address_tv)
         TextView addressAddressTv;
         @BindView(R.id.item_ll)
-        LinearLayout itemLl;
+        RelativeLayout itemLl;
+        @BindView(R.id.address_ll)
+        LinearLayout addressLl;
+        @BindView(R.id.add_address_tv)
+        TextView addAddressTv;
+
         public AddressVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
 }

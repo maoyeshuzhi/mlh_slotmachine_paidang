@@ -43,15 +43,13 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
     @Override
     public void onBind(final RecyclerView.ViewHolder viewHolder, int RealPosition, HomeBean.ListBeanX data, int size) {
         if (viewHolder instanceof HomeVH) {
-            ((HomeVH) viewHolder).priceTv.setText(TextUtil.setPriceText(data.getPrice()+""));
+            ((HomeVH) viewHolder).priceTv.setText(TextUtil.setPriceText(data.getPrice() + ""));
             ((HomeVH) viewHolder).discriptionTv.setText(data.getName() + "");
             ImgGlideUtil.displayImage(data.getImage(), ((HomeVH) viewHolder).goodsImg, true);
-            try {
-                ((HomeVH) viewHolder).codeImg.setImageBitmap(CodeUtils.createQRCode(data.getProduct_link(), 300));
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
-            switchStatus((HomeVH) viewHolder, RealPosition,data);
+
+            ((HomeVH) viewHolder).codeImg.setImageBitmap(CodeUtils.createQRCode(data.getProduct_link(), 300,0));
+
+            switchStatus((HomeVH) viewHolder, RealPosition, data);
         }
     }
 
@@ -75,7 +73,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, GoodsdetialsActivity.class);
-                intent.putExtra(Constant.GOODS_ID,data.getProduct_id());
+                intent.putExtra(Constant.GOODS_ID, data.getProduct_id());
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 mContext.startActivity(intent);
             }
@@ -84,13 +82,13 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
         viewHolder.codeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isShowCode[0]){
+                if (isShowCode[0]) {
                     (viewHolder).codeImg.setVisibility(View.INVISIBLE);
-                isShowCode[0] = !isShowCode[0];
-                AnimUtil.FlipAnimatorXViewShow(viewHolder.codeImg, viewHolder.goodsImg, ROTATE_TIEM);
-              }else {
+                    isShowCode[0] = !isShowCode[0];
+                    AnimUtil.FlipAnimatorXViewShow(viewHolder.codeImg, viewHolder.goodsImg, ROTATE_TIEM);
+                } else {
                     Intent intent = new Intent(mContext, GoodsdetialsActivity.class);
-                    intent.putExtra(Constant.GOODS_ID,data.getProduct_id());
+                    intent.putExtra(Constant.GOODS_ID, data.getProduct_id());
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     mContext.startActivity(intent);
                 }
@@ -98,7 +96,7 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
         });
 
         if (RealPosition == 1 || RealPosition == 4) {
-           // viewHolder.leftLineV.setVisibility(View.VISIBLE);
+            // viewHolder.leftLineV.setVisibility(View.VISIBLE);
             //viewHolder.rightLineV.setVisibility(View.VISIBLE);
         } else {
             //viewHolder.leftLineV.setVisibility(View.GONE);
@@ -115,10 +113,10 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeBean.ListBeanX> {
     private void viewAnim(final boolean[] isShowCode, final HomeVH viewHolder) {
         isShowCode[0] = !isShowCode[0];
         if (isShowCode[0]) {
-            ( viewHolder).codeImg.setVisibility(View.VISIBLE);
+            (viewHolder).codeImg.setVisibility(View.VISIBLE);
             AnimUtil.FlipAnimatorXViewShow(viewHolder.goodsImg, viewHolder.codeImg, ROTATE_TIEM);
         } else {
-            ( viewHolder).codeImg.setVisibility(View.INVISIBLE);
+            (viewHolder).codeImg.setVisibility(View.INVISIBLE);
             AnimUtil.FlipAnimatorXViewShow(viewHolder.codeImg, viewHolder.goodsImg, ROTATE_TIEM);
         }
         if (isShowCode[0]) {

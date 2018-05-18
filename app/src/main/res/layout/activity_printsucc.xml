@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <com.maoye.mlh_slotmachine.widget.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen220"
+        app:banner_default_image="@mipmap/default_banner"
+        app:delay_time="3000"
+        app:image_scale_type="fit_xy"
+        app:indicator_drawable_selected="@drawable/shape_selected"
+        app:indicator_drawable_unselected="@drawable/shape_noraml"
+        app:indicator_margin="@dimen/dimen10"
+        app:is_auto_play="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen76"
+        android:drawablePadding="@dimen/dimen27"
+        android:drawableTop="@mipmap/printsucc_icon"
+        android:gravity="center"
+        android:text="小票打印成功,请取走小票"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen23sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen60"
+        android:src="@mipmap/printsucc_bottom_icon" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/back"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen27"
+        android:layout_marginLeft="@dimen/dimen27"
+        android:drawableLeft="@mipmap/back_login"
+        android:drawablePadding="@dimen/dimen10"
+        android:gravity="center"
+        android:text="剩余操作时间10s"
+        android:textColor="@color/color_1e1e1e"
+        android:textSize="@dimen/dimen16sp" />
+
+
+</LinearLayout>

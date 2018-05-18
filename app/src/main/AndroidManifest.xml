@@ -46,6 +46,9 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".view.quickpayactivity.QuickpayActivity" />
         <activity android:name=".view.imgactivity.ImgActivity" />
+        <activity android:name=".view.print_select_activity.PrintSelectActivity" />
+        <activity android:name=".view.quickprintactivity.QuickprintActivity" />
+        <activity android:name=".view.printsuccactivity.PrintsuccActivity" />
 
 
         <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"

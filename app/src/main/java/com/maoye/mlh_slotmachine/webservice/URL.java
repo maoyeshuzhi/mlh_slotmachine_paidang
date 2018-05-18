@@ -32,6 +32,8 @@ public interface URL {
     String REFRESH_ORDER = "home/machine/refresh-orderno";//刷新订单
     String DELIVERY_WAY = "home/m/getEnabledShip";
     String getCaptcha = "home/machine/getCaptcha";
+    String querySapId = "home/machine/getMachineInfo";
+    String markBillStatus = "home/machine/updateOrderPrintStatus";
 
     String QUICK_ORDER_LIST = "newposService/presaleQuery";
     String QUICK_WXPAY = "newposService/wxPay";
@@ -39,4 +41,5 @@ public interface URL {
     String BILL_QUERY = "newposService/billQuery";
     String UPDATE_BILL = "newposService/updateBill";
     String APK_LOADDOWN = "http://47.92.91.12/mlhj.apk";
+    String QUICK_ORDER_DATA = "newposService/getBillBySaleNo";
 }

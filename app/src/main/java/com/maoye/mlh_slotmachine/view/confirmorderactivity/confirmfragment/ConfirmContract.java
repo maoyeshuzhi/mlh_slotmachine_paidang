@@ -17,10 +17,8 @@ import java.util.List;
 public class ConfirmContract {
     interface View extends BaseView {
           void getFreight(double fee);
-          void getPayCode(String codeUrl);
-          void  paySucc(OrderDetialBean orderDetialBean,boolean isfromSubmit);
-          void payFail(Throwable throwable);
         void  getDeliveryType(List<DelivetyWayBean> list);
+        void getOrderDetials(OrderDetialBean orderDetialBean);
     }
 
     interface  Presenter extends BasePresenter<View> {
@@ -31,8 +29,8 @@ public class ConfirmContract {
         int getAddress_id(List<AddressBean.ListBean> list);
         double getGoodsPrice(List<GoodsBean>list);
         void  submitOrder(SubmitOrderBean submitOrderBean,BaseObserver<BaseResult<OrderIdBean>> baseObserver);
-       void  getPayCode(int orderId,int payType);
-       void orderDetials(int orderId,boolean isfromSubmi);
+
+       void orderDetials(int orderId);
         int getDeliveryType(List<GoodsBean>list);
         void deliveryWay(String goodsIds);
     }

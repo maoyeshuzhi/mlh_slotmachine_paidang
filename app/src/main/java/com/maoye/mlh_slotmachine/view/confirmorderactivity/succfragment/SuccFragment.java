@@ -105,14 +105,14 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
             priceTv.setText(bean.getPaid_amount() + "元");
             timeTv.setText(bean.getPaid_time() + "");
             //codeImg.setImageBitmap(CodeUtils.createQRCode(EnvConfig.instance().getWebServiceBaseUrl() + URL.ORDER_DETIAL_H5 + bean.getOrder_id(), 300, 300, BitmapFactory.decodeResource(getResources(), R.mipmap.code_logo))
-            codeImg.setImageBitmap(CodeUtils.createQRCode(EnvConfig.instance().getWebServiceBaseUrl() + URL.VIP_CN + bean.getOrder_id(), 300, 300, BitmapFactory.decodeResource(getResources(), R.mipmap.code_logo))
+            codeImg.setImageBitmap(CodeUtils.createQRCode(EnvConfig.instance().getWebServiceBaseUrl() + URL.VIP_CN + bean.getOrder_id(), 300, 300, BitmapFactory.decodeResource(getResources(), R.mipmap.code_logo),0)
             );
         }
 
-        countDownTimer = new CountDownTimer(10 * 1000, 1000) {
+        countDownTimer = new CountDownTimer(11 * 1000, 1000) {
             @Override
             public void onTick(long l) {
-                countDownTv.setText(l / 1000 + "s");
+                countDownTv.setText(l / 1000-1 + "s");
             }
 
             @Override
@@ -122,7 +122,7 @@ public class SuccFragment extends MVPBaseFragment<SuccContract.View, SuccPresent
                 startActivity(intent);
                 getActivity().finish();
             }
-        }.start();
+        };
     }
 
     @Override

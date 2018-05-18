@@ -82,9 +82,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen33"
-        android:background="@color/color_d4d4d4"
-        android:paddingBottom="@dimen/dimen14"
-        android:paddingTop="@dimen/dimen30"
         android:src="@mipmap/print_tep" />
 
 
@@ -132,42 +129,13 @@
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen23sp" />
 
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/dimen6"
             android:layout_marginRight="@dimen/dimen57"
-            android:layout_marginTop="@dimen/dimen64"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/pay_bt"
-                android:layout_width="@dimen/dimen143"
-                android:layout_height="@dimen/dimen46"
-                android:background="@drawable/color1e1e1e_stroke"
-                android:gravity="center"
-                android:text="快付买单"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen18sp" />
-
-            <TextView
-                android:layout_width="@dimen/dimen100"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dimen9"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="在专柜通过快付下的订单可以在本机扫码买单"
-                android:textColor="@color/color_464646"
-                android:textSize="@dimen/dimen9sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="206dp"
             android:layout_marginTop="@dimen/dimen64"
             android:orientation="vertical">
 

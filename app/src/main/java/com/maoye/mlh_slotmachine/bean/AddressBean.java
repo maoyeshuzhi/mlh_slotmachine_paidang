@@ -64,6 +64,15 @@ public class AddressBean {
         @SerializedName("default")
         private int defaultX;//1为默认选中
         private String street;
+        private boolean isAddAddress;
+
+        public boolean isAddAddress() {
+            return isAddAddress;
+        }
+
+        public void setAddAddress(boolean addAddress) {
+            isAddAddress = addAddress;
+        }
 
         public int getId() {
             return id;

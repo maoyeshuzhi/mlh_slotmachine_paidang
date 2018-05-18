@@ -133,6 +133,10 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         typedArray.recycle();
     }
 
+    public void  setCurrentPosition(int position){
+        viewPager.setCurrentItem(position,false);
+    }
+
     private void initViewPagerScroll() {
         try {
             Field mField = ViewPager.class.getDeclaredField("mScroller");
@@ -534,7 +538,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
         if (mOnPageChangeListener != null) {
             mOnPageChangeListener.onPageScrollStateChanged(state);
         }
-//        Log.i(tag,"currentItem: "+currentItem);
+
         switch (state) {
             case 0://No operation
                 if (currentItem == 0) {

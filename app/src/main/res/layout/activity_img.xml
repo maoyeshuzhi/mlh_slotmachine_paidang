@@ -1,13 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_7f000000">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:background="@color/color_7f000000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/color_7f000000"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="left|center_vertical"
+            android:clickable="true"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingLeft="@dimen/dimen12"
+            android:paddingRight="@dimen/dimen12"
+            android:paddingTop="@dimen/dimen15"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/imageView_current_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingTop="@dimen/dimen15"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen18sp" />
+
+        <TextView
+            android:id="@+id/imageView_total_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/imageView_current_tv"
+            android:paddingBottom="@dimen/dimen15"
+            android:paddingTop="@dimen/dimen15"
+            android:text="/8"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen18sp" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/back_img"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dimen27"
+        android:layout_marginLeft="@dimen/dimen27"
+        android:layout_width="wrap_content"
+        android:src="@mipmap/back_login"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

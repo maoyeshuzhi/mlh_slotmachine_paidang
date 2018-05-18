@@ -16,7 +16,7 @@ public class ConfirmorderContract {
     }
 
     interface  Presenter extends BasePresenter<View> {
-
+         void  markOrder(int orderId);
 
     }
 }

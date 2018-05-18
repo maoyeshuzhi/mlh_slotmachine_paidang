@@ -14,7 +14,9 @@ import com.maoye.mlh_slotmachine.bean.OrderIdBean;
 import com.maoye.mlh_slotmachine.bean.PayCodeBean;
 import com.maoye.mlh_slotmachine.bean.ProvinceBean;
 import com.maoye.mlh_slotmachine.bean.QuickOrderBean;
+import com.maoye.mlh_slotmachine.bean.QuickOrderDetialsBean;
 import com.maoye.mlh_slotmachine.bean.QuickPayWXBean;
+import com.maoye.mlh_slotmachine.bean.SapIdBean;
 import com.maoye.mlh_slotmachine.bean.SubmitOrderBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
@@ -35,6 +37,9 @@ public interface ApiService {
 
     @GET(URL.HOME_DATA)
     Observable<BaseResult<HomeBean>> homedata();
+
+    @GET(URL.querySapId)
+    Observable<BaseResult<SapIdBean>> querySapId();
 
     @GET(URL.GOODS_DETIALS)
     Observable<BaseResult<GoodsDetialsBean>> goodsDetials(@Query("id") int id);
@@ -268,6 +273,16 @@ public interface ApiService {
     @GET(URL.BILL_QUERY)
     Observable<BaseResult<String>> billQuery(@Query("payJson") String payJson);
 
+
+    /**
+     * 快付订单信息
+     * @param saleNo   门店id+ ","+日期（年月日）+","+十位流水号
+
+     * @return
+     */
+    @GET(URL.QUICK_ORDER_DATA)
+    Observable<BaseResult<QuickOrderDetialsBean>> quickOrderData(@Query("saleNo") String saleNo);
+
     /**
      * 获取验证码
      * @param mobile
@@ -275,5 +290,13 @@ public interface ApiService {
      */
    @GET(URL.getCaptcha)
     Observable<BaseResult> getCaptcha(@Query("mobile") String mobile);
+
+    /**
+     * 标记打小票
+     * @param order_id
+     * @return
+     */
+   @GET(URL.markBillStatus)
+    Observable<BaseResult> markBillStatus(@Query("order_id") int order_id);
 
 }

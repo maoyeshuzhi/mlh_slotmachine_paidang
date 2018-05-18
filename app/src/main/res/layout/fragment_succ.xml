@@ -6,6 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -150,7 +151,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/code_img"
-            android:layout_marginTop="@dimen/dimen10"
             android:layout_toRightOf="@+id/code_img"
             android:text="@string/query_order_info_str"
             android:textColor="@color/color_1e1e1e"
@@ -171,7 +171,8 @@
             android:layout_marginLeft="@dimen/dimen12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/code_img"
+            android:layout_marginTop="@dimen/dimen2"
+            android:layout_below="@+id/code_img"
             android:text="茂乐惠, 随时随地买正品"
             android:textColor="@color/color_323232"
             android:textSize="@dimen/dimen9sp" />

@@ -3,6 +3,7 @@ package com.maoye.mlh_slotmachine.view.printreceiptactivity;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.mvp.BasePresenterImpl;
+import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
 import com.maoye.mlh_slotmachine.view.confirmorderactivity.confirmfragment.ConfirmModel;
 
@@ -25,6 +26,21 @@ public class PrintreceiptPresenter extends BasePresenterImpl<PrintreceiptContrac
             @Override
             protected void onBaseError(Throwable t) {
                 mView.onFail(t);
+            }
+        });
+    }
+
+    @Override
+    public void markOrder(final int orderId) {
+        model.markOrder(orderId, new BaseObserver<BaseResult>(mView.getContext(),false) {
+            @Override
+            protected void onBaseNext(BaseResult data) {
+                LogUtils.e(data.getMsg());
+            }
+
+            @Override
+            protected void onBaseError(Throwable t) {
+                     markOrder(orderId);
             }
         });
     }

@@ -3,14 +3,19 @@ package com.maoye.mlh_slotmachine.util.device.printers;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.media.ThumbnailUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
+import com.maoye.mlh_slotmachine.bean.QuickOrderDetialsBean;
 import com.maoye.mlh_slotmachine.util.CodeUtils;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.DateUtils;
@@ -23,6 +28,8 @@ import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 import com.maoye.mlh_slotmachine.webservice.URL;
 import com.printsdk.cmd.PrintCmd;
 import com.printsdk.usbsdk.UsbDriver;
+
+import java.util.Date;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -120,20 +127,21 @@ public class PrinterUtils {
         double goodsPrice = Double.valueOf(bean.getPaid_amount()) - Double.valueOf(bean.getFreight_amount());
         buffer.append(Constant.DOT_LINE);
         buffer.append("商品合计：              " + String.format("%.2f", goodsPrice) + "元" + "\n");
-        buffer.append("邮费：                  " + bean.getFreight_amount() + "元" + "\n\n");
-        buffer.append("折扣金额：              " + "0.00元" + "\n");
+        buffer.append("邮费：                  " +String.format("%.2f", Double.valueOf( bean.getFreight_amount())) + "元" + "\n\n");
+ /*       buffer.append("折扣金额：              " + "0.00元" + "\n");
         buffer.append("优惠券：                " + "0.00元" + "\n");
-        buffer.append("积分抵扣：              " + "0.00元" + "\n\n");
+        buffer.append("积分抵扣：              " + "0.00元" + "\n\n");*/
         buffer.append("应付金额：              " + bean.getPaid_amount() + "元" + "\n");
         if (bean.getPayment_type() == 1) {
             buffer.append("微信支付：              " + bean.getPaid_amount() + "元" + "\n");
         } else {
-            buffer.append("支付宝支付：           " + bean.getPaid_amount() + "元" + "\n");
+            buffer.append("支付宝支付：            " + bean.getPaid_amount() + "元" + "\n");
         }
         buffer.append(Constant.DOT_LINE);
         return buffer.toString();
 
     }
+
 
     /**
      * @param mUsbDriver
@@ -141,10 +149,10 @@ public class PrinterUtils {
      * @param context
      * @param from       来源 :0本机支付  1：快付
      */
-    public void getPrintTicketData(UsbDriver mUsbDriver, OrderDetialBean bean, Context context, int from) {
+    public boolean getPrintTicketData(UsbDriver mUsbDriver, OrderDetialBean bean, Context context, int from) {
         int iStatus = getPrinterStatus(mUsbDev1, mUsbDriver);
         if (checkStatus(iStatus) != 0)
-            return;
+            return false;
 
         try {
             mUsbDriver.write(PrintCmd.SetClean(), mUsbDev1);  // 初始化，清理缓存
@@ -165,29 +173,134 @@ public class PrinterUtils {
             mUsbDriver.write(PrintCmd.SetLinespace(6), mUsbDev1);
             mUsbDriver.write(PrintCmd.SetAlignment(1), mUsbDev1);
             //打印发票二维码
-            if (from == 0) {
-                String url = EnvConfig.instance().getBaseUkfUrl() + "h5/index.html#/invoice?orderAmount=" + bean.getOrder_amount() +
-                        "&orderId=" + bean.getOrder_id() + "&orderNo=" + bean.getOrder_no() +
-                        "&key=" + MD5.MD5(bean.getOrder_no() + bean.getOrder_amount() + "maoye_mlhj" + bean.getOrder_id());
-                mUsbDriver.write(PrintCmd.PrintQrcode(url, 13, 4, 1), mUsbDev1);         // 左边距、size、环绕模式0
-                mUsbDriver.write(PrintCmd.SetAlignment(1), mUsbDev1);
-                mUsbDriver.write(PrintCmd.SetLinespace(6), mUsbDev1);
-                mUsbDriver.write(PrintCmd.PrintString("\n扫码打印发票\n", 1), mUsbDev1);
-                mUsbDriver.write(PrintCmd.SetLinespace(linespace), mUsbDev1);
-                mUsbDriver.write(PrintCmd.PrintString(Constant.DOT_LINE, 0), mUsbDev1);
-            }
+            printCode(mUsbDriver, bean, context);
+            // 走纸换行、切纸、清理缓存
+            mUsbDriver.write(PrintCmd.PrintFeedline(3), mUsbDev1);
+            SetFeedCutClean(cutter, mUsbDev1, mUsbDriver);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 
+    private void printCode(UsbDriver mUsbDriver, OrderDetialBean bean, Context context) {
+        mUsbDriver.write(PrintCmd.SetLinespace(0));
+        String url = EnvConfig.instance().getBaseUkfUrl() + "h5/index.html#/invoice?orderAmount=" + bean.getOrder_amount() +
+                "&orderId=" + bean.getOrder_id() + "&orderNo=" + bean.getOrder_no() +
+                "&key=" + MD5.MD5(bean.getOrder_no() + bean.getOrder_amount() + "maoye_mlhj" + bean.getOrder_id());
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_printcode,null);
+        ImageView code1_img = view.findViewById(R.id.code1_img);
+        ImageView code2_img = view.findViewById(R.id.code2_img);
+        code1_img.setImageBitmap(CodeUtils.createQRCode(url,205,0));
+        code2_img.setImageBitmap(CodeUtils.createQRCode(URL.VIP_CN,205, 0));
+        Bitmap bitmap = createBitmap(context, view);
+        width = bitmap.getWidth();
+        heigh = bitmap.getHeight();
+        int iDataLen = width * heigh;
+        int[] pixels = new int[iDataLen];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, heigh);
+        mUsbDriver.write(PrintCmd.PrintDiskImagefile(pixels, width, heigh));
+        mUsbDriver.write(PrintCmd.SetLeftmargin(0));
+    }
+
+    public static Bitmap createBitmap(Context mContext, View view) {
+        Bitmap screenshot = null;
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        int w = view.getWidth();
+        int h = view.getHeight();
+        view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        screenshot = Bitmap.createBitmap(w, h , Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(screenshot);
+        view.draw(c);
+        return screenshot;
+    }
+
+
+    /**
+     * @param mUsbDriver
+     * @param bean
+     * @param context
+     */
+    public boolean getPrintTicketData(UsbDriver mUsbDriver, QuickOrderDetialsBean bean, Context context) {
+        int iStatus = getPrinterStatus(mUsbDev1, mUsbDriver);
+        if (checkStatus(iStatus) != 0)
+            return false;
+
+        try {
+            mUsbDriver.write(PrintCmd.SetClean(), mUsbDev1);  // 初始化，清理缓存
+            getCommonSettings(mUsbDev1, mUsbDriver);
+            // 小票标题
+            mUsbDriver.write(PrintCmd.SetBold(1), mUsbDev1);//0 不加粗、1 加粗
+            mUsbDriver.write(PrintCmd.SetAlignment(1), mUsbDev1);//0 左、1 居中、2 右 对齐
+
+            mUsbDriver.write(PrintCmd.PrintString(Constant.PRINT_TITLE, 0), mUsbDev1);
+            mUsbDriver.write(PrintCmd.SetAlignment(0), mUsbDev1);
+            mUsbDriver.write(PrintCmd.SetSizetext(0, 0), mUsbDev1);
+            mUsbDriver.write(PrintCmd.PrintString(Constant.DOT_LINE, 1), mUsbDev1);
+
+            // 小票主要内容
+            mUsbDriver.write(PrintCmd.SetBold(0), mUsbDev1);
+            mUsbDriver.write(PrintCmd.PrintString(printData(bean), 0), mUsbDev1);
+            //  mUsbDriver.write(PrintCmd.PrintFeedline(0), mUsbDev1); // 打印走纸0行
+            mUsbDriver.write(PrintCmd.SetLinespace(6), mUsbDev1);
+            mUsbDriver.write(PrintCmd.SetAlignment(1), mUsbDev1);
             // 公众号二维码
-            mUsbDriver.write(PrintCmd.SetLeftmargin(40));
+            mUsbDriver.write(PrintCmd.SetLeftmargin(45));
             PrintDiskImgFile(mUsbDriver, context, URL.VIP_CN);
             mUsbDriver.write(PrintCmd.SetLeftmargin(0));
             mUsbDriver.write(PrintCmd.PrintString("关注茂乐惠公众号了解最新动态", 1), mUsbDev1);
             mUsbDriver.write(PrintCmd.PrintFeedline(3), mUsbDev1);
             // 走纸换行、切纸、清理缓存
             SetFeedCutClean(cutter, mUsbDev1, mUsbDriver);
+            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
+    }
+
+
+    public String printData(QuickOrderDetialsBean bean) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("店员号：");
+        buffer.append("茂乐惠快付" + "\n");
+        buffer.append("会员号：");
+        buffer.append(bean.getUserNo() + "" + "\n");
+        buffer.append("流水号：");
+        buffer.append(bean.getSaleNo() + "\n");
+        buffer.append("下单时间：");
+        buffer.append(DateUtils.format(bean.getCreateTime(), DateUtils.Pattern.YYYY_MM_DD_HH_MM_SS) + "" + "\n");
+        buffer.append("打印时间：");
+        buffer.append(DateUtils.format(System.currentTimeMillis(), DateUtils.Pattern.YYYY_MM_DD_HH_MM_SS) + "\n");
+        int integral = 0;
+        for (QuickOrderDetialsBean.SaledListBean productListBean : bean.getSaledList()) {
+            integral = integral+productListBean.getVipIntegral();
+        }
+        buffer.append("本单所获积分：");
+        buffer.append(integral + "分" + "\n");
+        buffer.append(Constant.DOT_LINE);
+
+        double goodsPrice = 0.00,couponAmount = 0.00;
+        for (QuickOrderDetialsBean.SaledListBean productListBean : bean.getSaledList()) {
+            buffer.append(productListBean.getGoodsName() + "\n");
+            buffer.append("x" + productListBean.getSaleNum() + "                      " + productListBean.getSaleAmount() + "元" + "\n");
+             goodsPrice = goodsPrice+productListBean.getSaleAmount();
+            couponAmount = couponAmount+productListBean.getCouponAmount();
+
+        }
+
+        //商品信息
+        buffer.append(Constant.DOT_LINE);
+        buffer.append("商品合计：              " + String.format("%.2f", goodsPrice) + "元" + "\n");
+        buffer.append("优惠金额：              " +String.format("%.2f", couponAmount)+ "元" + "\n");
+        buffer.append("应付金额：              " + String.format("%.2f", goodsPrice-couponAmount) + "元" + "\n");
+        buffer.append("实付金额：              " + String.format("%.2f", goodsPrice-couponAmount)  + "元" + "\n");
+
+        return buffer.toString();
+
     }
 
 
@@ -199,13 +312,16 @@ public class PrinterUtils {
     int width, heigh;
 
     private int[] getBitmapParamsData(Context mContext, String codeContent) {
-        Bitmap bitmap = CodeUtils.createQRCode(codeContent, 300, 300, BitmapFactory.decodeResource(MyContext.appContext.getResources(), R.mipmap.code_logo));
-        Bitmap bm = convertToBlackWhite(bitmap); // 2.彩色转黑白图 ----20170615
-        width = bm.getWidth();
-        heigh = bm.getHeight();
-        int iDataLen = width * heigh;
-        int[] pixels = new int[iDataLen];
-        bm.getPixels(pixels, 0, width, 0, 0, width, heigh);
+        Bitmap bitmap;
+        int[] pixels;
+            bitmap = CodeUtils.createQRCode(codeContent, 250, 250, BitmapFactory.decodeResource(MyContext.appContext.getResources(), R.mipmap.code_logo),0);
+            Bitmap bm = convertToBlackWhite(bitmap); // 2.彩色转黑白图 ----20170615
+            width = bm.getWidth();
+            heigh = bm.getHeight();
+            int iDataLen = width * heigh;
+            pixels = new int[iDataLen];
+            bm.getPixels(pixels, 0, width, 0, 0, width, heigh);
+
         return pixels;
     }
 
@@ -311,7 +427,6 @@ public class PrinterUtils {
         }
         if (iStatus != 0)
             com.maoye.mlh_slotmachine.util.Toast.getInstance().toast(MyContext.appContext, sMsg + "", 2);
-
         return iRet;
 
     }
@@ -369,6 +484,7 @@ public class PrinterUtils {
         } catch (Exception e) {
             Toast.makeText(MyContext.appContext, e.getMessage(),
                     Toast.LENGTH_SHORT).show();
+            return true;
         }
         return blnRtn;
     }

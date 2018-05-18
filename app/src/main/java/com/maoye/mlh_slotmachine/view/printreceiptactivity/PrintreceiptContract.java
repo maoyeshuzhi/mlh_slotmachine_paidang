@@ -12,6 +12,7 @@ public class PrintreceiptContract {
 
     interface  Presenter extends BasePresenter<View> {
        void   OrderDetial(int orderId);
+       void markOrder(int orderId);
         
     }
 }

@@ -185,7 +185,6 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_goodsdetials);
         goodsId = getIntent().getIntExtra(Constant.GOODS_ID, 0);
         ButterKnife.bind(this);
@@ -208,6 +207,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         goodsPicAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Object data) {
+
                 picPisition = position;
                 for (int i = 0; i < image_list.size(); i++) {
                     if (picPisition == i) {
@@ -221,7 +221,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
             }
         });
 
-/*        banner.setOnBannerListener(new OnBannerListener() {
+        banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
                 ArrayList<String> arrayList = new ArrayList<>();
@@ -233,7 +233,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 intent.putExtra(Constant.POSITION, position);
                 startActivity(intent);
             }
-        });*/
+        });
 
     }
 
@@ -754,6 +754,8 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     }
 
     private void upDataBanner(int position) {
+    /*    if(position!=0)
+        banner.setCurrentPosition(position-1);*/
         List<String> list = new ArrayList<>();
         list.add(image_list.get(position).getImage_url());
         for (GoodsDetialsBean.ImageListBean imageListBean : image_list) {

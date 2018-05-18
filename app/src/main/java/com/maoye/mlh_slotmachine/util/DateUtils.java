@@ -244,6 +244,17 @@ public final class DateUtils {
     }
 
 
+    /**
+     * 多少天前的时间戳
+     * @param rangeTime 多少天以前 不包括rangeTime
+     * @return
+     */
+    public static long getPeriodDate(int rangeTime) {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, -rangeTime);
+        return c.getTime().getTime();
+    }
+
 
     @SuppressLint("SimpleDateFormat")
     public static String returnTime() {

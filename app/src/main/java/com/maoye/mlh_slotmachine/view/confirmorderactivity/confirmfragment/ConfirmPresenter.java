@@ -70,7 +70,7 @@ public class ConfirmPresenter extends BasePresenterImpl<ConfirmContract.View> im
             }
         }
 
-        return bean.getArea_id();
+        return bean==null?0:bean.getArea_id();
     }
 
     @Override
@@ -100,32 +100,23 @@ public class ConfirmPresenter extends BasePresenterImpl<ConfirmContract.View> im
 
     }
 
-    @Override
-    public void getPayCode(int orderId, int payType) {
-        mModel.getPayCode(orderId, payType, new BaseObserver<BaseResult<PayCodeBean>>(mView.getContext(),true) {
-            @Override
-            protected void onBaseNext(BaseResult<PayCodeBean> data) {
-                   mView.getPayCode(data.getData().getUrl());
-            }
 
-            @Override
-            protected void onBaseError(Throwable t) {
-
-            }
-        });
-    }
 
     @Override
-    public void orderDetials(int orderId, final boolean isFromSubmit) {
-        mModel.orderDetials(orderId, new BaseObserver<BaseResult<OrderDetialBean>>(mView.getContext(),isFromSubmit) {
+    public void orderDetials(final int orderId) {
+        mModel.orderDetials(orderId, new BaseObserver<BaseResult<OrderDetialBean>>(mView.getContext(),true) {
             @Override
             protected void onBaseNext(BaseResult<OrderDetialBean> data) {
-                  mView.paySucc(data.getData(),isFromSubmit);
+             if(data!=null){
+                 mView.getOrderDetials(data.getData());
+             }else {
+                 orderDetials(orderId);
+             }
             }
 
             @Override
             protected void onBaseError(Throwable t) {
-                 mView.payFail(t);
+                orderDetials(orderId);
             }
         });
     }

@@ -1,9 +1,5 @@
 package com.maoye.mlh_slotmachine.util;
 
-/**
- * Created by Rs on 2018/4/12.
- */
-
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,31 +16,65 @@ import java.util.Hashtable;
 import java.util.Map;
 
 /**
- * Created by aaron on 16/7/27.
  * 二维码扫描工具类
  */
 public class CodeUtils {
     private static final int BLACK = 0xff000000;
-    public static Bitmap createQRCode(String str,int widthAndHeight) throws WriterException {
-        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
-        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-        BitMatrix matrix = new MultiFormatWriter().encode(str,
-                BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight);
-        int width = matrix.getWidth();
-        int height = matrix.getHeight();
-        int[] pixels = new int[width * height];
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (matrix.get(x, y)) {
-                    pixels[y * width + x] = BLACK;
+    /**
+     *
+     * @param str
+     * @param widthAndHeight
+     * @param whiteMargin  设置白边间距
+     * @return
+     */
+    public static Bitmap createQRCode(String str,int widthAndHeight,int whiteMargin) {
+        try {
+            Map<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+            hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            hints.put(EncodeHintType.MARGIN,whiteMargin);
+
+            BitMatrix matrix = new MultiFormatWriter().encode(str,
+                    BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight);
+            //matrix = deleteWhite(matrix);
+            int width = matrix.getWidth();
+            int height = matrix.getHeight();
+            int[] pixels = new int[width * height];
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    if (matrix.get(x, y)) {
+                        pixels[y * width + x] = BLACK;
+                    }
                 }
             }
+            Bitmap bitmap = Bitmap.createBitmap(width, height,
+                    Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+            return bitmap;
+        } catch (WriterException e) {
+            e.printStackTrace();
         }
-        Bitmap bitmap = Bitmap.createBitmap(width, height,
-                Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        return bitmap;
+        return null;
+    }
+
+    /**
+     * 删除白边
+     * */
+    private static BitMatrix deleteWhite(BitMatrix matrix) {
+        int[] rec = matrix.getEnclosingRectangle();
+        int resWidth = rec[2] + 1;
+        int resHeight = rec[3] + 1;
+
+        BitMatrix resMatrix = new BitMatrix(resWidth, resHeight);
+        resMatrix.clear();
+        for (int i = 0; i < resWidth; i++) {
+            for (int j = 0; j < resHeight; j++) {
+                if (matrix.get(i + rec[0], j + rec[1]))
+                    resMatrix.set(i, j);
+            }
+        }
+        return resMatrix;
     }
 
 
@@ -56,8 +86,9 @@ public class CodeUtils {
      * @return
      * @throws WriterException
      */
-    public static Bitmap createQRCode(String str,int widthAndHeight,int color) throws WriterException {
-        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
+    public static Bitmap createQRCode(String str,int widthAndHeight,int whiteMargin,int color) throws WriterException {
+        Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+        hints.put(EncodeHintType.MARGIN,whiteMargin);
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
         BitMatrix matrix = new MultiFormatWriter().encode(str,
                 BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight);
@@ -85,9 +116,10 @@ public class CodeUtils {
      * @param widthPix  widthPix
      * @param heightPix heightPix
      * @param logoBm    logoBm
+     * @param whiteMargin    白边间距
      * @return 二维码
      */
-    public static Bitmap createQRCode(String content, int widthPix, int heightPix, Bitmap logoBm) {
+    public static Bitmap createQRCode(String content, int widthPix, int heightPix, Bitmap logoBm,int whiteMargin) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -95,11 +127,15 @@ public class CodeUtils {
             // 配置参数
             Map<EncodeHintType, Object> hints = new HashMap<>();
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            hints.put(EncodeHintType.MARGIN,whiteMargin);
             // 容错级别
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
             // 图像数据转换，使用了矩阵转换
             BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, widthPix,
                     heightPix, hints);
+
+
+
             int[] pixels = new int[widthPix * heightPix];
             // 下面这里按照二维码的算法，逐个生成二维码的图片，
             // 两个for循环是图片横列扫描的结果

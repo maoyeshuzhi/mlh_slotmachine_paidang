@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.google.zxing.WriterException;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
@@ -33,8 +34,9 @@ public class DialogAddressCode extends AlertDialog {
     Button confirmBt;
     private String linkUrl;
     private OnItemChildClickListener onItemChildClickListener;
-    public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener){
-        this.onItemChildClickListener  = onItemChildClickListener;
+
+    public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener) {
+        this.onItemChildClickListener = onItemChildClickListener;
     }
 
     public DialogAddressCode(Context context, String linkUrl) {
@@ -49,21 +51,17 @@ public class DialogAddressCode extends AlertDialog {
         setContentView(R.layout.dialog_addresscode);
         ButterKnife.bind(this);
         setCanceledOnTouchOutside(false);
-        try {
-            codeImg.setImageBitmap(CodeUtils.createQRCode(linkUrl, DensityUtil.dip2px(getContext(), 138)));
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+        codeImg.setImageBitmap(CodeUtils.createQRCode(linkUrl, DensityUtil.dip2px(getContext(), 138),0));
     }
 
-    @OnClick({R.id.cancel_tv,R.id.confirm_bt})
+    @OnClick({R.id.cancel_tv, R.id.confirm_bt})
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.cancel_tv:
                 break;
             case R.id.confirm_bt:
-                if(onItemChildClickListener!=null){
-                    onItemChildClickListener.onChildItemClick(null,0,0,null);
+                if (onItemChildClickListener != null) {
+                    onItemChildClickListener.onChildItemClick(null, 0, 0, null);
                 }
                 break;
         }

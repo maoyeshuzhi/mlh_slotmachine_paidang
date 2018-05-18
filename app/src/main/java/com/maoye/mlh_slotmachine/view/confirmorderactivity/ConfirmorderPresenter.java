@@ -17,4 +17,18 @@ public class ConfirmorderPresenter extends BasePresenterImpl<ConfirmorderContrac
         this.mModel = new ConfirmModel();
     }
 
+    @Override
+    public void markOrder(final int orderId) {
+        mModel.markOrder(orderId, new BaseObserver<BaseResult>(mView.getContext(),false) {
+            @Override
+            protected void onBaseNext(BaseResult data) {
+
+            }
+
+            @Override
+            protected void onBaseError(Throwable t) {
+                markOrder(orderId);
+            }
+        });
+    }
 }

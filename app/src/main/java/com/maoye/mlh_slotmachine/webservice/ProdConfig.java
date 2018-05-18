@@ -3,8 +3,8 @@ package com.maoye.mlh_slotmachine.webservice;
 /**
  * 生产环境
  */
-
 public class ProdConfig extends EnvConfig{
+
     @Override
     public String getWebServiceBaseUrl() {
         return "http://itao.maoye.cn/";
@@ -12,7 +12,7 @@ public class ProdConfig extends EnvConfig{
 
     @Override
     public String getQuickPayWebServiceBaseUrl() {
-        return "http://172.29.36.195/";
+        return "http://172.29.100.105:8081/";
     }
 
     @Override

@@ -25,6 +25,15 @@ public class OrderDetialBean implements Serializable{
     private int payment_type;//支付方式(1-微信 2-支付宝)
     private int order_status;//代发货：10  待取货：30 待收货：20   已完成：81、82
     private Double refund_amount;//退款金额
+    private  int is_print_note;//（0-未打印小票，1-已打印小票）
+
+    public int getIs_print_note() {
+        return is_print_note;
+    }
+
+    public void setIs_print_note(int is_print_note) {
+        this.is_print_note = is_print_note;
+    }
 
     public Double getRefund_amount() {
         return refund_amount;

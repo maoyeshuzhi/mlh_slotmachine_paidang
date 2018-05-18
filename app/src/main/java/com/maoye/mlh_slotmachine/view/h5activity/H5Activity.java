@@ -34,11 +34,6 @@ public class H5Activity extends MVPBaseActivity<H5Contract.View, H5Presenter> im
     TextView title;
     @BindView(R.id.close)
     TextView close;
-
-    @BindView(R.id.nodata_tv)
-    TextView nodataTv;
-    @BindView(R.id.nodata_view_rl)
-    RelativeLayout nodataViewRl;
     @BindView(R.id.webView)
     ProgressWebView webView;
     private String inset_url;

@@ -90,11 +90,13 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         timer = new CountDownTimer(Constant.countDownTime,1000) {
             @Override
             public void onTick(long l) {
-                verifiCodeTv.setText(String.format("%ss",l/1000+""));
+               long ontickTime =  l/1000;
+                verifiCodeTv.setText(String.format("%ds",ontickTime - 1));
             }
 
             @Override
             public void onFinish() {
+                verifiCodeTv.setText("获取验证码");
                 verifiCodeTv.setEnabled(true);
                 verifiCodeTv.setClickable(true);
 

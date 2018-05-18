@@ -41,8 +41,6 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
     TextView flow2Tv;
     @BindView(R.id.code_et)
     EditText codeEt;
-    @BindView(R.id.pay_bt)
-    Button payBt;
     @BindView(R.id.goshop_bt)
     Button goshopBt;
     @BindView(R.id.back_bt)
@@ -61,11 +59,10 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
     private UsbManager mUsbManager;
     UsbDriver mUsbDriver;
     private static final String ACTION_USB_PERMISSION = "com.usb.sample.USB_PERMISSION";
-    public static final String TIME1 = "返回首页%ss";
+    public static final String TIME1 = "返回首页%ds";
     public static final String TIME2 = "剩余操作时长%s秒";
     private CountDownTimer countDownTimer1, countDownTimer2;
     private String authCode = "";
-    private boolean isPrintSucc;
     private String orderId = "";
 
 
@@ -80,10 +77,10 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
     }
 
     private void initData() {
-        countDownTimer1 = new CountDownTimer(10 * 1000, 1000) {
+        countDownTimer1 = new CountDownTimer(11 * 1000, 1000) {
             @Override
             public void onTick(long l) {
-                timeBackTv.setText(String.format(TIME1, l / 1000 + ""));
+                timeBackTv.setText(String.format(TIME1, l / 1000 -1));
             }
 
             @Override
@@ -107,22 +104,6 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(codeEt.getWindowToken(),0);
 
-     codeEt.addTextChangedListener(new TextWatcher() {
-         @Override
-         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-         }
-
-         @Override
-         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-         }
-
-         @Override
-         public void afterTextChanged(Editable editable) {
-             LogUtils.e(editable+"");
-
-         }
-     });
-
         codeEt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -134,7 +115,6 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
                     if (split[split.length-1]!=null&&!orderId.equals(split[split.length-1])) {
                         try {
                             orderId = split[split.length-1];
-                            LogUtils.e("orderid"+orderId);
                             mPresenter.OrderDetial(Integer.valueOf(orderId));
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -168,17 +148,28 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
        if(status ==10||status ==20||status ==30||status ==81||status ==82) {
            PrinterUtils printerUtils = PrinterUtils.getInstanse();
            if (!printerUtils.PrintConnStatus(mUsbDriver, mUsbManager)) {
-               if(!isPrintSucc) orderId = "";
                return;
            }
-           isPrintSucc = true;
-           printerUtils.getPrintTicketData(mUsbDriver, bean, this,0);
-           flow2Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b5), null, null);
-           printTitleTv.setVisibility(View.GONE);
-           printTepImg.setVisibility(View.GONE);
-           succTv.setVisibility(View.VISIBLE);
-           timeBackTv.setVisibility(View.VISIBLE);
-           countDownTimer1.start();
+
+           if(bean.getIs_print_note()==1){
+               Toast.getInstance().toast(this,"该订单已打印过小票,每个订单只能打印一次小票！",2);
+                 return;
+           }
+
+           boolean printTicketData = printerUtils.getPrintTicketData(mUsbDriver, bean, this, 0);
+
+           if(printTicketData){
+               orderId = "";
+               flow2Tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.mipmap.b5), null, null);
+               printTitleTv.setVisibility(View.GONE);
+               printTepImg.setVisibility(View.GONE);
+               succTv.setVisibility(View.VISIBLE);
+               timeBackTv.setVisibility(View.VISIBLE);
+               mPresenter.markOrder(bean.getOrder_id());
+               countDownTimer2.cancel();
+               countDownTimer1.start();
+           }
+
        }else {
            Toast.getInstance().toast(this,"该订单状态无法打印小票",2);
        }
@@ -196,13 +187,9 @@ public class PrintReceiptActivity extends MVPBaseActivity<PrintreceiptContract.V
 
     }
 
-    @OnClick({R.id.pay_bt, R.id.goshop_bt, R.id.back_bt})
+    @OnClick({ R.id.goshop_bt, R.id.back_bt})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.pay_bt:
-                //快付买单
-                Toast.getInstance().toast(this,"正在开发中,敬请期待",2);
-                break;
             case R.id.goshop_bt:
             case R.id.back_bt:
                 openActivity(HomeActivity.class);

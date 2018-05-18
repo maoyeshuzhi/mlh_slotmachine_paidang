@@ -28,6 +28,7 @@ import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
 import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
+import com.maoye.mlh_slotmachine.view.print_select_activity.PrintSelectActivity;
 import com.maoye.mlh_slotmachine.view.printreceiptactivity.PrintReceiptActivity;
 import com.maoye.mlh_slotmachine.view.quickpayactivity.QuickpayActivity;
 import com.maoye.mlh_slotmachine.webservice.URL;
@@ -46,8 +47,7 @@ import butterknife.OnClick;
 
 
 public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresenter> implements HomeContract.View {
-    @BindView(R.id.quick_pay_bt)
-    TextView quickPayBt;
+
     @BindView(R.id.print_bill_bt)
     TextView printBillBt;
     @BindView(R.id.leftpage_img)
@@ -74,6 +74,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+
 
         String s = MD5.MD5("M100118051115198227600.01maoye_mlhj4745");
         LogUtils.e("当前设备设备号："+ DeviceInfoUtil.getDeviceId());
@@ -143,17 +144,13 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     }
 
-    @OnClick({R.id.quick_pay_bt, R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img})
+    @OnClick({ R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.quick_pay_bt:
-                //快付买单
-               // Toast.getInstance().toast(this, "正在开发中,敬请期待", 2);
-               openActivity(QuickpayActivity.class);
-                break;
+
             case R.id.print_bill_bt:
                 //补打小票
-                openActivity(PrintReceiptActivity.class);
+                openActivity(PrintSelectActivity.class);
                 break;
             case R.id.leftpage_img:
                 if (goodList.size() > 0)

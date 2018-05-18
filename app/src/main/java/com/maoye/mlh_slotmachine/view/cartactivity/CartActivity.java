@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
@@ -20,10 +20,10 @@ import com.maoye.mlh_slotmachine.adapter.CartGoodsAdapter;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
-import com.maoye.mlh_slotmachine.view.loginactivity.LoginActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.Toast;
+import com.maoye.mlh_slotmachine.view.loginactivity.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,11 +67,13 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
     TextView flow4Tv;
     @BindView(R.id.flow5_tv)
     TextView flow5Tv;
-    @BindView(R.id.nodata_view_rl)
-    RelativeLayout nodataViewRl;
+    @BindView(R.id.nodata_view)
+    ImageView nodataView;
+
     private CartGoodsAdapter cartGoodsAdapter;
     private List<GoodsBean> list = new ArrayList<>();
     public static final String ALL_GOODS_NUM_FORMAT = "购物车商品（共%d件）";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +104,7 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
         cartGoodsAdapter.addDatas(list);
 
         selectnumTv.setText("0");
-        priceTv.setText(String.format("合计：￥%s",0+""));
+        priceTv.setText(String.format("合计：￥%s", 0 + ""));
     }
 
     @Override
@@ -119,7 +121,7 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
                 mPresenter.deleteAll();
                 break;
             case R.id.delete_tv:
-               String str = mPresenter.getSelectPotion(list);
+                String str = mPresenter.getSelectPotion(list);
                 if (TextUtils.isEmpty(str)) {
                     Toast.getInstance().toast(this, "请选择需要删除的商品", 2);
                 } else {
@@ -132,17 +134,17 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
             case R.id.submit_bt:
                 ArrayList<GoodsBean> selectList = new ArrayList<>();
                 for (GoodsBean bean : list) {
-                     if(bean.isSelect()){
-                         selectList.add(bean);
-                     }
+                    if (bean.isSelect()) {
+                        selectList.add(bean);
+                    }
                 }
-                if(selectList.size()==0){
-                    Toast.getInstance().toast(this,"请选择需要购买的商品",2);
-                }else {
+                if (selectList.size() == 0) {
+                    Toast.getInstance().toast(this, "请选择需要购买的商品", 2);
+                } else {
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(Constant.FROM,Constant.FROM_CART);
-                    intent.putExtra(Constant.KEY,selectList);
+                    intent.putExtra(Constant.FROM, Constant.FROM_CART);
+                    intent.putExtra(Constant.KEY, selectList);
                     startActivity(intent);
                 }
 
@@ -162,19 +164,19 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
             case CartGoodsAdapter.SELECT_GOODS:
                 //是否被选中
                 if (list.get(position).isSelect()) {
-                    selectnumTv.setText(Integer.valueOf(selectnumTv.getText().toString()) +1 + "");
+                    selectnumTv.setText(Integer.valueOf(selectnumTv.getText().toString()) + 1 + "");
                 } else {
                     selectnumTv.setText(Integer.valueOf(selectnumTv.getText().toString()) - 1 + "");
                 }
-                 priceTv.setText( mPresenter.getPrice(list));
+                priceTv.setText(mPresenter.getPrice(list));
                 break;
             case CartGoodsAdapter.ADD_GOODS:
                 mPresenter.changeGoodsNum(position, ((GoodsBean) data).getNum() + 1);
                 break;
             case CartGoodsAdapter.SUBTRICT_GOODS:
-                if(((GoodsBean) data).getNum()<=1){
-                    Toast.getInstance().toast(this,"至少选择一件商品",2);
-                }else {
+                if (((GoodsBean) data).getNum() <= 1) {
+                    Toast.getInstance().toast(this, "至少选择一件商品", 2);
+                } else {
                     mPresenter.changeGoodsNum(position, ((GoodsBean) data).getNum() - 1);
                 }
 
@@ -187,7 +189,7 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
         GoodsBean bean = list.get(postion);
         bean.setNum(goodsNum);
         cartGoodsAdapter.addDatas(list);
-        if(bean.isSelect()){
+        if (bean.isSelect()) {
             priceTv.setText(mPresenter.getPrice(list));
         }
     }
@@ -195,7 +197,7 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
     @Override
     public void deleteAllResult(BaseResult baseResult) {
         if (selctallCb.isChecked()) selctallCb.setChecked(false);
-        nodataViewRl.setVisibility(View.VISIBLE);
+        nodataView.setVisibility(View.VISIBLE);
         recycler.setVisibility(View.GONE);
         list = new ArrayList<>();
         goodsnumTv.setText(String.format(ALL_GOODS_NUM_FORMAT, list.size()));
@@ -215,14 +217,14 @@ public class CartActivity extends MVPBaseActivity<CartContract.View, CartPresent
             for (GoodsBean bean : list) {
                 bean.setSelect(true);
             }
-            selectnumTv.setText(list.size()+"");
+            selectnumTv.setText(list.size() + "");
         } else {
             for (GoodsBean bean : list) {
                 bean.setSelect(false);
             }
-            selectnumTv.setText(0+"");
+            selectnumTv.setText(0 + "");
         }
-        priceTv.setText( mPresenter.getPrice(list));
+        priceTv.setText(mPresenter.getPrice(list));
         cartGoodsAdapter.addDatas(list);
     }
 }

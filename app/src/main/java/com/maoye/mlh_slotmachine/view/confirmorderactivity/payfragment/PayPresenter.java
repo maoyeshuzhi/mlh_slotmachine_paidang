@@ -44,39 +44,4 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
             }
         });
     }
-
-    @Override
-    public void getPayCode(int orderId, int payType) {
-        model.getPayCode(orderId, payType, new BaseObserver<BaseResult<PayCodeBean>>(mView.getContext(), true) {
-            @Override
-            protected void onBaseNext(BaseResult<PayCodeBean> data) {
-                mView.getPayCode(data.getData().getUrl());
-            }
-
-            @Override
-            protected void onBaseError(Throwable t) {
-
-            }
-        });
-    }
-
-    /**
-     * 修改订单号
-     *
-     * @param orderId 原来订单号id
-     */
-    @Override
-    public void changeOrderNo(int orderId, final boolean isClickWXCode) {
-        model.changeOrderNo(orderId, new BaseObserver<BaseResult<OrderIdBean>>(mView.getContext(),true) {
-            @Override
-            protected void onBaseNext(BaseResult<OrderIdBean> data) {
-                mView.getOrderInfo(data.getData(),isClickWXCode);
-            }
-
-            @Override
-            protected void onBaseError(Throwable t) {
-
-            }
-        });
-    }
 }

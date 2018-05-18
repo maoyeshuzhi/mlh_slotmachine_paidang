@@ -23,18 +23,20 @@ public class Constant {
    public static final String PRINT_TITLE ="茂业百货官方商城-茂乐惠\nhttp://itao.maoye.cn\n官方授权 品质保证";
    public static final String DOT_LINE ="…………………………………………";
    public static final String Normal_CN ="正常";
-    public static final String PaperWillExhausted_CN = "  纸将尽;";
-    public static final String PrintHeadOpen_CN = "  打印头打开;";
-    public static final String CutterNotReset_CN = "  切刀未复位;";
-    public static final String PrintHeadOverheated_CN = "  打印头过热;";
-    public static final String BlackMarkError_CN = "  黑标错误;";
-    public static final String PaperExhausted_CN = "  纸尽;";
-    public static final String NoConnectedOrNoOnPower_CN = "  打印机未连接或未上电;";
-    public static final String Abnormal_CN = "  异常;";
+    public static final String PaperWillExhausted_CN = "  纸将尽";
+    public static final String PrintHeadOpen_CN = "  打印头打开";
+    public static final String CutterNotReset_CN = "  切刀未复位";
+    public static final String PrintHeadOverheated_CN = "  打印头过热";
+    public static final String BlackMarkError_CN = "  黑标错误";
+    public static final String PaperExhausted_CN = "  纸尽";
+    public static final String NoConnectedOrNoOnPower_CN = "  打印机未连接或未上电";
+    public static final String Abnormal_CN = "  异常";
     public static final String WEIXIN_CODE = "微信二维码";
     public static final String WALI_CODE = "支付宝二维码";
     public static final int countDownTime = 120*1000;//倒计时时间
-    public static final int quickPaycountDownTime = 360*1000;//倒计时时间
+    public static final int quickPaycountDownTime = 361*1000;//倒计时时间
     public static final String countDownTimeFormat = "剩%s秒自动关闭";
+    public static final String countDownTimeFormat2 = "剩余操作时长%d秒";
+    public static final String PRINT_SUCC = "打印成功";
 
 }

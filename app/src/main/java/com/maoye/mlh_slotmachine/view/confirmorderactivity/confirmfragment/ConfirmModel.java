@@ -52,4 +52,9 @@ public class ConfirmModel extends BaseModel {
         toSubscribe(observable,baseObserver);
     }
 
+    public void markOrder(int orderId, BaseObserver<BaseResult> baseObserver){
+        Observable observable = mServletApi.markBillStatus(orderId);
+        toSubscribe(observable,baseObserver);
+    }
+
 }

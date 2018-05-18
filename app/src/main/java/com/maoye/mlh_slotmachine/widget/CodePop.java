@@ -24,23 +24,20 @@ import com.maoye.mlh_slotmachine.util.DensityUtil;
 
 public class CodePop extends PopupWindow {
     private View view;
-    private  RelativeLayout v;
+    private RelativeLayout v;
     private ImageView codeImg;
     private CountDownTimer timer;
     private TextView timeTv;
     public static final String TIME_HINT = "点击隐藏 %ss";
 
-    public  CodePop(Activity context,String linkUrl){
-        LayoutInflater  inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public CodePop(Activity context, String linkUrl) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.pop_code, null);
-         v = view.findViewById(R.id.view);
+        v = view.findViewById(R.id.view);
         codeImg = view.findViewById(R.id.code_img);
         timeTv = view.findViewById(R.id.time_tv);
-        try {
-            codeImg.setImageBitmap(CodeUtils.createQRCode(linkUrl, DensityUtil.dip2px(context,110)));
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+        codeImg.setImageBitmap(CodeUtils.createQRCode(linkUrl, DensityUtil.dip2px(context, 110),0));
+
         this.setContentView(view);
         this.setFocusable(true);
         view.setFocusableInTouchMode(true);
@@ -49,10 +46,10 @@ public class CodePop extends PopupWindow {
         //设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        timer = new CountDownTimer(15000,1000) {
+        timer = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long l) {
-                timeTv.setText(String.format(TIME_HINT,l/1000));
+                timeTv.setText(String.format(TIME_HINT, l / 1000));
             }
 
             @Override
