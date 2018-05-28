@@ -26,6 +26,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxAdapter;
+import com.jakewharton.rxbinding2.widget.RxAdapterView;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.adapter.AddressAdapter;
 import com.maoye.mlh_slotmachine.adapter.OrderGoodsAdapter;
@@ -38,6 +41,7 @@ import com.maoye.mlh_slotmachine.bean.OrderIdBean;
 import com.maoye.mlh_slotmachine.bean.SubmitOrderBean;
 import com.maoye.mlh_slotmachine.listener.OnItemChildClickListener;
 import com.maoye.mlh_slotmachine.listener.OnItemClickListener;
+import com.maoye.mlh_slotmachine.listener.OnMultiClickListener;
 import com.maoye.mlh_slotmachine.view.confirmorderactivity.ConfirmOrderActivity;
 import com.maoye.mlh_slotmachine.view.homeactivity.HomeActivity;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseFragment;
@@ -55,11 +59,13 @@ import com.maoye.mlh_slotmachine.widget.GiveUpPayDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.functions.Consumer;
 
 
 public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, ConfirmPresenter> implements ConfirmContract.View, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
@@ -151,6 +157,21 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
     }
 
     private void initView() {
+        submitBt.setOnClickListener(new OnMultiClickListener(1) {
+            @Override
+            public void onMultiClick(View view) {
+                submitOrder();
+            }
+        });
+        RxView.clicks(submitBt)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        submitOrder();
+                    }
+                });
+
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         payView = layoutInflater.inflate(R.layout.pop_pay, null);
         time1Tv = payView.findViewById(R.id.time1_tv);
@@ -328,16 +349,12 @@ public class ConfirmFragment extends MVPBaseFragment<ConfirmContract.View, Confi
         countDownTimer1.cancel();
     }
 
-    @OnClick({R.id.back_imgbt, R.id.submit_bt})
+    @OnClick({R.id.back_imgbt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_imgbt:
                 getActivity().finish();
                 break;
-            case R.id.submit_bt:
-                submitOrder();
-                break;
-
             case R.id.dismiss_img:
                 GiveUpPayDialog dialog = new GiveUpPayDialog(getContext());
                 dialog.show();

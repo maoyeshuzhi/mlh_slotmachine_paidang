@@ -18,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
@@ -37,6 +38,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 
 public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPresenter> implements LoginContract.View, RadioGroup.OnCheckedChangeListener {
@@ -99,19 +102,8 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 verifiCodeTv.setText("获取验证码");
                 verifiCodeTv.setEnabled(true);
                 verifiCodeTv.setClickable(true);
-
             }
         };
- /*       findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, ConfirmOrderActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(Constant.KEY, getIntent().getSerializableExtra(Constant.KEY));
-                intent.putExtra(Constant.FROM, getIntent().getIntExtra(Constant.FROM, 0));
-                startActivity(intent);
-            }
-        });*/
     }
 
     protected void initData() {
@@ -209,6 +201,9 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
         @Override
         public void afterTextChanged(Editable editable) {
+            if(!TextUtils.isEmpty(editable)&&editable.length()==11){
+                pswEt.requestFocus();
+            }
             isCanLogin(loginType == ACCOUNT_LOIGN && editable.length() > 0 && !TextUtils.isEmpty(pswEt.getText()));
         }
     };

@@ -1,156 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/refreshlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ScrollView
+    <include layout="@layout/layout_head" />
+
+    <com.maoye.mlh_slotmachine.widget.banner.Banner
+        android:id="@+id/head_banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:scrollbars="none">
+        android:layout_height="@dimen/dimen220"
+        app:banner_default_image="@mipmap/default_banner"
+        app:delay_time="4000"
+        app:image_scale_type="fit_xy"
+        app:indicator_drawable_selected="@drawable/shape_selected"
+        app:indicator_drawable_unselected="@drawable/shape_noraml"
+        app:indicator_margin="@dimen/dimen10"
+        app:is_auto_play="true" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen528"
+        android:layout_marginTop="@dimen/dimen6">
+
+        <com.maoye.mlh_slotmachine.widget.banner.ViewBanner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen528"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:delay_time="5000"
+            app:indicator_drawable_selected="@drawable/shape_selected"
+            app:indicator_drawable_unselected="@drawable/shape_noraml"
+            app:is_auto_play="true" />
+
+        <ImageView
+            android:id="@+id/leftpage_img"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen7"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:src="@mipmap/left_arrow_white" />
+
+        <ImageView
+            android:id="@+id/rightpage_img"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen7"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:rotation="180"
+            android:src="@mipmap/left_arrow_white" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/dimen35"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/print_ll"
+            android:layout_marginLeft="@dimen/dimen20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen22"
+            android:layout_marginRight="@dimen/dimen6"
+            android:gravity="right"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_head" />
+            <Button
+                android:id="@+id/print_bill_bt"
+                android:layout_width="@dimen/dimen143"
+                android:layout_height="@dimen/dimen46"
+                android:background="@color/black"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/print_bill_str"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen18sp" />
 
-            <com.maoye.mlh_slotmachine.widget.banner.Banner
-                android:id="@+id/head_banner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen220"
-                app:banner_default_image="@mipmap/default_banner"
-                app:delay_time="4000"
-                app:image_scale_type="fit_xy"
-                app:indicator_margin="@dimen/dimen10"
-                app:indicator_drawable_selected="@drawable/shape_selected"
-                app:indicator_drawable_unselected="@drawable/shape_noraml"
-                app:is_auto_play="true" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="438dp">
-
-                <com.maoye.mlh_slotmachine.widget.banner.ViewBanner
-                    android:id="@+id/banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen480"
-                    app:delay_time="5000"
-                    android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    android:layout_marginTop="@dimen/dimen8"
-                    app:indicator_margin="@dimen/dimen10"
-                    app:indicator_drawable_selected="@drawable/shape_selected"
-                    app:indicator_drawable_unselected="@drawable/shape_noraml"
-                    app:is_auto_play="true"/>
-
-                <ImageView
-                    android:id="@+id/leftpage_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen7"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:src="@mipmap/left_arrow_white" />
-
-                <ImageView
-                    android:id="@+id/rightpage_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dimen7"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:rotation="180"
-                    android:src="@mipmap/left_arrow_white" />
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/dimen7"
-                android:layout_weight="1"
-                android:gravity="bottom"
-                android:orientation="vertical">
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen40"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/cart_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen28"
-                        android:clickable="true"
-                        android:src="@mipmap/selectedgoods" />
-
-                    <LinearLayout
-                        android:id="@+id/print_ll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="@dimen/dimen6"
-                        android:layout_marginRight="@dimen/dimen17"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/print_bill_bt"
-                            android:layout_width="@dimen/dimen143"
-                            android:layout_height="@dimen/dimen46"
-                            android:background="@drawable/black_stroke"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:text="@string/print_bill_str"
-                            android:textColor="@color/color_1e1e1e" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/dimen6"
-                            android:gravity="center"
-                            android:text="@string/print_bill_hint_str"
-                            android:textColor="@color/color_646464"
-                            android:textSize="@dimen/dimen7sp" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen36"
-                    android:src="@mipmap/homebottomimg" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dimen3"
-                    android:drawableLeft="@mipmap/shuzhilogo"
-                    android:drawablePadding="@dimen/dimen4"
-                    android:gravity="center"
-                    android:text="由茂业数智联合信息技术（深圳）有限公司提供技术支持"
-                    android:textColor="@color/color_b4b4b4"
-                    android:textSize="@dimen/dimen7sp" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen6"
+                android:gravity="center"
+                android:text="@string/print_bill_hint_str"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen7sp" />
         </LinearLayout>
-    </ScrollView>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/print_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen22"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/search_goods_bt"
+                android:layout_width="@dimen/dimen143"
+                android:layout_height="@dimen/dimen46"
+                android:background="@drawable/black_stroke"
+                android:clickable="true"
+                android:drawableLeft="@mipmap/search_icon"
+                android:drawablePadding="@dimen/dimen4"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen22"
+                android:text="@string/search_goods_str"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen6"
+                android:text="@string/search_more_goods_str"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen7sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/cart_img"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen12"
+            android:clickable="true"
+            android:src="@mipmap/selectedgoods" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dimen7"
+        android:drawableLeft="@mipmap/shuzhilogo"
+        android:drawablePadding="@dimen/dimen4"
+        android:gravity="center"
+        android:text="由茂业数智联合信息技术（深圳）有限公司提供技术支持"
+        android:textColor="@color/color_b4b4b4"
+        android:textSize="@dimen/dimen7sp" />
+</LinearLayout>
+

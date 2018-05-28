@@ -59,6 +59,7 @@ import com.maoye.mlh_slotmachine.widget.NoLineSpaceTextView;
 import com.maoye.mlh_slotmachine.widget.banner.Banner;
 import com.maoye.mlh_slotmachine.widget.banner.listener.OnBannerListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -606,6 +607,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
     }
 
 
+
     @OnClick({R.id.subtract_tv, R.id.add_tv, R.id.left_scroll_img, R.id.right_scroll_img, R.id.addcart_tv, R.id.immdl_buy_tv, R.id.phonebuy_tv, R.id.back, R.id.addcart_bottom_tv, R.id.immdl_buy_bottom_tv, R.id.top_imgbt, R.id.cart_img, R.id.warmhint_bt, R.id.address_bt, R.id.detial_bt, R.id.back_imgbt})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -666,7 +668,14 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 codePop.showAsDropDown(phonebuyTv);
                 break;
             case R.id.back:
-                finish();
+                try {
+                    Runtime.getRuntime().exec("adb shell input keyevent 4");
+                } catch (IOException e) {
+                    onBackPressed();
+                    e.printStackTrace();
+                }
+
+               // onBackPressed();
                 break;
             case R.id.immdl_buy_tv:
                 if (bean.getSpec_name_list().size() == 0) {
@@ -780,7 +789,8 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
         paramsBean.setNum(Integer.valueOf(selectGoodsNumTv.getText() + ""));
         paramsBean.setPrice(mPresenter.getPrice(bean.getSpec_list()));
         paramsBean.setProduct_id(bean.getId());
-        paramsBean.setOld_price(bean.getOld_price());
+
+        paramsBean.setOld_price(mPresenter.getOld_price(bean.getSpec_list()));
         paramsBean.setProduct_image(bean.getDefault_image());
         paramsBean.setSpec_id(mPresenter.getSpecId(bean.getSpec_list()));
         paramsBean.setProduct_name(bean.getName());

@@ -18,6 +18,7 @@ import java.util.concurrent.TimeoutException;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import retrofit2.HttpException;
 
 
 public abstract class BaseObserver<T>  implements Observer<T> {
@@ -66,15 +67,18 @@ public abstract class BaseObserver<T>  implements Observer<T> {
             sb.append("请求超时");
         } else if(e instanceof JsonSyntaxException){
             sb.append("请求不合法");
-        } else if (e instanceof ApiException) {
-            sb.append(e.getMessage());
         }else if (e instanceof  SocketTimeoutException){
             sb.append("连接超时");
-        } else {
-            sb.append("未知错误");
+        } else if (e instanceof HttpException){
+            sb.append("服务器连接失败");//HTTP 500 internal Server Error
+        }else if(e instanceof ApiException){
+            sb.append(((ApiException) e).getMsg());
         }
-        dismissProgressDialog();
+        if(sb.length()==0 ){
+            sb.append(ApiException.getMsg());
+        }
         Toast.getInstance().toast(MyContext.appContext,sb+"",2);
+        dismissProgressDialog();
          onBaseError(e);
     }
 

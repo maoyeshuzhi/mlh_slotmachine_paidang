@@ -94,7 +94,7 @@ public class DialogAddLocalAddress extends AlertDialog {
             case R.id.save_tv:
                 if(judge()){
                     Observable observable = BaseRetrofit.getInstance()
-                            .apiService.addAddress(nameEt.getText().toString(),phoneEt.getText().toString(),provinceBean.getRegion_id(),cityBean.getRegion_id(),districtBean.getRegion_id(),detialaddressEt.getText().toString())
+                            .mServletApi.addAddress(nameEt.getText().toString(),phoneEt.getText().toString(),provinceBean.getRegion_id(),cityBean.getRegion_id(),districtBean.getRegion_id(),detialaddressEt.getText().toString())
                             .map(new HttpResultFunc());
                     observable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -105,7 +105,7 @@ public class DialogAddLocalAddress extends AlertDialog {
             case R.id.province_tv:
                 provinceTv.setClickable(false);
                 provinceTv.setEnabled(false);
-                Observable observable = BaseRetrofit.getInstance().apiService.province().map(new HttpResultFunc<List<ProvinceBean>>());
+                Observable observable = BaseRetrofit.getInstance().mServletApi.province().map(new HttpResultFunc<List<ProvinceBean>>());
                 observable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(provinceObserver);
@@ -116,7 +116,7 @@ public class DialogAddLocalAddress extends AlertDialog {
                 }
                 cityTv.setEnabled(false);
                 cityTv.setClickable(false);
-                Observable cityObservable = BaseRetrofit.getInstance().apiService.city(provinceBean.getRegion_id()).map(new HttpResultFunc<List<ProvinceBean>>());
+                Observable cityObservable = BaseRetrofit.getInstance().mServletApi.city(provinceBean.getRegion_id()).map(new HttpResultFunc<List<ProvinceBean>>());
                 cityObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cityObserver);
@@ -125,7 +125,7 @@ public class DialogAddLocalAddress extends AlertDialog {
                 if (cityBean == null) return;
                 districtTv.setClickable(false);
                 districtTv.setEnabled(false);
-                Observable districtObservable = BaseRetrofit.getInstance().apiService.city(cityBean.getRegion_id()).map(new HttpResultFunc<List<ProvinceBean>>());
+                Observable districtObservable = BaseRetrofit.getInstance().mServletApi.city(cityBean.getRegion_id()).map(new HttpResultFunc<List<ProvinceBean>>());
                 districtObservable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(districtObserver);

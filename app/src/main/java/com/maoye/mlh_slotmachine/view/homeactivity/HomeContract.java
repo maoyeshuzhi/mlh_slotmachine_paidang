@@ -19,6 +19,5 @@ public class HomeContract {
          void  statisticClickNum(int adId);
         List<List<HomeBean.ListBeanX>> handerGoodsData(List<HomeBean.ListBeanX> listBeanXES);
         void  versionInfo();
-        void startup(int status);
     }
 }

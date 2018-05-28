@@ -3,6 +3,7 @@ package com.maoye.mlh_slotmachine.widget.banner;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -108,7 +109,6 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         numIndicator = (TextView) view.findViewById(R.id.numIndicator);
         numIndicatorInside = (TextView) view.findViewById(R.id.numIndicatorInside);
         View defaultView = LayoutInflater.from(context).inflate(defaultRedsId, this, false);
-
         default_layout.addView(defaultView);
         initViewPagerScroll();
     }
@@ -402,17 +402,17 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         if (count > 1 && isAutoPlay) {
             if (currentItem == 0) {
                 currentItem = count-1;
-                viewPager.setCurrentItem(currentItem);
+                viewPager.setCurrentItem(currentItem,false);
                 // currentItem = count;
             } else {
                 currentItem = currentItem % (count + 1) - 1;
-
                 if (currentItem == count) {
                     viewPager.setCurrentItem(currentItem - 1);
                 } else {
                     viewPager.setCurrentItem(currentItem);
                 }
             }
+
 
         }
         startAutoPlay();
@@ -426,11 +426,11 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
             currentItem = currentItem % (count + 1) + 1;
             if (oldCurrentItem == count + 1) {
                 currentItem = 2;
-                viewPager.setCurrentItem(currentItem, false);
+                viewPager.setCurrentItem(currentItem,false);
             } else if (currentItem == 1) {
-                viewPager.setCurrentItem(currentItem, false);
+                viewPager.setCurrentItem(currentItem);
             } else {
-                viewPager.setCurrentItem(currentItem, false);
+                viewPager.setCurrentItem(currentItem);
             }
         }
         startAutoPlay();
@@ -443,7 +443,8 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
             viewPager.addOnPageChangeListener(this);
         }
         viewPager.setAdapter(adapter);
-        viewPager.setFocusable(true);
+        viewPager.setFocusable(false);
+      //  viewPager.setFocusable(true);
         viewPager.setCurrentItem(1);
         if (gravity != -1)
             indicator.setGravity(gravity);
@@ -454,6 +455,38 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         }
         if (isAutoPlay)
             startAutoPlay();
+
+       /* viewPager.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (currentItem == 0 && getChildCount() == 0) {
+                    return false;
+                }
+                final int action = motionEvent.getAction();
+                final float x = motionEvent.getX();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        mLastMotionX = x;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        if (Math.abs(x - mLastMotionX) >MOVE_LIMITATION) {
+                            if (x - mLastMotionX < 0) {
+                                scrollRight();
+                            } else {
+                                scrollLeft();
+                            }
+                            return true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });*/
     }
 
 
@@ -528,14 +561,14 @@ public class ViewBanner extends FrameLayout implements OnPageChangeListener {
         public Object instantiateItem(ViewGroup container, final int position) {
             container.addView(list.get(position));
             View view = list.get(position);
-            if (listener != null) {
+        /*    if (listener != null) {
                 view.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         listener.OnBannerClick(toRealPosition(position));
                     }
                 });
-            }
+            }*/
             return view;
         }
 

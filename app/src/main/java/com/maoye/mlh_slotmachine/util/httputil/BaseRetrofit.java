@@ -2,7 +2,6 @@ package com.maoye.mlh_slotmachine.util.httputil;
 
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.maoye.mlh_slotmachine.util.httputil.cookies.ClearableCookieJar;
 import com.maoye.mlh_slotmachine.util.httputil.cookies.PersistentCookieJar;
@@ -14,10 +13,11 @@ import com.maoye.mlh_slotmachine.webservice.ApiService;
 import com.maoye.mlh_slotmachine.webservice.EnvConfig;
 
 import java.io.File;
-import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -36,7 +36,7 @@ public class BaseRetrofit {
     private static final int DEFAULT_TIME = 10;    //默认超时时间
     private final long RETRY_TIMES = 1;   //重订阅次数
     protected Retrofit retrofit,quickPayRetrofit;
-    public ApiService apiService ,quickApiService;
+    public ApiService mServletApi ,quickApiService;
     private ClearableCookieJar cookieJar;
 
     //构造方法私有
@@ -57,7 +57,7 @@ public class BaseRetrofit {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         quickApiService = quickPayRetrofit.create(ApiService.class);
-        apiService = retrofit.create(ApiService.class);
+        mServletApi = retrofit.create(ApiService.class);
     }
 
     public  <T> void toSubscribe(io.reactivex.Observable<T> observable, io.reactivex.Observer<T> observer) {
@@ -77,13 +77,21 @@ public class BaseRetrofit {
         observable.subscribeOn(Schedulers.io())    // 指定subscribe()发生在IO线程
                 .observeOn(AndroidSchedulers.mainThread())  // 指定Subscriber的回调发生在io线程
                 .retry(time)
+       /*         .retryWhen(new Function<Observable<? extends Throwable>, Observable<?>>() {
+                    @Override
+                    public Observable<?> apply(Observable<? extends Throwable> observable) throws Exception {
+                        return Observable.just(throwable).timer(5, TimeUnit.SECONDS);
+                    }
+                })
+
+
                 .repeatWhen(new Function<io.reactivex.Observable<Object>, ObservableSource<?>>() {
                     @Override
                     public ObservableSource<?> apply(@NonNull io.reactivex.Observable<Object> objectObservable) throws Exception {
-                        return null;
+                        return objectObservable.delay(5,TimeUnit.SECONDS);
                     }
-                })
-                .subscribe(observer);   //订阅
+                })*/
+                .subscribe(observer);//订阅
     }
 
 
@@ -105,6 +113,7 @@ public class BaseRetrofit {
                 .connectTimeout(2, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
                 .addInterceptor(new AddParamInterceptor())
+                .retryOnConnectionFailure(true)
                 // .addInterceptor(new com.maoye.mlh_slotmachine.util.httputil.cache.CacheInterceptor())
                 .build();
 

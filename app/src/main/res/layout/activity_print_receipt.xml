@@ -129,8 +129,6 @@
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen23sp" />
 
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

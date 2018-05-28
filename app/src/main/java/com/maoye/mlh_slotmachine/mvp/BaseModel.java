@@ -15,16 +15,8 @@ import java.util.Map;
 public class BaseModel extends BaseRetrofit{
 
     private static final String TAG = "BaseModel";
-
-    protected ApiService mServletApi;   //所有的注解接口
-
     protected Map<String, Object> mParams = new HashMap<>();
 
-    public BaseModel() {
-        super();
-        mServletApi = retrofit.create(ApiService.class);
-
-    }
 
 
 

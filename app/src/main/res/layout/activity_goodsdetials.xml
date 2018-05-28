@@ -50,6 +50,7 @@
                             android:id="@+id/banner"
                             android:layout_width="@dimen/dimen270"
                             android:layout_height="@dimen/dimen270"
+                            android:transitionName="img"
                             app:banner_default_image="@mipmap/default_image"
                             app:delay_time="3000"
                             app:image_scale_type="center_crop"

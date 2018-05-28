@@ -18,7 +18,7 @@ import io.reactivex.Observable;
 public class QuickPayPrintModel extends BaseModel {
 
     public  void  orderData(String saleNo, BaseObserver<BaseResult<QuickOrderDetialsBean>>observer){
-          Observable observable = quickApiService.quickOrderData(saleNo);
+          Observable observable = quickApiService.quickOrderData2(saleNo,1);
           toSubscribe(observable,observer);
     }
 
@@ -29,5 +29,10 @@ public class QuickPayPrintModel extends BaseModel {
     public  void bannarData(int type, BaseObserver<BaseResult<List<AdvertBean>>>observer){
         Observable observable = mServletApi.advert(type);
         toSubscribe(observable, observer);
+    }
+
+    public  void markPrint(String saleNo, BaseObserver<BaseResult> observer){
+        Observable observable = quickApiService.quickMarkPrint(saleNo);
+        toSubscribe(10,observable, observer);
     }
 }

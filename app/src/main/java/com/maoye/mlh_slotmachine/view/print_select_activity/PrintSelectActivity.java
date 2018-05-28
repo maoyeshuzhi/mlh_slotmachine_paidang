@@ -3,15 +3,16 @@ package com.maoye.mlh_slotmachine.view.print_select_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
-import com.maoye.mlh_slotmachine.bean.HomeBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
@@ -41,7 +42,10 @@ public class PrintSelectActivity extends MVPBaseActivity<Print_selectContract.Vi
     Button mlhjPrintBt;
     @BindView(R.id.back_bt)
     ImageButton backBt;
-    private List<AdvertBean>list = new ArrayList<>();
+    @BindView(R.id.time_tv)
+    TextView timeTv;
+    private List<AdvertBean> list = new ArrayList<>();
+    private CountDownTimer timer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +79,24 @@ public class PrintSelectActivity extends MVPBaseActivity<Print_selectContract.Vi
                 }
             }
         });
+        timer = new CountDownTimer(Constant.quickPaycountDownTime,1000) {
+            @Override
+            public void onTick(long l) {
+                timeTv.setText(String.format(Constant.countDownTimeFormat2,l/1000-1)+"");
+            }
+
+            @Override
+            public void onFinish() {
+                   openActivity(HomeActivity.class);
+                   finish();
+            }
+        }.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
     }
 
     @Override

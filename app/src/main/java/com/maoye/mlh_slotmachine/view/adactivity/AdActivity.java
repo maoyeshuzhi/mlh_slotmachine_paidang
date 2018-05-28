@@ -11,6 +11,7 @@ import com.maoye.mlh_slotmachine.bean.AdBean;
 import com.maoye.mlh_slotmachine.bean.CacheBean;
 import com.maoye.mlh_slotmachine.bean.CacheBean_;
 import com.maoye.mlh_slotmachine.util.NetworkUtil;
+import com.maoye.mlh_slotmachine.util.ThreadPoolManager;
 import com.maoye.mlh_slotmachine.view.homeactivity.GlideImageLoader;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
@@ -18,6 +19,9 @@ import com.maoye.mlh_slotmachine.widget.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +61,8 @@ public class AdActivity extends MVPBaseActivity<AdactivityContract.View, Adactiv
             }
             banner.update(resultList);
         }
+
+
 
         thread = new Thread(new Runnable() {
             @Override

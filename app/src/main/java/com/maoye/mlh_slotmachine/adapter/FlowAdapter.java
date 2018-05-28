@@ -24,7 +24,7 @@ public class FlowAdapter extends BaseRecyclerAdapter<SpecBean.SpecItemListBean> 
     }
 
     @Override
-    public void onBind(RecyclerView.ViewHolder viewHolder, final int RealPosition, final SpecBean.SpecItemListBean data, int size) {
+    public void onBind(final RecyclerView.ViewHolder viewHolder, final int RealPosition, final SpecBean.SpecItemListBean data, int size) {
         if (viewHolder instanceof FlowVH) {
             if (data.isSelect()) {
                 ((FlowVH) viewHolder).nameTv.setTextColor(mContext.getResources().getColor(R.color.white));
@@ -37,6 +37,8 @@ public class FlowAdapter extends BaseRecyclerAdapter<SpecBean.SpecItemListBean> 
             ((FlowVH) viewHolder).nameTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ((FlowVH) viewHolder).nameTv.setTextColor(mContext.getResources().getColor(R.color.white));
+                    ((FlowVH) viewHolder).nameTv.setBackgroundResource(R.color.black);
                     for (int i = 0; i < getData().size(); i++) {
                         if(i == RealPosition){
                             getData().get(i).setSelect(true);

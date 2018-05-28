@@ -21,7 +21,8 @@ public class AddParamInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         HttpUrl httpUrl = request.url().newBuilder()
-                .addQueryParameter("device_no", DeviceInfoUtil.getDeviceId())
+               .addQueryParameter("device_no", DeviceInfoUtil.getDeviceId())
+               // .addQueryParameter("device_no", "cc:b8:a8:50:3a:98")
                 .build();
         Request build = request.newBuilder().url(httpUrl).build();
         LogUtils.e("-请求Url---"+httpUrl.toString());

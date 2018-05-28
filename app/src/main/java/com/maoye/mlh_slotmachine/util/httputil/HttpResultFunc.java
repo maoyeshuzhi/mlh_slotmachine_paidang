@@ -15,7 +15,7 @@ public class HttpResultFunc<T> implements Function<BaseResult<T>, T> {
 
     @Override
     public T apply(BaseResult<T> tBaseResult) throws Exception {
-        Log.e("TAG", "call: "+ new Gson().toJson(tBaseResult.getData()));
+      //  Log.e("TAG", "call: "+ new Gson().toJson(tBaseResult.getData()));
         return (T) tBaseResult;
     }
 }

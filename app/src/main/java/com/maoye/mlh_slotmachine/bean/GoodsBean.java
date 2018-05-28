@@ -10,6 +10,9 @@ public class GoodsBean implements Serializable{
     private int product_id;
     private String product_name;
     private String product_image;
+    private String name;
+    private String image;
+    private String product_link;
     private int num;
     private int spec_id;
     private String price;
@@ -18,6 +21,30 @@ public class GoodsBean implements Serializable{
     private int index;
     private boolean isSelect;
     private int delivery_type;//配送方式(0-不限制 1-自提 2-快递)
+
+    public String getProduct_link() {
+        return product_link;
+    }
+
+    public void setProduct_link(String product_link) {
+        this.product_link = product_link;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public int getDelivery_type() {
         return delivery_type;

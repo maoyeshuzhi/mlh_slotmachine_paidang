@@ -17,6 +17,7 @@ import io.reactivex.Observable;
 public class CartModel extends BaseModel {
 
     public void getCartGoodsList(BaseObserver<BaseResult<List<GoodsBean>>> observer){
+
         Observable observable = mServletApi.cartlist().map(new HttpResultFunc());
         toSubscribe(observable,observer);
     }

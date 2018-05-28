@@ -8,9 +8,9 @@ import com.maoye.mlh_slotmachine.bean.BaseResult;
  */
 
 public class FromJsonUtils {
-    public static BaseResult fromJson(String json, Class clazz) {
+    public static BaseResult fromJson(String json, Class clazz,String key) {
         return new GsonBuilder()
-                .registerTypeAdapter(BaseResult.class, new JsonFormatParser(clazz))
+                .registerTypeAdapter(BaseResult.class, new JsonFormatParser(clazz,key))
                 .enableComplexMapKeySerialization()
                 .serializeNulls()
                 .create()

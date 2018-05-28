@@ -7,12 +7,12 @@ package com.maoye.mlh_slotmachine.webservice;
 public class LuoChao extends EnvConfig {
     @Override
     public String getWebServiceBaseUrl() {
-        return "http://172.29.36.195/";
+        return "http://172.29.100.9/";
     }
 
     @Override
     public String getQuickPayWebServiceBaseUrl() {
-        return "http://172.29.36.195/";
+        return "http://172.29.36.38:8081/";
     }
 
     @Override

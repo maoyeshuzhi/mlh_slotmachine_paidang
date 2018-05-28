@@ -34,6 +34,9 @@ public interface URL {
     String getCaptcha = "home/machine/getCaptcha";
     String querySapId = "home/machine/getMachineInfo";
     String markBillStatus = "home/machine/updateOrderPrintStatus";
+    String DEFAULT_GOODS = "home/machine/searchDefault";
+    String SEACH_GOODS = "home/machine/search";
+    String BRAND_GOODS = "home/machine/brand";
 
     String QUICK_ORDER_LIST = "newposService/presaleQuery";
     String QUICK_WXPAY = "newposService/wxPay";
@@ -42,4 +45,6 @@ public interface URL {
     String UPDATE_BILL = "newposService/updateBill";
     String APK_LOADDOWN = "http://47.92.91.12/mlhj.apk";
     String QUICK_ORDER_DATA = "newposService/getBillBySaleNo";
+    String QUICK_BILL_INFO = "newposService/getShopParm";
+    String QUICK_MARK_PRINT = "newposService/print";
 }

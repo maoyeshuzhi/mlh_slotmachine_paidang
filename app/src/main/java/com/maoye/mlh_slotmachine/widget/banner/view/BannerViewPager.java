@@ -12,7 +12,7 @@ import com.maoye.mlh_slotmachine.widget.banner.ViewBanner;
 public class BannerViewPager extends ViewPager {
     private boolean scrollable = true;
 
-    private static final double MOVE_LIMITATION = 1;// 触发移动的像素距离
+    private static final double MOVE_LIMITATION = 6;// 触发移动的像素距离
     private float mLastMotionX; // 手指触碰屏幕的最后一次x坐标
     private int currentItem;
     private float preX;
@@ -28,7 +28,17 @@ public class BannerViewPager extends ViewPager {
     }
 
 
-
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (this.scrollable) {
+            if (getCurrentItem() == 0 && getChildCount() == 0) {
+                return false;
+            }
+            return super.onTouchEvent(event);
+        } else {
+            return false;
+        }
+    }
 
 
 /*

@@ -23,13 +23,13 @@
         android:id="@+id/quick_pay_print_bt"
         android:layout_width="@dimen/dimen308"
         android:layout_height="@dimen/dimen66"
-        android:paddingLeft="@dimen/dimen22"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dimen143"
         android:background="@color/black"
-        android:drawablePadding="@dimen/dimen8"
         android:drawableLeft="@mipmap/quickpay_icon"
+        android:drawablePadding="@dimen/dimen8"
         android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen22"
         android:text="茂乐惠快付小程序补打小票"
         android:textColor="@color/white"
         android:textSize="@dimen/dimen18sp" />
@@ -38,13 +38,13 @@
         android:id="@+id/mlhj_print_bt"
         android:layout_width="@dimen/dimen308"
         android:layout_height="@dimen/dimen66"
-        android:paddingLeft="@dimen/dimen22"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dimen41"
         android:background="@drawable/color1e1e1e_stroke"
-        android:drawablePadding="@dimen/dimen8"
         android:drawableLeft="@mipmap/maolehui_icon"
+        android:drawablePadding="@dimen/dimen8"
         android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen22"
         android:text="茂乐惠机器订单补打小票"
         android:textColor="@color/color_1e1e1e"
         android:textSize="@dimen/dimen18sp" />
@@ -52,13 +52,32 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    <ImageButton
-        android:id="@+id/back_bt"
-        android:layout_width="wrap_content"
+        android:layout_weight="1" />
+
+
+    <LinearLayout
         android:layout_marginBottom="@dimen/dimen27"
-        android:layout_marginLeft="@dimen/dimen27"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:src="@mipmap/back_login"/>
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/back_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen27"
+            android:background="?attr/selectableItemBackground"
+            android:src="@mipmap/back_login" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_marginLeft="@dimen/dimen13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/countDownTimer_str"
+            android:textColor="@color/color_646464"
+            android:textSize="@dimen/dimen13sp" />
+    </LinearLayout>
+
+
 </LinearLayout>

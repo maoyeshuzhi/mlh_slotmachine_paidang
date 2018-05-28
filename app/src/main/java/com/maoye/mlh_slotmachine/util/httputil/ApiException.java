@@ -15,13 +15,13 @@ public class ApiException extends RuntimeException {
     public static final int ERROR_404 = -1;
     /*错误码*/
     private int mCode;
-    private String mMessage;
+    private static String mMessage;
 
     public int getmCode() {
         return mCode;
     }
 
-    public String getMsg() {
+    public static String getMsg() {
         return mMessage;
     }
 
@@ -46,19 +46,12 @@ public class ApiException extends RuntimeException {
 
     private static String getApiExceptionMessage(int code, String detailMessage) {
         String message = "";
-        switch (code) {
-            case WRONG_PASSWORD:
-                message = "密码错误";
-                break;
-            default:
-                if (!TextUtils.isEmpty(detailMessage)) {
-                    message = detailMessage;
-                } else {
-                    message = "未知错误";
-                }
+        if (!TextUtils.isEmpty(detailMessage)) {
+            message = detailMessage;
+        } else {
+            message = "未知错误";
         }
-            Toast.getInstance().toast(MyContext.appContext, message, 2);
-        new Throwable(code + "");
+        new Throwable(detailMessage + "");
         return message;
     }
 }

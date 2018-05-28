@@ -35,7 +35,7 @@ public class ShutdownBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void questStatus(int iStatus) {
-        Observable<BaseResult> baseResultObservable = BaseRetrofit.getInstance().apiService.deveice_status(iStatus);
+        Observable<BaseResult> baseResultObservable = BaseRetrofit.getInstance().mServletApi.deveice_status(iStatus);
         baseResultObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

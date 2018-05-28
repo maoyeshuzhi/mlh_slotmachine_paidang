@@ -20,5 +20,6 @@ public class QuickprintContract {
         void  orderData(String orderCode);
         void  getSapId(String deviceId);
         void statisticClickNum(int adverId);
+        void markPrint(String saleNo);
     }
 }

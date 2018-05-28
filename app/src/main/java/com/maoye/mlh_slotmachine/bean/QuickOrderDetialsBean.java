@@ -7,34 +7,6 @@ import java.util.List;
  */
 
 public class QuickOrderDetialsBean {
-
-    /**
-     * saleNo : 10012018051699990005
-     * shopNo : 1001
-     * vipNo : null
-     * vipPhone : null
-     * vipName : null
-     * userNo : 9999
-     * terminalNo : 9999
-     * count : 0
-     * startDate : null
-     * endDate : null
-     * salePrice : 0
-     * createTime : 1526438498000
-     * payTime : null
-     * createDateString : 20180516
-     * billStatus : 0
-     * isReturn : 0
-     * saleNoSource : null
-     * saledList : [{"id":1963,"saleNo":"10012018051699990005","barcode":"0100896301","goodsName":"暇步士","saleNum":1,"realPrice":1,"salePrice":1,"isReturn":null,"vipIntegral":0,"rowNo":1,"vipIntegralReward":0,"discAmount":0,"giveAmount":0,"promNo":"100120170520","promPolicyId":"1022","saleAmount":1,"couponAmount":0.67}]
-     * salepayList : []
-     * saleMac : 04
-     * barcodes : null
-     * haveInvoice : null
-     * discountType : 4
-     * saleAmount : null
-     */
-
     private String saleNo;
     private String shopNo;
     private Object vipNo;
@@ -57,8 +29,35 @@ public class QuickOrderDetialsBean {
     private Object haveInvoice;
     private int discountType;
     private double saleAmount;
+    private String shopName;
+    private String tel;
     private List<SaledListBean> saledList;
-    private List<?> salepayList;
+    private List<SalepayListBean> salepayList;
+    private int printCount;//打印次数
+
+
+    public int getPrintCount() {
+        return printCount;
+    }
+
+    public void setPrintCount(int printCount) {
+        this.printCount = printCount;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
     public String getSaleNo() {
         return saleNo;
@@ -244,34 +243,37 @@ public class QuickOrderDetialsBean {
         this.saledList = saledList;
     }
 
-    public List<?> getSalepayList() {
+    public List<SalepayListBean> getSalepayList() {
         return salepayList;
     }
 
-    public void setSalepayList(List<?> salepayList) {
+    public void setSalepayList(List<SalepayListBean> salepayList) {
         this.salepayList = salepayList;
     }
 
+    public static class SalepayListBean {
+        private double payAmount;
+        private String paymodeName;
+
+        public double getPayAmount() {
+            return payAmount;
+        }
+
+        public void setPayAmount(double payAmount) {
+            this.payAmount = payAmount;
+        }
+
+        public String getPaymodeName() {
+            return paymodeName;
+        }
+
+        public void setPaymodeName(String paymodeName) {
+            this.paymodeName = paymodeName;
+        }
+    }
+
+
     public static class SaledListBean {
-        /**
-         * id : 1963
-         * saleNo : 10012018051699990005
-         * barcode : 0100896301
-         * goodsName : 暇步士
-         * saleNum : 1
-         * realPrice : 1
-         * salePrice : 1
-         * isReturn : null
-         * vipIntegral : 0
-         * rowNo : 1
-         * vipIntegralReward : 0
-         * discAmount : 0
-         * giveAmount : 0
-         * promNo : 100120170520
-         * promPolicyId : 1022
-         * saleAmount : 1
-         * couponAmount : 0.67
-         */
 
         private int id;
         private String saleNo;
@@ -284,12 +286,12 @@ public class QuickOrderDetialsBean {
         private int vipIntegral;
         private int rowNo;
         private int vipIntegralReward;
-        private double discAmount;
-        private double giveAmount;
+        private double discAmount; //折扣金额
+        private double giveAmount;//满减
         private String promNo;
         private String promPolicyId;
         private double saleAmount;
-        private double couponAmount;
+        private double couponAmount;//抵扣券
 
         public int getId() {
             return id;

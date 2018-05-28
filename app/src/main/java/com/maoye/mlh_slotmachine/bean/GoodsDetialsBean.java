@@ -51,7 +51,7 @@ public class GoodsDetialsBean {
     private String sap_BrandNo;
     private String sap_NameL;
     private String sap_Lifnr;
-    private int weight;
+    private double weight;
     private int freight_id;
     private double points_ratio;
     private String points_pay_ratio;
@@ -364,11 +364,11 @@ public class GoodsDetialsBean {
         this.sap_Lifnr = sap_Lifnr;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

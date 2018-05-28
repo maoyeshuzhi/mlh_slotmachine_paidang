@@ -1,24 +1,17 @@
 package com.maoye.mlh_slotmachine.mvp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
-
-
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.maoye.mlh_slotmachine.MlhApplication;
@@ -26,13 +19,11 @@ import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.CacheBean;
 import com.maoye.mlh_slotmachine.bean.CacheBean_;
-import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.httputil.cache.ImgCacheUtil;
 import com.maoye.mlh_slotmachine.view.adactivity.AdActivity;
 import com.maoye.mlh_slotmachine.view.homeactivity.HomeActivity;
 import com.maoye.mlh_slotmachine.util.DateUtils;
 import com.maoye.mlh_slotmachine.util.NetworkUtil;
-import com.maoye.mlh_slotmachine.util.StatusBarUtils;
 import com.maoye.mlh_slotmachine.util.httputil.BaseRetrofit;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
 import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
@@ -49,13 +40,13 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
     private FragmentManager fragmentManager;
     private Fragment showFragment;
     private CountDownTimer timer;
-    public static final int TIME = 10 * 60 * 1000;//十分钟
+    public static final int TIME = 5 * 60 * 1000;//5分钟
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ImmersionBar.with(this).init();
-        hideBottomUIMenu();
+      //  hideBottomUIMenu();
         mPresenter = getInstance(this, 1);
         mPresenter.attachView((V) this);
         fragmentManager = getSupportFragmentManager();
@@ -116,7 +107,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
     }
 
     private void adbannerData() {
-        Observable observable = BaseRetrofit.getInstance().apiService.advert(3);
+        Observable observable = BaseRetrofit.getInstance().mServletApi.advert(3);
         BaseRetrofit.getInstance().toSubscribe(observable, new BaseObserver<BaseResult<List<AdvertBean>>>(this, false) {
             @Override
             protected void onBaseNext(final BaseResult<List<AdvertBean>> data) {

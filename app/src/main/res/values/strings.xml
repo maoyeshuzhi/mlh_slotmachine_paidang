@@ -5,7 +5,7 @@
     <string name="phoneBuy">手机购买</string>
     <string name="home_title_str">随时随地随心买正品</string>
     <string name="quick_pay_str">快付买单</string>
-    <string name="quick_pay_hint_str">在专柜通过快付下的订单, 可以在本机扫码买单</string>
+    <string name="search_more_goods_str">搜索更多茂业好物</string>
     <string name="print_bill_str">补打小票</string>
     <string name="print_bill_hint_str">茂乐惠快付/微商城订单打印小票</string>
     <string name="deliveryway_str">配送方式</string>
@@ -42,5 +42,6 @@
     <string name="print_bill_title_str">请打开订单二维码图片\n对准下方扫码口</string>
     <string name="address_hint_str">建议您如实填写详细收货地址，例如街道名称，门牌号\n码，楼层和房间号等信息</string>
     <string name="countDownTimer_str">剩余操作时长360秒</string>
+    <string name="search_goods_str">搜索商品</string>
 
 </resources>

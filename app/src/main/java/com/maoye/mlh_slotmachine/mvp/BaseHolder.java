@@ -11,7 +11,6 @@ import android.view.View;
 
 /**
  * 基础的ViewHolder
- * Created by zyz on 2016/5/17.
  */
 public abstract class BaseHolder<M> extends RecyclerView.ViewHolder {
 

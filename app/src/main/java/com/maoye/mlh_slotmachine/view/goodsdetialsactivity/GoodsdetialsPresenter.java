@@ -17,6 +17,7 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
     public int specId;
     public String spec_vals;
     public String price = "0.00";
+    public String old_price = "0.00";
 
     public GoodsdetialsPresenter() {
         this.goodsDetialsModel = new GoodsDetialsModel();
@@ -61,6 +62,10 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
         }
     }
 
+    public  double getOldPrice(){
+        return 0.00;
+    }
+
 
     /**
      * 毫秒转化
@@ -97,6 +102,10 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
     @Override
     public String getPrice(List<GoodsDetialsBean.SpecListBean> spec_list) {
         return price.equals("0.00") ? spec_list.get(0).getPrice() + "" : price;
+    }
+
+    public String getOld_price(List<GoodsDetialsBean.SpecListBean> spec_list) {
+        return old_price.equals("0.00") ? spec_list.get(0).getOld_price() + "" : old_price;
     }
 
 
@@ -201,6 +210,7 @@ public class GoodsdetialsPresenter extends BasePresenterImpl<GoodsdetialsContrac
                 specId = specListBean.getId();
                 spec_vals = specListBean.getSpec_vals();
                 price = specListBean.getPrice();
+                old_price = specListBean.getOld_price();
                 isallSelect = false;
             }
         }

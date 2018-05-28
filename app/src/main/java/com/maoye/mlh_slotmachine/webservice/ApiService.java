@@ -4,6 +4,7 @@ package com.maoye.mlh_slotmachine.webservice;
 import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
+import com.maoye.mlh_slotmachine.bean.BrandGoodsBean;
 import com.maoye.mlh_slotmachine.bean.DelivetyWayBean;
 import com.maoye.mlh_slotmachine.bean.FeeBean;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
@@ -13,6 +14,7 @@ import com.maoye.mlh_slotmachine.bean.OrderDetialBean;
 import com.maoye.mlh_slotmachine.bean.OrderIdBean;
 import com.maoye.mlh_slotmachine.bean.PayCodeBean;
 import com.maoye.mlh_slotmachine.bean.ProvinceBean;
+import com.maoye.mlh_slotmachine.bean.QuickBillTitleBean;
 import com.maoye.mlh_slotmachine.bean.QuickOrderBean;
 import com.maoye.mlh_slotmachine.bean.QuickOrderDetialsBean;
 import com.maoye.mlh_slotmachine.bean.QuickPayWXBean;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -283,6 +286,20 @@ public interface ApiService {
     @GET(URL.QUICK_ORDER_DATA)
     Observable<BaseResult<QuickOrderDetialsBean>> quickOrderData(@Query("saleNo") String saleNo);
 
+    @GET(URL.QUICK_ORDER_DATA)
+    Observable<BaseResult<QuickOrderDetialsBean>> quickOrderData2(@Query("saleNo") String saleNo ,@Query("checkReturn") int checkReturn);
+
+    /**
+     * 快付获取门店和手机号
+     * @param shopNo
+     * @return
+     */
+    @GET(URL.QUICK_BILL_INFO)
+    Observable<BaseResult<List<QuickBillTitleBean>>> quickBillInfo(@Query("shopNo") String shopNo);
+
+    @GET(URL.QUICK_MARK_PRINT)
+    Observable<BaseResult> quickMarkPrint(@Query("saleNo") String shopNo);
+
     /**
      * 获取验证码
      * @param mobile
@@ -298,5 +315,16 @@ public interface ApiService {
      */
    @GET(URL.markBillStatus)
     Observable<BaseResult> markBillStatus(@Query("order_id") int order_id);
+
+
+   @GET(URL.DEFAULT_GOODS)
+    Observable<BaseResult<List<GoodsBean>>> defaultGoods();
+
+
+   @GET(URL.SEACH_GOODS)
+    Observable<BaseResult<BrandGoodsBean>> searchGoods(@Query("name")String name);
+
+   @GET(URL.BRAND_GOODS)
+    Observable<BaseResult<BrandGoodsBean>> brandGoods(@Query("id")int id);
 
 }

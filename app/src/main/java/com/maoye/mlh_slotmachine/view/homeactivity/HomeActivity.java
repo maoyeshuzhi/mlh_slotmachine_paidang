@@ -6,37 +6,53 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.apkmanager.DownLoadApk;
+import com.maoye.mlh_slotmachine.bean.BaseInfo;
+import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.CacheBean;
 import com.maoye.mlh_slotmachine.bean.HomeBean;
+import com.maoye.mlh_slotmachine.bean.SapIdBean;
 import com.maoye.mlh_slotmachine.bean.VersionInfoBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
 import com.maoye.mlh_slotmachine.util.Constant;
 import com.maoye.mlh_slotmachine.util.DeviceInfoUtil;
 import com.maoye.mlh_slotmachine.util.LogUtils;
 import com.maoye.mlh_slotmachine.util.MD5;
-import com.maoye.mlh_slotmachine.util.Toast;
 import com.maoye.mlh_slotmachine.util.VersionManagerUtil;
+import com.maoye.mlh_slotmachine.util.httputil.BaseRetrofit;
 import com.maoye.mlh_slotmachine.util.httputil.cache.CacheUtil;
+import com.maoye.mlh_slotmachine.util.httputil.subscribers.BaseObserver;
 import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
+import com.maoye.mlh_slotmachine.view.goodsactivity.GoodsActivity;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
 import com.maoye.mlh_slotmachine.view.print_select_activity.PrintSelectActivity;
-import com.maoye.mlh_slotmachine.view.printreceiptactivity.PrintReceiptActivity;
-import com.maoye.mlh_slotmachine.view.quickpayactivity.QuickpayActivity;
+import com.maoye.mlh_slotmachine.view.searchgoodsactivity.SearchgoodsActivity;
 import com.maoye.mlh_slotmachine.webservice.URL;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
 import com.maoye.mlh_slotmachine.widget.banner.Banner;
 import com.maoye.mlh_slotmachine.widget.banner.BannerConfig;
 import com.maoye.mlh_slotmachine.widget.banner.ViewBanner;
 import com.maoye.mlh_slotmachine.widget.banner.listener.OnBannerListener;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.AccordionTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.BackgroundToForegroundTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.CubeInTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.CubeOutTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.DefaultTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.DepthPageTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.FlipHorizontalTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.FlipVerticalTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.RotateUpTransformer;
+import com.maoye.mlh_slotmachine.widget.banner.transformer.ScaleInOutTransformer;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +60,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresenter> implements HomeContract.View {
 
     @BindView(R.id.print_bill_bt)
-    TextView printBillBt;
+    Button printBillBt;
+    @BindView(R.id.search_goods_bt)
+    Button searchGoodsBt;
     @BindView(R.id.leftpage_img)
     ImageView leftpageImg;
     @BindView(R.id.rightpage_img)
@@ -61,8 +82,6 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
     LinearLayout printLl;
     @BindView(R.id.head_banner)
     Banner headBanner;
-    @BindView(R.id.refreshlayout)
-    SwipeRefreshLayout refreshlayout;
     @BindView(R.id.banner)
     ViewBanner banner;
     private BadgeView goodsNumView;
@@ -74,17 +93,18 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
-
-        String s = MD5.MD5("M100118051115198227600.01maoye_mlhj4745");
-        LogUtils.e("当前设备设备号："+ DeviceInfoUtil.getDeviceId());
+        LogUtils.e("当前设备设备号：" + DeviceInfoUtil.getDeviceId());
         goodsNumView = new BadgeView(HomeActivity.this);
         goodsNumView.setStyle(1);
         goodsNumView.setTargetView(cartImg);
         goodsNumView.setBadgeMargin(10, 0, 0, 10);
         headBanner.setImageLoader(new GlideImageLoader());
-        banner.setViewLoader(new HomeGoodsVH());
+        banner.setViewLoader(new HomeBrandVH());
         banner.setBannerStyle(BannerConfig.NOT_INDICATOR);
+      //  banner.setPageTransformer(true, new ScaleInOutTransformer());
+        banner.setPageTransformer(true, new BackgroundToForegroundTransformer());//沉浮加缩放
+      //  banner.setPageTransformer(true, new CubeOutTransformer());//3d折叠(理想)
+       // banner.setPageTransformer(true, new FlipHorizontalTransformer());//翻转
         banner.start();
         headBanner.start();
         headBanner.setOnBannerListener(new OnBannerListener() {
@@ -107,25 +127,15 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
                 }
             }
         });
-        mPresenter.startup(1);
-        initData();
 
-        refreshlayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        refreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.homedata(false);
-            }
-        });
+        initData();
     }
 
 
 
-    private void initData() {
 
+    private void initData() {
+        baseInfo();
         Object query = CacheUtil.query(CacheUtil.HOME_ACTIVITY, HomeBean.class);
         if (query != null) {
             HomeBean bean = (HomeBean) query;
@@ -133,6 +143,26 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
             goodsData(bean);
             getHeadBannerData(bean);
         }
+    }
+
+
+    public void baseInfo() {
+        Observable<BaseResult<SapIdBean>> baseResultObservable = BaseRetrofit.getInstance().mServletApi.querySapId();
+        baseResultObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseResult<SapIdBean>>(getApplicationContext(), false) {
+                    @Override
+                    protected void onBaseNext(BaseResult<SapIdBean> data) {
+                        Log.e("Tag", "getSap_id: "+data.getData().getSap_id() );
+                        BaseInfo.setSapId(data.getData().getSap_id());
+                        BaseInfo.setStoreName(data.getData().getShop_name());
+                    }
+
+                    @Override
+                    protected void onBaseError(Throwable t) {
+
+                    }
+                });
     }
 
 
@@ -144,7 +174,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     }
 
-    @OnClick({ R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img})
+    @OnClick({R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img, R.id.search_goods_bt})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -164,6 +194,9 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
                 //购物车
                 openActivity(CartActivity.class);
                 break;
+            case R.id.search_goods_bt:
+               openActivity(SearchgoodsActivity.class);
+                break;
         }
     }
 
@@ -175,6 +208,13 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
      */
     private void goodsData(HomeBean data) {
         goodList = mPresenter.handerGoodsData(data.getList());
+        if(goodList.size()>1){
+            rightpageImg.setVisibility(View.VISIBLE);
+            leftpageImg.setVisibility(View.VISIBLE);
+        }else {
+            rightpageImg.setVisibility(View.GONE);
+            leftpageImg.setVisibility(View.GONE);
+        }
         if (goodList.size() == 0) {
             return;
         }
@@ -194,8 +234,6 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     @Override
     public void onSuccess(Object o) {
-        if (refreshlayout.isRefreshing())
-            refreshlayout.setRefreshing(false);
         if (o == null) return;
         HomeBean data = (HomeBean) o;
         goodsNumView.setBadgeCount(data.getCartNum());
@@ -212,8 +250,6 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     @Override
     public void onFail(Throwable throwable) {
-        if (refreshlayout.isRefreshing())
-            refreshlayout.setRefreshing(false);
     }
 
     @Override

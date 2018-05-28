@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen0.5"
+        android:background="@color/color_dedcdd" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen46"
+        android:layout_marginLeft="@dimen/dimen42"
+        android:layout_marginRight="@dimen/dimen42"
+        android:layout_marginTop="@dimen/dimen97"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen46"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:layout_weight="1"
+            android:background="@drawable/color1e1e1e_stroke"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/goood_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen46"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/search_goods_et"
+                android:drawablePadding="@dimen/dimen9"
+                android:hint="请输入商品或品牌名称"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dimen12"
+                android:textCursorDrawable="@drawable/shap_cursor"
+                android:textSize="@dimen/dimen20" />
+
+            <ImageView
+                android:id="@+id/delete_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:paddingLeft="@dimen/dimen18"
+                android:paddingRight="@dimen/dimen12"
+                android:src="@mipmap/close_et_icon"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/search_bt"
+            android:layout_width="@dimen/dimen68"
+            android:layout_height="@dimen/dimen46"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen50"
+            android:src="@mipmap/nodata_icon" />
+
+        <TextView
+            android:id="@+id/nodata_hint_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen21"
+            android:text="Sorry! “香奈儿”暂无搜索内容
+为您推荐了相关商品，您逛逛"
+            android:textColor="@color/color_969696"
+            android:textSize="@dimen/dimen18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen91"
+        android:layout_marginBottom="@dimen/dimen26"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/line_left" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen22"
+            android:layout_marginRight="@dimen/dimen22"
+            android:text="好物推荐"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen22sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/line_right" />
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/banner_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen448">
+
+        <com.maoye.mlh_slotmachine.widget.banner.ViewBanner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen448"
+            app:delay_time="5000"
+            app:is_auto_play="true" />
+
+        <ImageView
+            android:id="@+id/leftpage_img"
+            android:clickable="true"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen7"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@mipmap/left_black_icon" />
+
+        <ImageView
+            android:id="@+id/rightpage_img"
+            android:clickable="true"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen7"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:rotation="180"
+            android:src="@mipmap/left_black_icon" />
+    </RelativeLayout>
+
+<!--    <com.maoye.mlh_slotmachine.widget.banner.ViewBanner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen448"
+        app:delay_time="5000"
+        app:is_auto_play="true" />-->
+
+
+    <RelativeLayout
+        android:id="@+id/recycler_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/leftpage_min_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen7"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@mipmap/left_min_icon" />
+
+        <ImageView
+            android:id="@+id/rightpage_min_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen7"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:rotation="180"
+            android:src="@mipmap/left_min_icon" />
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen46"
+        android:layout_marginLeft="@dimen/dimen28"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:src="@mipmap/back_login" />
+
+</LinearLayout>

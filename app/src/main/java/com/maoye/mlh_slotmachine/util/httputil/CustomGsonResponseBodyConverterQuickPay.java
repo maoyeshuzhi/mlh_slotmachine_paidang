@@ -34,10 +34,9 @@ public class CustomGsonResponseBodyConverterQuickPay<T>implements Converter<Resp
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
         BaseResult httpStatus = gson.fromJson(response, BaseResult.class);
-
         if(httpStatus.getStatus()!=0){
             value.close();
-            throw new ApiException(httpStatus.getCode(),httpStatus.getErrorMsg()+"");
+            throw new ApiException(httpStatus.getCode(),httpStatus.getMessage()!=null?httpStatus.getMessage():httpStatus.getErrorMsg()+"");
         }
 
         MediaType contentType = value.contentType();

@@ -57,7 +57,7 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
         List<List<HomeBean.ListBeanX>> resultList = new ArrayList<>();
         List<HomeBean.ListBeanX> itemList = new ArrayList<>();
         for (int i = 0; i < listBeanXES.size(); i++) {
-            if (itemList.size() < 5) {
+            if (itemList.size() < 3) {
                 itemList.add(listBeanXES.get(i));
                 if (i == listBeanXES.size() - 1) {
                     resultList.add(itemList);
@@ -78,7 +78,7 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
       homeModel.versionInfo(new BaseObserver<BaseResult<VersionInfoBean>>(mView.getContext(),false) {
           @Override
           protected void onBaseNext(BaseResult<VersionInfoBean> data) {
-              if(data!=null) mView.getVersionInfo(data.getData());
+              if(mView!=null&&data!=null) mView.getVersionInfo(data.getData());
           }
 
           @Override
@@ -87,30 +87,4 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
           }
       });
     }
-
-    /**
-     * 开机
-     * @param status
-     */
-    @Override
-    public void startup(int status) {
-        Observable<BaseResult> baseResultObservable = BaseRetrofit.getInstance().apiService.deveice_status(status);
-        baseResultObservable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BaseResult>(mView.getContext()) {
-                    @Override
-                    protected void onBaseNext(BaseResult data) {
-
-                    }
-
-                    @Override
-                    protected void onBaseError(Throwable t) {
-
-                    }
-                });
-    }
-
-
-
-
 }

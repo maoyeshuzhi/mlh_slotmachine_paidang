@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:scaleType="fitXY"
-    android:src="@mipmap/head_icon" />
+    android:background="@color/white"
+    android:layout_height="@dimen/dimen50"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:src="@mipmap/head_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen50" />
+</LinearLayout >
+

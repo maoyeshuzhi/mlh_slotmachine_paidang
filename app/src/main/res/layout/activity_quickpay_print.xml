@@ -19,67 +19,168 @@
         app:indicator_margin="@dimen/dimen10"
         app:is_auto_play="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen54"
-        android:layout_marginTop="@dimen/dimen40"
-        android:includeFontPadding="false"
-        android:text="输入订单码补打茂乐惠快付订单小票"
-        android:textColor="@color/color_1e1e1e"
-        android:textSize="@dimen/dimen18sp" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/rg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen54"
-        android:layout_marginRight="@dimen/dimen54"
-        android:layout_marginTop="@dimen/dimen27"
+        android:layout_height="@dimen/dimen40"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dimen29"
+        android:layout_marginLeft="@dimen/dimen78"
+        android:layout_marginRight="@dimen/dimen78"
+        android:layout_marginTop="@dimen/dimen10"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/time_tv"
-            android:layout_width="@dimen/dimen120"
-            android:layout_height="@dimen/dimen46"
-            android:layout_marginRight="@dimen/dimen3"
-            android:background="@drawable/color969696_stroke"
+        <RadioButton
+            android:id="@+id/scancode_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/color969696soliddd2450"
+            android:button="@null"
+            android:checked="true"
             android:gravity="center"
-            android:text="20180516"
+            android:text="扫码打印"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen16sp" />
+
+        <RadioButton
+            android:id="@+id/inputcode_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/color969696soliddd2450"
+            android:button="@null"
+            android:gravity="center"
+            android:text="快付码打印"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen16sp" />
+    </RadioGroup>
+
+
+    <LinearLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen54"
+            android:layout_marginTop="@dimen/dimen10"
+            android:includeFontPadding="false"
+            android:text="输入订单码补打茂乐惠快付订单小票"
             android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen18sp" />
 
-        <EditText
-            android:id="@+id/code_et"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen46"
-            android:layout_weight="1"
-            android:background="@drawable/color969696_stroke"
-            android:digits="@string/number"
-            android:hint="请输入10位数订单码"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/dimen12"
-            android:textCursorDrawable="@drawable/shap_cursor"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen54"
+            android:layout_marginRight="@dimen/dimen54"
+            android:layout_marginTop="@dimen/dimen27"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:layout_width="@dimen/dimen120"
+                android:layout_height="@dimen/dimen46"
+                android:background="@drawable/color969696_stroke"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/time_tv"
+                    android:layout_width="@dimen/dimen120"
+                    android:layout_height="@dimen/dimen46"
+                    android:layout_marginRight="@dimen/dimen3"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="20180516"
+                    android:textColor="@color/color_1e1e1e"
+                    android:textSize="@dimen/dimen18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/triangle_cion" />
+            </RelativeLayout>
+
+
+            <EditText
+                android:id="@+id/code_et"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen46"
+                android:layout_weight="1"
+                android:background="@drawable/color969696_stroke"
+                android:digits="@string/number"
+                android:hint="请输入8位数订单码"
+                android:inputType="phone"
+                android:maxLength="8"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dimen12"
+                android:textCursorDrawable="@drawable/shap_cursor"
+                android:textSize="@dimen/dimen18sp" />
+
+            <Button
+                android:id="@+id/query_bt"
+                android:layout_width="@dimen/dimen126"
+                android:layout_height="@dimen/dimen46"
+                android:layout_marginLeft="@dimen/dimen3"
+                android:background="@color/color_b4b4b4"
+                android:clickable="false"
+                android:enabled="false"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen18sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/scan_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/scancode_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:focusable="true"
+            android:imeOptions="actionSend"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen2" />
+
+        <TextView
+            android:id="@+id/print_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen20"
+            android:drawablePadding="@dimen/dimen26"
+            android:drawableRight="@mipmap/print_scan"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:text="@string/print_bill_title_str"
+            android:textColor="@color/color_1e1e1e"
             android:textSize="@dimen/dimen18sp" />
 
-        <Button
-            android:id="@+id/query_bt"
-            android:layout_width="@dimen/dimen126"
-            android:layout_height="@dimen/dimen46"
-            android:layout_marginLeft="@dimen/dimen3"
-            android:background="@color/color_b4b4b4"
-            android:clickable="false"
-            android:enabled="false"
-            android:text="确认"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimen18sp" />
     </LinearLayout>
+
 
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:overScrollMode="never"
         android:scrollbars="none"
         android:visibility="gone">
@@ -94,6 +195,7 @@
     </ScrollView>
 
     <View
+        android:id="@+id/spaceview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
@@ -141,7 +243,8 @@
             android:enabled="false"
             android:text="打印小票"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen18sp" />
+            android:textSize="@dimen/dimen18sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 

@@ -14,18 +14,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.maoye.mlh_slotmachine.R;
 import com.maoye.mlh_slotmachine.adapter.QuickGoodsDetialAdapter;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
+import com.maoye.mlh_slotmachine.bean.BaseInfo;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.QuickOrderDetialsBean;
 import com.maoye.mlh_slotmachine.mvp.MVPBaseActivity;
@@ -54,7 +60,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View, QuickprintPresenter> implements QuickprintContract.View {
+public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View, QuickprintPresenter> implements QuickprintContract.View, RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.banner)
     Banner banner;
@@ -79,6 +85,20 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
     NotScrollRecyclerView recycler;
     @BindView(R.id.countdowntimer_tv)
     TextView countdowntimerTv;
+    @BindView(R.id.spaceview)
+    View spaceview;
+    @BindView(R.id.scancode_rb)
+    RadioButton scancodeRb;
+    @BindView(R.id.inputcode_rb)
+    RadioButton inputcodeRb;
+    @BindView(R.id.rg)
+    RadioGroup rg;
+    @BindView(R.id.input_layout)
+    LinearLayout inputLayout;
+    @BindView(R.id.scancode_et)
+    EditText scancodeEt;
+    @BindView(R.id.scan_layout)
+    LinearLayout scanLayout;
     private List<AdvertBean> list = new ArrayList<>();
     private String sapId;
     public static final int DATE_DIALOG = 1;
@@ -90,6 +110,10 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
     private List<QuickOrderDetialsBean.SaledListBean> orderList = new ArrayList<>();
     private QuickOrderDetialsBean bean;
     private CountDownTimer countDownTimer;
+    private String code="",saleNo="";
+    private int selectType;
+    public static final int SCAN =0;
+    public  static final int INPUT =1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +124,8 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
     }
 
     private void initdata() {
+        String sapId = BaseInfo.getSapId();
+        Log.e("Tag", "sapId: " + sapId);
         mPresenter.getSapId(DeviceInfoUtil.getDeviceId());
         adapter = new QuickGoodsDetialAdapter();
         recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -170,6 +196,36 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
                 finish();
             }
         }.start();
+
+
+        scancodeEt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (KeyEvent.KEYCODE_ENTER == i && KeyEvent.ACTION_DOWN == keyEvent.getAction()) {
+                    //处理事件
+                  String  authCode = scancodeEt.getText().toString();
+                    if(authCode.startsWith("saleNo=")) {
+                        code = authCode;
+                        String[] split = authCode.split("=");
+                        scancodeEt.setText("");
+                        if (split[split.length - 1] != null && !saleNo.equals(split[split.length - 1])) {
+                            try {
+                                saleNo = split[split.length - 1];
+                                mPresenter.orderData(saleNo);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            Toast.getInstance().toast(getApplicationContext(),"请勿重复打印！",2);
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        rg.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -219,9 +275,11 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
                     return;
                 }
                 switchClick(false);
+
                 boolean printTicketData = printerUtils.getPrintTicketData(mUsbDriver, bean, this);
                 if (printTicketData) {
                     Toast.getInstance().toast(this, Constant.PRINT_SUCC, 2);
+                    mPresenter.markPrint(bean.getSaleNo());
                     codeEt.setText("");
                 }
                 break;
@@ -256,7 +314,8 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
             mYear = year;
             mMonth = monthOfYear;
             mDay = dayOfMonth;
-            String month = mMonth < 10 ? ("0" + mMonth) : mMonth + "";
+            int i = monthOfYear + 1;
+            String month = mMonth < 9 ? ("0" + i) : i + "";
             String day = mDay < 10 ? ("0" + mDay) : mDay + "";
             timeTv.setText(mYear + "" + month + day);
         }
@@ -270,33 +329,69 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
 
     @Override
     public void getOrderDetials(BaseResult<QuickOrderDetialsBean> beanBaseResult) {
-        if (beanBaseResult != null) {
-
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(codeEt.getWindowToken(), 0);
+        if(selectType == SCAN){
             bean = beanBaseResult.getData();
             if (bean == null) {
+                scancodeEt.setText("");
                 Toast.getInstance().toast(getApplicationContext(), "不存在此订单", 2);
                 return;
             }
-            scrollView.setVisibility(View.VISIBLE);
-            orderList = bean.getSaledList();
-            adapter.addDatas(orderList);
-            double price = 0.00;
-            switchClick(true);
-            orderNoTv.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.select), null, null, null);
-            for (QuickOrderDetialsBean.SaledListBean saledListBean : orderList) {
-                price = price + saledListBean.getSaleAmount() - saledListBean.getCouponAmount();
+
+            PrinterUtils printerUtils = PrinterUtils.getInstanse();
+            if (!printerUtils.PrintConnStatus(mUsbDriver, mUsbManager)) {
+                saleNo = "";
+                code = "";
+                scancodeEt.setText("");
+                return;
             }
-            priceTv.setText(String.format("合计：￥%s", String.format("%.2f", price)));
-        } else {
-            scrollView.setVisibility(View.GONE);
+            switchClick(false);
+            boolean printTicketData = printerUtils.getPrintTicketData(mUsbDriver, bean, this);
+            if (printTicketData) {
+                Toast.getInstance().toast(this, Constant.PRINT_SUCC, 2);
+                mPresenter.markPrint(bean.getSaleNo());
+                scancodeEt.setText("");
+            }else {
+                saleNo = "";
+                code = "";
+                scancodeEt.setText("");
+            }
+
+        }else if(selectType ==INPUT){
+            if (beanBaseResult != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(codeEt.getWindowToken(), 0);
+                bean = beanBaseResult.getData();
+                if (bean == null) {
+                    Toast.getInstance().toast(getApplicationContext(), "不存在此订单", 2);
+                    return;
+                }
+                scrollView.setVisibility(View.VISIBLE);
+                spaceview.setVisibility(View.GONE);
+                orderList = bean.getSaledList();
+                adapter.addDatas(orderList);
+                double price = 0.00;
+                switchClick(true);
+                orderNoTv.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.select), null, null, null);
+                for (QuickOrderDetialsBean.SaledListBean saledListBean : orderList) {
+                    price = price + saledListBean.getSaleAmount() - saledListBean.getCouponAmount();
+                }
+                priceTv.setText(String.format("合计：￥%s", String.format("%.2f", price)));
+            } else {
+                scrollView.setVisibility(View.GONE);
+                spaceview.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void getOrderDetialsFial(Throwable t) {
+        spaceview.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.GONE);
+        if(selectType == SCAN){
+            saleNo = "";
+            code = "";
+            scancodeEt.setText("");
+        }
     }
 
 
@@ -313,4 +408,38 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
     }
 
 
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (i) {
+            case R.id.scancode_rb:
+                switchType(0);
+                break;
+            case R.id.inputcode_rb:
+                switchType(1);
+                break;
+        }
+    }
+
+    private void switchType(int type) {
+        selectType = type;
+        switchClick(false);
+        if (type == 0) {
+            scancodeEt.setFocusable(true);
+            scancodeEt.setText("");
+            orderList.clear();
+            scrollView.setVisibility(View.GONE);
+            spaceview.setVisibility(View.VISIBLE);
+            confirmBt.setVisibility(View.GONE);
+            inputLayout.setVisibility(View.GONE);
+            scanLayout.setVisibility(View.VISIBLE);
+            scancodeRb.setTextColor(getResources().getColor(R.color.white));
+            inputcodeRb.setTextColor(getResources().getColor(R.color.color_1e1e1e));
+        } else if (type == 1) {
+            confirmBt.setVisibility(View.VISIBLE);
+            inputLayout.setVisibility(View.VISIBLE);
+            scanLayout.setVisibility(View.GONE);
+            scancodeRb.setTextColor(getResources().getColor(R.color.color_1e1e1e));
+            inputcodeRb.setTextColor(getResources().getColor(R.color.white));
+        }
+    }
 }

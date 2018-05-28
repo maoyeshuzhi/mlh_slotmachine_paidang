@@ -94,28 +94,8 @@ public class HomeBean  {
         }
 
         public static class ListBeanX {
-            /**
-             * id : 14
-             * product_id : 206
-             * name : 卡帕 小黑鞋
-             * image : http://image1.maoye.cn/Uploads/product/281/2017-12-27/201712-2715143426546249.jpg
-             * price : 80.00
-             */
-
             private int id;
-            private int product_id;
-            private String name;
-            private String image;
-            private String price;
-            private String product_link;
-
-            public String getProduct_link() {
-                return product_link;
-            }
-
-            public void setProduct_link(String product_link) {
-                this.product_link = product_link;
-            }
+            private String spread_image;
 
             public int getId() {
                 return id;
@@ -125,36 +105,12 @@ public class HomeBean  {
                 this.id = id;
             }
 
-            public int getProduct_id() {
-                return product_id;
+            public String getSpread_image() {
+                return spread_image;
             }
 
-            public void setProduct_id(int product_id) {
-                this.product_id = product_id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getImage() {
-                return image;
-            }
-
-            public void setImage(String image) {
-                this.image = image;
-            }
-
-            public String getPrice() {
-                return price;
-            }
-
-            public void setPrice(String price) {
-                this.price = price;
+            public void setSpread_image(String spread_image) {
+                this.spread_image = spread_image;
             }
         }
 }

@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 
 import com.maoye.mlh_slotmachine.bean.MyObjectBox;
 import com.maoye.mlh_slotmachine.util.MyContext;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import io.objectbox.BoxStore;
 
@@ -28,7 +29,9 @@ public class MlhApplication extends Application{
     public void onCreate() {
         super.onCreate();
         MyContext.setContext(getApplicationContext());
+        CrashReport.initCrashReport(getApplicationContext(), "ec8724a1fa", false);
         mBoxStore = MyObjectBox.builder().androidContext(this).build();
+
 
     }
 
