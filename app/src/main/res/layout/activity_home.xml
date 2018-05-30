@@ -71,42 +71,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/print_ll"
-            android:layout_marginLeft="@dimen/dimen20"
+            android:id="@+id/search_goods_ll"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen22"
-            android:layout_marginRight="@dimen/dimen6"
-            android:gravity="right"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/print_bill_bt"
-                android:layout_width="@dimen/dimen143"
-                android:layout_height="@dimen/dimen46"
-                android:background="@color/black"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/print_bill_str"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dimen18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dimen6"
-                android:gravity="center"
-                android:text="@string/print_bill_hint_str"
-                android:textColor="@color/color_646464"
-                android:textSize="@dimen/dimen7sp" />
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_toRightOf="@+id/print_ll"
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/dimen10"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen22"
             android:gravity="center"
@@ -114,14 +81,14 @@
 
             <Button
                 android:id="@+id/search_goods_bt"
-                android:layout_width="@dimen/dimen143"
+                android:layout_width="@dimen/dimen120"
                 android:layout_height="@dimen/dimen46"
                 android:background="@drawable/black_stroke"
                 android:clickable="true"
                 android:drawableLeft="@mipmap/search_icon"
                 android:drawablePadding="@dimen/dimen4"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/dimen22"
+                android:paddingLeft="@dimen/dimen10"
                 android:text="@string/search_goods_str"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen18sp" />
@@ -136,6 +103,72 @@
                 android:textSize="@dimen/dimen7sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/print_ll"
+            android:layout_toRightOf="@+id/search_goods_ll"
+            android:layout_marginLeft="@dimen/dimen7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen22"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/print_bill_bt"
+                android:outlineProvider="bounds"
+                android:layout_width="@dimen/dimen120"
+                android:layout_height="@dimen/dimen46"
+                android:background="@drawable/black_stroke"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/print_bill_str"
+                android:textColor="@color/color_1e1e1e"
+                android:textSize="@dimen/dimen18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen6"
+                android:gravity="center"
+                android:text="@string/print_bill_hint_str"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen7sp" />
+        </LinearLayout>
+
+        <LinearLayout
+           android:layout_toRightOf="@+id/print_ll"
+            android:layout_marginLeft="@dimen/dimen7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen22"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/brand_guides_bt"
+                android:elevation="1dp"
+                android:translationZ="@dimen/dimen0.5"
+                android:layout_width="@dimen/dimen120"
+                android:layout_height="@dimen/dimen46"
+                android:background="@drawable/black_stroke"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="品牌导航"
+                android:textColor="@color/color_1e1e1e"
+                android:textSize="@dimen/dimen18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen6"
+                android:gravity="center"
+                android:text="茂业天地华强店1F美妆品牌分布图"
+                android:textColor="@color/color_646464"
+                android:textSize="@dimen/dimen7sp" />
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/cart_img"
             android:layout_alignParentRight="true"
@@ -145,7 +178,6 @@
             android:layout_marginRight="@dimen/dimen12"
             android:clickable="true"
             android:src="@mipmap/selectedgoods" />
-
 
     </RelativeLayout>
 

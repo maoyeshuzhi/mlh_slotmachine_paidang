@@ -87,25 +87,30 @@
             <RelativeLayout
                 android:layout_width="@dimen/dimen120"
                 android:layout_height="@dimen/dimen46"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dimen3"
                 android:background="@drawable/color969696_stroke"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/time_tv"
-                    android:layout_width="@dimen/dimen120"
-                    android:layout_height="@dimen/dimen46"
-                    android:layout_marginRight="@dimen/dimen3"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="center"
                     android:text="20180516"
+                    android:includeFontPadding="false"
+                    android:minHeight="0dp"
                     android:textColor="@color/color_1e1e1e"
                     android:textSize="@dimen/dimen18sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/time_tv"
+                    android:layout_marginBottom="@dimen/dimen4"
+                    android:layout_alignBottom="@+id/time_tv"
                     android:src="@mipmap/triangle_cion" />
             </RelativeLayout>
 
@@ -117,9 +122,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/color969696_stroke"
                 android:digits="@string/number"
-                android:hint="请输入8位数订单码"
+                android:hint="请输入8位或10位订单码"
                 android:inputType="phone"
-                android:maxLength="8"
+                android:maxLength="10"
                 android:maxLines="1"
                 android:paddingLeft="@dimen/dimen12"
                 android:textCursorDrawable="@drawable/shap_cursor"
@@ -164,7 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen20"
+            android:layout_marginTop="@dimen/dimen100"
             android:drawablePadding="@dimen/dimen26"
             android:drawableRight="@mipmap/print_scan"
             android:gravity="center_vertical"

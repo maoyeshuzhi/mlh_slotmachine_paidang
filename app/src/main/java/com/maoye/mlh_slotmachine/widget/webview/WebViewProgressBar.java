@@ -14,7 +14,7 @@ import com.maoye.mlh_slotmachine.R;
 
 public class WebViewProgressBar extends View {
     private int progress = 1;//进度默认为1
-    private final static int HEIGHT = 5;//进度条高度为5
+    private final static int HEIGHT = 2;//进度条高度为5
     private Paint paint;//进度条的画笔
     //  渐变颜色数组
     private final static int colors[] = new int[]{0xFF7AD237, 0xFF8AC14A, 0x35B056 }; //int类型颜色值格式：0x+透明值+颜色的rgb值

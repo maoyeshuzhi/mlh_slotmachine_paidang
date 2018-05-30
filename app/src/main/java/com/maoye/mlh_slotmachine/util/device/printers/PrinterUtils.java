@@ -130,18 +130,15 @@ public class PrinterUtils {
         double goodsPrice = Double.valueOf(bean.getPaid_amount()) - Double.valueOf(bean.getFreight_amount());
         buffer.append(Constant.DOT_LINE);
         buffer.append("商品合计：              " + String.format("%.2f", goodsPrice) + "元" + "\n");
-        buffer.append("邮费：                  " + String.format("%.2f", Double.valueOf(bean.getFreight_amount())) + "元" + "\n\n");
+        if (Double.valueOf(bean.getFreight_amount()) != 0) {
+            buffer.append("邮费：                  " + String.format("%.2f", Double.valueOf(bean.getFreight_amount())) + "元" + "\n");
+        }
         buffer.append("优惠金额：              " + String.format("%.2f", Double.valueOf(bean.getDiscount_amount())) + "元" + "\n");
-
- /*       buffer.append("折扣金额：              " + "0.00元" + "\n");
-        buffer.append("优惠券：                " + "0.00元" + "\n");
-        buffer.append("积分抵扣：              " + "0.00元" + "\n\n");*/
         buffer.append("应付金额：              " + bean.getPaid_amount() + "元" + "\n");
-        buffer.append("实付金额：              " + bean.getPaid_amount() + "元" + "\n");
         if (bean.getPayment_type() == 1) {
-            buffer.append("微信支付：              " + bean.getPaid_amount() + "元" + "\n");
+            buffer.append("实付金额(微信支付)：         " + bean.getPaid_amount() + "元" + "\n");
         } else {
-            buffer.append("支付宝支付：            " + bean.getPaid_amount() + "元" + "\n");
+            buffer.append("实付金额(支付宝支付)：       " + bean.getPaid_amount() + "元" + "\n");
         }
         buffer.append(Constant.DOT_LINE);
         return buffer.toString();
@@ -255,7 +252,7 @@ public class PrinterUtils {
 
     public String printData(QuickOrderDetialsBean bean) {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(bean.getShopName()+"顾客联" + "\n");
+        buffer.append(bean.getShopName() + "顾客联" + "\n");
         buffer.append("店名：" + BaseInfo.getStoreName() + "\n");
         buffer.append("电话：" + bean.getTel() + "\n");
         buffer.append("收银员：" + bean.getUserNo() + "     ");
@@ -283,7 +280,7 @@ public class PrinterUtils {
         buffer.append(Constant.DOT_LINE);
         buffer.append("应付：" + TextUtil.doubleTwoPoint(goodsPrice) + "\n");
         buffer.append("折扣:" + TextUtil.doubleTwoPoint(discAmount) + "   ");
-        buffer.append("满减:" +TextUtil.doubleTwoPoint(giveAmount));
+        buffer.append("满减:" + TextUtil.doubleTwoPoint(giveAmount));
         buffer.append("\n");
         buffer.append("实付：" + String.format("%.2f", goodsPrice - allDiscountAmount) + "\n");
         //支付方式

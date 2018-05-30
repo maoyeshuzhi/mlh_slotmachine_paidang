@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_7f000000"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <LinearLayout
+        android:layout_width="@dimen/dimen280"
+        android:layout_height="@dimen/dimen707"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/dimen38"
+        android:layout_marginTop="@dimen/dimen100"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+            android:id="@+id/refreshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="@dimen/dimen280"
+                android:layout_height="@dimen/dimen707" />
+        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/dismiss_imgbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:paddingTop="@dimen/dimen5"
+        android:paddingRight="@dimen/dimen22"
+        android:paddingLeft="@dimen/dimen28"
+        android:paddingBottom="@dimen/dimen28"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@mipmap/close_dialog" />
+</LinearLayout>

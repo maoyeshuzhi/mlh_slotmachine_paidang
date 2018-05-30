@@ -37,6 +37,8 @@ public interface URL {
     String DEFAULT_GOODS = "home/machine/searchDefault";
     String SEACH_GOODS = "home/machine/search";
     String BRAND_GOODS = "home/machine/brand";
+    String BRAND_DETIAL = "home/machine/brandDetail";
+    String MAP_GUIDES = "h5/index.html#/map";
 
     String QUICK_ORDER_LIST = "newposService/presaleQuery";
     String QUICK_WXPAY = "newposService/wxPay";

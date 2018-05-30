@@ -50,6 +50,8 @@ public class BaseRetrofit {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
+
+
         quickPayRetrofit = new Retrofit.Builder()
                 .baseUrl(EnvConfig.instance().getQuickPayWebServiceBaseUrl())
                 .client(getHttpClient())
@@ -64,6 +66,7 @@ public class BaseRetrofit {
         observable.subscribeOn(Schedulers.io())    // 指定subscribe()发生在IO线程
                 .observeOn(AndroidSchedulers.mainThread())  // 指定Subscriber的回调发生在io线程
                 .subscribe(observer);   //订阅
+
     }
 
     /**

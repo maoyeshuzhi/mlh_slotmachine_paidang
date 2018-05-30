@@ -80,5 +80,6 @@ dependencies {
     implementation "io.objectbox:objectbox-android:$objectboxVersion"
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
 
+    implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
     implementation 'com.tencent.bugly:crashreport:latest.release'
 }

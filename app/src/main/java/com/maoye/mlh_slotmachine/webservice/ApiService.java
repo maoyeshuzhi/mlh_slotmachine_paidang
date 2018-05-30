@@ -5,6 +5,7 @@ import com.maoye.mlh_slotmachine.bean.AddressBean;
 import com.maoye.mlh_slotmachine.bean.AdvertBean;
 import com.maoye.mlh_slotmachine.bean.BaseResult;
 import com.maoye.mlh_slotmachine.bean.BrandGoodsBean;
+import com.maoye.mlh_slotmachine.bean.BrandGoodsListBean;
 import com.maoye.mlh_slotmachine.bean.DelivetyWayBean;
 import com.maoye.mlh_slotmachine.bean.FeeBean;
 import com.maoye.mlh_slotmachine.bean.GoodsBean;
@@ -299,6 +300,16 @@ public interface ApiService {
 
     @GET(URL.QUICK_MARK_PRINT)
     Observable<BaseResult> quickMarkPrint(@Query("saleNo") String shopNo);
+
+    /**
+     * 专柜详情
+     * @param id 专柜id
+     * @param page 当前请求的页数
+     * @param limit 当前请求数据数量
+     * @return
+     */
+    @GET(URL.BRAND_DETIAL)
+    Observable<BaseResult<BrandGoodsListBean>> brandDetial(@Query("id") String id , @Query("page") int page , @Query("limit") int limit );
 
     /**
      * 获取验证码

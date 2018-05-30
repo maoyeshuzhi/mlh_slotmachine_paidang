@@ -542,6 +542,7 @@
             android:id="@+id/back_imgbt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dimen28"
             android:layout_marginLeft="@dimen/dimen28"

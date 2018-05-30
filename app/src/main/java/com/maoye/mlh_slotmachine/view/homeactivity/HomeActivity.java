@@ -34,6 +34,7 @@ import com.maoye.mlh_slotmachine.view.cartactivity.CartActivity;
 import com.maoye.mlh_slotmachine.view.goodsactivity.GoodsActivity;
 import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
+import com.maoye.mlh_slotmachine.view.mapguidesactivity.MapguidesActivity;
 import com.maoye.mlh_slotmachine.view.print_select_activity.PrintSelectActivity;
 import com.maoye.mlh_slotmachine.view.searchgoodsactivity.SearchgoodsActivity;
 import com.maoye.mlh_slotmachine.webservice.URL;
@@ -69,6 +70,8 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     @BindView(R.id.print_bill_bt)
     Button printBillBt;
+    @BindView(R.id.brand_guides_bt)
+    Button brandGuidesBt;
     @BindView(R.id.search_goods_bt)
     Button searchGoodsBt;
     @BindView(R.id.leftpage_img)
@@ -101,10 +104,10 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         headBanner.setImageLoader(new GlideImageLoader());
         banner.setViewLoader(new HomeBrandVH());
         banner.setBannerStyle(BannerConfig.NOT_INDICATOR);
-      //  banner.setPageTransformer(true, new ScaleInOutTransformer());
+        //  banner.setPageTransformer(true, new ScaleInOutTransformer());
         banner.setPageTransformer(true, new BackgroundToForegroundTransformer());//沉浮加缩放
-      //  banner.setPageTransformer(true, new CubeOutTransformer());//3d折叠(理想)
-       // banner.setPageTransformer(true, new FlipHorizontalTransformer());//翻转
+        //  banner.setPageTransformer(true, new CubeOutTransformer());//3d折叠(理想)
+        // banner.setPageTransformer(true, new FlipHorizontalTransformer());//翻转
         banner.start();
         headBanner.start();
         headBanner.setOnBannerListener(new OnBannerListener() {
@@ -132,10 +135,8 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
     }
 
 
-
-
     private void initData() {
-        baseInfo();
+        if (BaseInfo.getSapId() != null) baseInfo();
         Object query = CacheUtil.query(CacheUtil.HOME_ACTIVITY, HomeBean.class);
         if (query != null) {
             HomeBean bean = (HomeBean) query;
@@ -145,15 +146,14 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
         }
     }
 
-
     public void baseInfo() {
         Observable<BaseResult<SapIdBean>> baseResultObservable = BaseRetrofit.getInstance().mServletApi.querySapId();
         baseResultObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .retry(20)
                 .subscribe(new BaseObserver<BaseResult<SapIdBean>>(getApplicationContext(), false) {
                     @Override
                     protected void onBaseNext(BaseResult<SapIdBean> data) {
-                        Log.e("Tag", "getSap_id: "+data.getData().getSap_id() );
                         BaseInfo.setSapId(data.getData().getSap_id());
                         BaseInfo.setStoreName(data.getData().getShop_name());
                     }
@@ -174,7 +174,7 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
     }
 
-    @OnClick({R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img, R.id.search_goods_bt})
+    @OnClick({R.id.print_bill_bt, R.id.leftpage_img, R.id.rightpage_img, R.id.cart_img, R.id.search_goods_bt, R.id.brand_guides_bt})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -195,7 +195,10 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
                 openActivity(CartActivity.class);
                 break;
             case R.id.search_goods_bt:
-               openActivity(SearchgoodsActivity.class);
+                openActivity(SearchgoodsActivity.class);
+                break;
+            case R.id.brand_guides_bt:
+                openActivity(MapguidesActivity.class);
                 break;
         }
     }
@@ -208,10 +211,10 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
      */
     private void goodsData(HomeBean data) {
         goodList = mPresenter.handerGoodsData(data.getList());
-        if(goodList.size()>1){
+        if (goodList.size() > 1) {
             rightpageImg.setVisibility(View.VISIBLE);
             leftpageImg.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             rightpageImg.setVisibility(View.GONE);
             leftpageImg.setVisibility(View.GONE);
         }

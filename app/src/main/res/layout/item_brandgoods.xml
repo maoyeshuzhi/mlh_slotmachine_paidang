@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen4"
+    android:layout_marginBottom="@dimen/dimen8"
+    android:id="@+id/item_ll"
+    android:clickable="true"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/left_space"
+        android:visibility="gone"
+        android:layout_width="@dimen/dimen2"
+        android:layout_height="@dimen/dimen10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/goods_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen117"
+            android:scaleType="fitCenter"
+            android:transitionName="img"
+            android:src="@mipmap/default_image" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen6"
+            android:layout_marginTop="@dimen/dimen5"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="SK-2明星变色润唇膏"
+            android:textColor="@color/color_1e1e1e"
+            android:textSize="@dimen/dimen10sp" />
+
+        <TextView
+            android:id="@+id/price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen6"
+            android:layout_marginTop="@dimen/dimen3"
+            android:includeFontPadding="false"
+            android:text="￥1080.00"
+            android:textColor="@color/color_dd2450"
+            android:textSize="@dimen/dimen12sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/right_space"
+        android:visibility="gone"
+        android:layout_width="@dimen/dimen2"
+        android:layout_height="@dimen/dimen10" />
+</LinearLayout>

@@ -668,14 +668,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 codePop.showAsDropDown(phonebuyTv);
                 break;
             case R.id.back:
-                try {
-                    Runtime.getRuntime().exec("adb shell input keyevent 4");
-                } catch (IOException e) {
-                    onBackPressed();
-                    e.printStackTrace();
-                }
-
-               // onBackPressed();
+                onBackPressed();
                 break;
             case R.id.immdl_buy_tv:
                 if (bean.getSpec_name_list().size() == 0) {
@@ -720,7 +713,7 @@ public class GoodsdetialsActivity extends MVPBaseActivity<GoodsdetialsContract.V
                 scrollview.smoothScrollTo(0, i2);
                 break;
             case R.id.back_imgbt:
-                finish();
+                onBackPressed();
                 break;
         }
     }

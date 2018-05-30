@@ -152,7 +152,7 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!TextUtils.isEmpty(editable) && editable.length() >= 8) {
+                if (!TextUtils.isEmpty(editable) && (editable.length()==8 || editable.length()==10)) {
                     queryBt.setEnabled(true);
                     queryBt.setClickable(true);
                     queryBt.setBackgroundColor(getResources().getColor(R.color.color_dd2450));
@@ -297,7 +297,10 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DATE_DIALOG:
-                DatePickerDialog dialog = new DatePickerDialog(this, mdateListener, mYear, mMonth, mDay);
+               // DatePickerDialog.THEME_HOLO_DARK
+                //DatePickerDialog.THEME_HOLO_LIGHT
+               // R.style.MyDatePickerDialogTheme
+                DatePickerDialog dialog = new DatePickerDialog(this,  R.style.MyDatePickerDialogTheme, mdateListener, mYear, mMonth, mDay);
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
                 DatePicker datePicker = dialog.getDatePicker();
@@ -329,14 +332,19 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
 
     @Override
     public void getOrderDetials(BaseResult<QuickOrderDetialsBean> beanBaseResult) {
+        bean = beanBaseResult.getData();
+        if(bean.getPrintCount()>=3){
+            Toast.getInstance().toast(this,"纸质小票已打印三次，无法再打印！",2);
+            if(selectType == SCAN) scancodeEt.setText("");
+             return;
+        }
+
         if(selectType == SCAN){
-            bean = beanBaseResult.getData();
             if (bean == null) {
                 scancodeEt.setText("");
                 Toast.getInstance().toast(getApplicationContext(), "不存在此订单", 2);
                 return;
             }
-
             PrinterUtils printerUtils = PrinterUtils.getInstanse();
             if (!printerUtils.PrintConnStatus(mUsbDriver, mUsbManager)) {
                 saleNo = "";
@@ -360,7 +368,6 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
             if (beanBaseResult != null) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(codeEt.getWindowToken(), 0);
-                bean = beanBaseResult.getData();
                 if (bean == null) {
                     Toast.getInstance().toast(getApplicationContext(), "不存在此订单", 2);
                     return;

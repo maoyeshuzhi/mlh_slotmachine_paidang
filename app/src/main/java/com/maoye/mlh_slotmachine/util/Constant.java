@@ -8,6 +8,9 @@ public class Constant {
     public static final int WXPAY = 1;
     public static final int ALPAY = 0;
     public static final int TITLE = 2;//设置标题
+    public static final int NOMARL = 0;
+    public static final int REFRESH = 1;
+    public static final int LOADMORE = 2;
 
     public static final String POSITION = "position";
     public static final String FROM = "from";

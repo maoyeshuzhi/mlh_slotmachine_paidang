@@ -76,7 +76,7 @@ public class QuickprintPresenter extends BasePresenterImpl<QuickprintContract.Vi
         model.orderData(saleNo, new BaseObserver<BaseResult<QuickOrderDetialsBean>>(mView.getContext(), true) {
             @Override
             protected void onBaseNext(BaseResult<QuickOrderDetialsBean> data) {
-                if (mView != null) mView.getOrderDetials(data);
+                if (mView != null ) mView.getOrderDetials(data);
             }
 
             @Override

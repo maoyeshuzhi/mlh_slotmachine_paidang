@@ -5,7 +5,7 @@ package com.maoye.mlh_slotmachine.webservice;
  */
 
 public abstract class EnvConfig {
-    private static Stage stage = Stage.PROD;
+    private static Stage stage = Stage.DEV;
 
     public static EnvConfig instance() {
         switch (stage) {

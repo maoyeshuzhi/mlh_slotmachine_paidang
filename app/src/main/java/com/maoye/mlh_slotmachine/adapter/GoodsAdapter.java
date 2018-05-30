@@ -79,9 +79,6 @@ public class GoodsAdapter extends BaseRecyclerAdapter<GoodsBean> {
                 intent.putExtra(Constant.GOODS_ID, data.getProduct_id());
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-
-
                     mContext.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) mContext, viewHolder.goodsImg,"img").toBundle());
                 }
             }
