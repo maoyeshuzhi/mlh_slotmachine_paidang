@@ -43,5 +43,6 @@
     <string name="address_hint_str">建议您如实填写详细收货地址，例如街道名称，门牌号\n码，楼层和房间号等信息</string>
     <string name="countDownTimer_str">剩余操作时长360秒</string>
     <string name="search_goods_str">搜索商品</string>
+    <string name="back_str">返回</string>
 
 </resources>

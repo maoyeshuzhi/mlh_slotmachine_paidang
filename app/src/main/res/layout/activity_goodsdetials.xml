@@ -573,7 +573,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/dimen27"
                 android:paddingRight="@dimen/dimen10"
-                android:text="@string/returnhome_str"
+                android:text="@string/back_str"
                 android:textColor="@color/color_1e1e1e"
                 android:textSize="@dimen/dimen13sp" />
 
