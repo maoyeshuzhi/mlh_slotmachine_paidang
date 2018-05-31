@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -66,7 +68,7 @@ public class WebViewMapGuides extends WebView {
         WebSettings mSettings = this.getSettings();
         mSettings.setJavaScriptEnabled(true);//开启javascript
         mSettings.setDomStorageEnabled(true);//开启DOM
-        mSettings.setDefaultTextEncodingName("utf-8");//设置字符编码
+      //  mSettings.setDefaultTextEncodingName("utf-8");//设置字符编码
         //设置web页面
 
         //  mSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);// 屏幕自适应网页,如果没有这个，在低分辨率的手机上显示可能会异常
@@ -79,6 +81,10 @@ public class WebViewMapGuides extends WebView {
         mSettings.setLoadWithOverviewMode(true);// 调整到适合webview大小
         //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
         // mSettings.setBlockNetworkImage(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mSettings.setMixedContentMode(
+                    WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+        }
         mSettings.setBlockNetworkImage(false);
         mSettings.setAppCacheEnabled(true);//开启缓存机制
         mSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -121,13 +127,16 @@ public class WebViewMapGuides extends WebView {
             super.onLoadResource(view, url);
         }
 
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+          //  super.onReceivedSslError(view, handler, error);
+            handler.proceed();// 接受所有网站的证书
+        }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
           //  goBack();
-            if (description.contains("net::ERR_INTERNET_DISCONNECTED")) {
-            }
-            // super.onReceivedError(view, errorCode, description, failingUrl);
+            super.onReceivedError(view, errorCode, description, failingUrl);
 
         }
 

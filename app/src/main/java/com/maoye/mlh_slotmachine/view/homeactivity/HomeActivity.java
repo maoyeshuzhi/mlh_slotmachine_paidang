@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,7 @@ import com.maoye.mlh_slotmachine.view.goodsdetialsactivity.GoodsdetialsActivity;
 import com.maoye.mlh_slotmachine.view.h5activity.H5Activity;
 import com.maoye.mlh_slotmachine.view.mapguidesactivity.MapguidesActivity;
 import com.maoye.mlh_slotmachine.view.print_select_activity.PrintSelectActivity;
+import com.maoye.mlh_slotmachine.view.quickprintv2activity.Quickprintv2Activity;
 import com.maoye.mlh_slotmachine.view.searchgoodsactivity.SearchgoodsActivity;
 import com.maoye.mlh_slotmachine.webservice.URL;
 import com.maoye.mlh_slotmachine.widget.BadgeView;
@@ -136,7 +138,18 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
 
     private void initData() {
-        if (BaseInfo.getSapId() != null) baseInfo();
+
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int width = metric.widthPixels;     // 屏幕宽度（像素）
+        int height = metric.heightPixels;   // 屏幕高度（像素）
+        float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
+        int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
+
+        Log.e("tag", "width: "+width +"height "+height +"density: " +density+"densityDpi:" +densityDpi);
+
+
+        if (BaseInfo.getSapId() == null) baseInfo();
         Object query = CacheUtil.query(CacheUtil.HOME_ACTIVITY, HomeBean.class);
         if (query != null) {
             HomeBean bean = (HomeBean) query;
@@ -180,7 +193,8 @@ public class HomeActivity extends MVPBaseActivity<HomeContract.View, HomePresent
 
             case R.id.print_bill_bt:
                 //补打小票
-                openActivity(PrintSelectActivity.class);
+                openActivity(Quickprintv2Activity.class);
+              //  openActivity(PrintSelectActivity.class);
                 break;
             case R.id.leftpage_img:
                 if (goodList.size() > 0)

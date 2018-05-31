@@ -147,8 +147,8 @@
 
             <Button
                 android:id="@+id/brand_guides_bt"
-                android:elevation="1dp"
-                android:translationZ="@dimen/dimen0.5"
+                android:elevation="0.1dp"
+                android:translationZ="0.1dp"
                 android:layout_width="@dimen/dimen120"
                 android:layout_height="@dimen/dimen46"
                 android:background="@drawable/black_stroke"

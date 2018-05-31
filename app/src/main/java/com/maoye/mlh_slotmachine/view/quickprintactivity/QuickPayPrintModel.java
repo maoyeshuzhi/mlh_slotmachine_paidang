@@ -31,6 +31,11 @@ public class QuickPayPrintModel extends BaseModel {
         toSubscribe(observable, observer);
     }
 
+    public void onClickAd(int adId, BaseObserver<BaseResult> observer) {
+        Observable observable = mServletApi.statistic(adId);
+        toSubscribe(observable, observer);
+    }
+
     public  void markPrint(String saleNo, BaseObserver<BaseResult> observer){
         Observable observable = quickApiService.quickMarkPrint(saleNo);
         toSubscribe(10,observable, observer);

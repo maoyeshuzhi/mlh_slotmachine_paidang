@@ -41,5 +41,6 @@ public class AnimUtil {
             }
         });
         animator1.setDuration(time).start();
+
     }
 }

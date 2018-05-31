@@ -28,11 +28,13 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
         homeModel.getHomeData( new BaseObserver<BaseResult<HomeBean>>(mView.getContext(),isShowDialog) {
             @Override
             protected void onBaseNext(BaseResult<HomeBean> data) {
+                if(mView!=null)
                 mView.onSuccess(data.getData());
             }
 
             @Override
             protected void onBaseError(Throwable t) {
+                if(mView!=null)
                 mView.onFail(t);
             }
         });

@@ -55,6 +55,7 @@
         <activity android:name=".view.goodsactivity.GoodsActivity" />
         <activity android:name=".view.searchgoodsactivity.SearchgoodsActivity" />
         <activity android:name=".view.mapguidesactivity.MapguidesActivity" />
+        <activity android:name=".view.quickprintv2activity.Quickprintv2Activity" />
         <!--  <activity android:name=".view.mapguidesactivity.MapguidesActivity" />-->
 
 

@@ -14,7 +14,6 @@ import android.view.View;
  * Created by Aspsine on 2015/11/5.
  */
 public class DensityUtil {
-
     public static int getScreenWidth(Context context) {
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);

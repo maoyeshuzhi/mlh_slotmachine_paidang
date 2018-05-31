@@ -211,13 +211,22 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
                         if (split[split.length - 1] != null && !saleNo.equals(split[split.length - 1])) {
                             try {
                                 saleNo = split[split.length - 1];
-                                mPresenter.orderData(saleNo);
+                                String[] saleSpit = saleNo.split(",");
+                                if(saleSpit.length==2 ) {
+                                    String s0 = saleSpit[0];
+                                    String substring = s0.substring(0, s0.length() - 8);
+                                    mPresenter.orderData(substring + saleSpit[1]);
+                                }else {
+                                    mPresenter.orderData(saleNo);
+                                }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
                         }else {
                             Toast.getInstance().toast(getApplicationContext(),"请勿重复打印！",2);
                         }
+                    }else {
+                        scancodeEt.setText("");
                     }
                     return true;
                 }
@@ -291,7 +300,6 @@ public class QuickprintActivity extends MVPBaseActivity<QuickprintContract.View,
                 break;
         }
     }
-
 
     @Override
     protected Dialog onCreateDialog(int id) {

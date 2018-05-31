@@ -118,6 +118,7 @@ public class GoodsAdapter extends BaseRecyclerAdapter<GoodsBean> {
             (viewHolder).codeImg.setVisibility(View.INVISIBLE);
             AnimUtil.FlipAnimatorXViewShow(viewHolder.codeImg, viewHolder.goodsImg, ROTATE_TIEM);
         }
+
         if (isShowCode[0]) {
             new Handler().postDelayed(new Runnable() {
                 @Override

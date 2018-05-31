@@ -3,6 +3,7 @@ package com.maoye.mlh_slotmachine;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.DisplayMetrics;
 
 
 import com.maoye.mlh_slotmachine.bean.MyObjectBox;
@@ -31,7 +32,6 @@ public class MlhApplication extends Application{
         MyContext.setContext(getApplicationContext());
         CrashReport.initCrashReport(getApplicationContext(), "ec8724a1fa", false);
         mBoxStore = MyObjectBox.builder().androidContext(this).build();
-
 
     }
 
