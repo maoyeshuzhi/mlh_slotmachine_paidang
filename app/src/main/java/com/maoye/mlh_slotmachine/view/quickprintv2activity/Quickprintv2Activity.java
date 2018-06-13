@@ -138,12 +138,12 @@ public class Quickprintv2Activity extends MVPBaseActivity<Quickprintv2Contract.V
                     imm.hideSoftInputFromWindow(codeEt.getWindowToken(), 0);
                     String authCode = codeEt.getText().toString();
                     codeEt.setText("");
-                    if (authCode.startsWith("saleNo=")) {
+                    if (authCode.startsWith("0-0-=")) {
                         String[] split = authCode.split("=");
-                        if (split[split.length - 1] != null && !saleNo.equals(split[split.length - 1])) {
+                        if (split[split.length - 1] != null && !saleNo.equals(split[1])) {
                             try {
-                                saleNo = split[split.length - 1];
-                                String[] saleSpit = saleNo.split(",");
+                                saleNo = split[1];
+                                String[] saleSpit = saleNo.split("-");
                                 if (saleSpit.length == 2) {
                                     String s0 = saleSpit[0];
                                     String substring = s0.substring(0, s0.length() - 8);
@@ -239,7 +239,6 @@ public class Quickprintv2Activity extends MVPBaseActivity<Quickprintv2Contract.V
             codeEt.setVisibility(View.GONE);
             succTv.setVisibility(View.VISIBLE);
             timeBackTv.setVisibility(View.VISIBLE);
-            mPresenter.markPrint(bean.getSaleNo());
             countDownTimer2.cancel();
             countDownTimer1.start();
             codeEt.setText("");
